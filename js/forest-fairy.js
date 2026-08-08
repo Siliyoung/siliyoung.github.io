@@ -8,6 +8,7 @@
   const fairy = document.getElementById('fairy-sprite');
   const sparkleLayer = document.getElementById('sparkle-layer');
   const navToggle = document.querySelector('.nav-toggle');
+  const header = document.querySelector('.site-header');
   const nav = document.querySelector('.site-nav');
 
   root.style.setProperty('--forest-bg', `url("${assets.IMAGE_BACKGROUND_OVERALL || ''}")`);
@@ -45,6 +46,38 @@
     });
   }
 
+  function setupCopyButtons() {
+    document.querySelectorAll('.article-content figure.highlight, .article-content > pre').forEach(function (block) {
+      const code = block.querySelector('pre') || block;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'copy-code-button';
+      button.textContent = 'Copy';
+      button.setAttribute('aria-label', '复制代码');
+      button.addEventListener('click', async function () {
+        const text = code.innerText || code.textContent || '';
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch (error) {
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.style.position = 'fixed';
+          area.style.opacity = '0';
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand('copy');
+          area.remove();
+        }
+        button.textContent = 'Copied';
+        button.classList.add('copied');
+        window.setTimeout(function () {
+          button.textContent = 'Copy';
+          button.classList.remove('copied');
+        }, 1400);
+      });
+      block.appendChild(button);
+    });
+  }
   function createSparkles(x, y) {
     if (!sparkleLayer) return;
     const count = 12 + Math.floor(Math.random() * 4);
@@ -64,11 +97,21 @@
     }
   }
 
+
+  if (header) {
+    const updateHeaderVisibility = function () {
+      header.classList.toggle('nav-hidden', window.scrollY > 80);
+    };
+    window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+    updateHeaderVisibility();
+  }
   if (navToggle && nav) {
     navToggle.addEventListener('click', function () {
       nav.classList.toggle('open');
     });
   }
+
+  setupCopyButtons();
 
   if (!canReveal) return;
 
