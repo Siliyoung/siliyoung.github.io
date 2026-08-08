@@ -1,125 +1,49 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>基于低代码平台的智能体搭建-coze | YangYang</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Coze  核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简化了分发流程。 适用人群：AI 应用的">
-<meta property="og:type" content="article">
-<meta property="og:title" content="基于低代码平台的智能体搭建-coze">
-<meta property="og:url" content="https://www.yang--yang.com/2026/08/06/chapter05/index.html">
-<meta property="og:site_name" content="YangYang">
-<meta property="og:description" content="Coze  核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简化了分发流程。 适用人群：AI 应用的">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805213617609-1785938790932-3.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805213717327-1785938841871-6-1785980944567-3.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805213750768-1785938869420-9-1785980951814-6.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805213848913-1785938878558-12-1785980956999-9.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805214113308-1785938893338-15-1785980963225-12.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805214026359-1785939016915-21.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805214445655-1785938938218-18-1785980977700-16.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805214606290-1785939035724-24-1785980990879-19.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805214708077-1785939042409-27-1785980997569-22.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805215907245-1785939050993-30-1785981005193-25.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805215944874-1785939061420-33-1785981014764-28.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805221917397-1785981019670-31.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805222330786-1785981025077-34.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805225223898-1785981030415-37.png">
-<meta property="og:image" content="https://www.yang--yang.com/images/chapter05/image-20260805225041107-1785981036865-40.png">
-<meta property="article:published_time" content="2026-08-06T01:51:00.000Z">
-<meta property="article:modified_time" content="2026-08-06T01:58:23.485Z">
-<meta property="article:author" content="YangYang">
-<meta property="article:tag" content="Coze">
-<meta property="article:tag" content="Dify">
-<meta property="article:tag" content="FastGPT">
-<meta property="article:tag" content="n8n">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.yang--yang.com/images/chapter05/image-20260805213617609-1785938790932-3.png">
-  
-    <link rel="alternate" href="/atom.xml" title="YangYang" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <title>基于低代码平台的智能体搭建-coze · YangYang</title>
+  <link rel="stylesheet" href="/css/forest-fairy.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">`r`n  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`r`n  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
 <meta name="generator" content="Hexo 8.1.2"></head>
-
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">YangYang</a>
-      </h1>
+  <div class="moss-orb moss-orb-one"></div>
+  <div class="moss-orb moss-orb-two"></div>
+  <div id="fairy-sprite" aria-hidden="true"></div>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">✦</span>
+      <span>
+        <strong>YangYang</strong>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.yang--yang.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main"><article id="post-chapter05" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/08/06/chapter05/" class="article-date">
-  <time class="dt-published" datetime="2026-08-06T01:51:00.000Z" itemprop="datePublished">2026-08-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ai-agent/">AI Agent</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      基于低代码平台的智能体搭建-coze
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><strong>Coze</strong></p>
+        <a href="/">首页</a>
+      
+        <a href="/categories/ai-agent/">AI Agent 学习</a>
+      
+        <a href="/archives/">文章归档</a>
+      
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+  </header>
+
+  <main class="site-main">
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">AI Agent</span>
+    <h1>基于低代码平台的智能体搭建-coze</h1>
+    <div class="article-meta"><time datetime="2026-08-06T01:51:00.000Z">2026 年 08 月 06 日</time><span>·</span><span>3 min read</span></div>
+  </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Coze%E6%9E%84%E5%BB%BA%E2%80%9C%E6%AF%8F%E6%97%A5AI%E7%AE%80%E6%8A%A5%E2%80%9D%E5%8A%A9%E6%89%8B"><span class="toc-text">Coze构建“每日AI简报”助手</span></a></li></ol></aside>
+    <div class="article-card reveal"><div class="article-content"><p><strong>Coze</strong></p>
 <ul>
 <li><strong>核心定位</strong>：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。</li>
 <li><strong>特点分析</strong>：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简化了分发流程。</li>
@@ -164,141 +88,25 @@
 <p><img src="/images/chapter05/image-20260805222330786-1785981025077-34.png" alt="image-20260805222330786"></p>
 <h4 id="创建提示词"><a href="#创建提示词" class="headerlink" title="创建提示词"></a>创建提示词</h4><p><img src="/images/chapter05/image-20260805225223898-1785981030415-37.png" alt="image-20260805225223898"></p>
 <h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p><img src="/images/chapter05/image-20260805225041107-1785981036865-40.png" alt="image-20260805225041107"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://www.yang--yang.com/2026/08/06/chapter05/" data-id="cuidkPZB5irNvHWWTL1-LuaI-" data-title="基于低代码平台的智能体搭建-coze" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Coze/" rel="tag">Coze</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dify/" rel="tag">Dify</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FastGPT/" rel="tag">FastGPT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/n8n/" rel="tag">n8n</a></li></ul>
-
-    </footer>
+</div><footer class="article-footer"><span>✦ 写于森林边缘</span><a href="/">返回首页 ↑</a></footer></div>
   </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2026/08/05/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">后一篇</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
-  
 </article>
 
+  </main>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ai-agent/">AI Agent</a></li></ul>
-    </div>
-  </div>
+  <footer class="site-footer">
+    <span>在森林里学习，在星光下记录。</span>
+    <span>© 2026 YangYang</span>
+  </footer>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Coze/" rel="tag">Coze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dify/" rel="tag">Dify</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FastGPT/" rel="tag">FastGPT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReAct/" rel="tag">ReAct</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/n8n/" rel="tag">n8n</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="tag">大模型</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Agent/" style="font-size: 10px;">Agent</a> <a href="/tags/Coze/" style="font-size: 10px;">Coze</a> <a href="/tags/Dify/" style="font-size: 10px;">Dify</a> <a href="/tags/FastGPT/" style="font-size: 10px;">FastGPT</a> <a href="/tags/ReAct/" style="font-size: 10px;">ReAct</a> <a href="/tags/n8n/" style="font-size: 10px;">n8n</a> <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="font-size: 10px;">大模型</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/08/">八月 2026</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2026/08/06/chapter05/">基于低代码平台的智能体搭建-coze</a>
-          </li>
-        
-          <li>
-            <a href="/2026/08/05/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2026/08/05/chapter04/">智能体经典范式构建</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2026 YangYang<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
+  <script>
+    window.FAIRY_ASSETS = {
+      IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
+      IMAGE_FAIRY_CASTING: '/images/fairy/fairy-casting-transparent.png',
+      IMAGE_BACKGROUND_OVERALL: '/images/fairy/forest-background.png',
+      IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
+    };
+  </script>
+  <script src="/js/forest-fairy.js"></script>
 </body>
 </html>

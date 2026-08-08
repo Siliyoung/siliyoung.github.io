@@ -1,108 +1,49 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>智能体经典范式构建 | YangYang</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Chat Completions 格式 大模型 API 调用最核心的消息格式  1234exampleMessages &#x3D; [    &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python code.&quot;&amp;#12">
-<meta property="og:type" content="article">
-<meta property="og:title" content="智能体经典范式构建">
-<meta property="og:url" content="https://www.yang--yang.com/2026/08/05/chapter04/index.html">
-<meta property="og:site_name" content="YangYang">
-<meta property="og:description" content="Chat Completions 格式 大模型 API 调用最核心的消息格式  1234exampleMessages &#x3D; [    &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python code.&quot;&amp;#12">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-08-05T13:42:00.000Z">
-<meta property="article:modified_time" content="2026-08-06T01:21:25.694Z">
-<meta property="article:author" content="YangYang">
-<meta property="article:tag" content="Agent">
-<meta property="article:tag" content="ReAct">
-<meta property="article:tag" content="大模型">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="YangYang" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <title>智能体经典范式构建 · YangYang</title>
+  <link rel="stylesheet" href="/css/forest-fairy.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">`r`n  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`r`n  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
 <meta name="generator" content="Hexo 8.1.2"></head>
-
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">YangYang</a>
-      </h1>
+  <div class="moss-orb moss-orb-one"></div>
+  <div class="moss-orb moss-orb-two"></div>
+  <div id="fairy-sprite" aria-hidden="true"></div>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">✦</span>
+      <span>
+        <strong>YangYang</strong>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.yang--yang.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main"><article id="post-chapter04" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/08/05/chapter04/" class="article-date">
-  <time class="dt-published" datetime="2026-08-05T13:42:00.000Z" itemprop="datePublished">2026-08-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ai-agent/">AI Agent</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      智能体经典范式构建
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Chat-Completions-格式"><a href="#Chat-Completions-格式" class="headerlink" title="Chat Completions 格式"></a><strong>Chat Completions 格式</strong></h3><blockquote>
+        <a href="/">首页</a>
+      
+        <a href="/categories/ai-agent/">AI Agent 学习</a>
+      
+        <a href="/archives/">文章归档</a>
+      
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+  </header>
+
+  <main class="site-main">
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">AI Agent</span>
+    <h1>智能体经典范式构建</h1>
+    <div class="article-meta"><time datetime="2026-08-05T13:42:00.000Z">2026 年 08 月 05 日</time><span>·</span><span>23 min read</span></div>
+  </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Chat-Completions-%E6%A0%BC%E5%BC%8F"><span class="toc-text">Chat Completions 格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E4%BD%93%E8%8C%83%E5%BC%8FReAct-Reason-Act"><span class="toc-text">智能体范式ReAct (Reason + Act)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Plan-and-Solve"><span class="toc-text">Plan-and-Solve</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reflection"><span class="toc-text">Reflection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-text">习题</span></a></li></ol></aside>
+    <div class="article-card reveal"><div class="article-content"><h3 id="Chat-Completions-格式"><a href="#Chat-Completions-格式" class="headerlink" title="Chat Completions 格式"></a><strong>Chat Completions 格式</strong></h3><blockquote>
 <p>大模型 API 调用最核心的消息格式</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">exampleMessages = [</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;You are a helpful assistant that writes Python code.&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;写一个快速排序算法&quot;</span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
@@ -361,145 +302,25 @@
 <p>输出：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">(hello<span class="literal">-agents</span>) <span class="built_in">PS</span> E:\AI\hello<span class="literal">-agents</span>\code\chapter4&gt; python ReAct.py</span><br><span class="line">工具 <span class="string">&#x27;Search&#x27;</span> 已注册。</span><br><span class="line"></span><br><span class="line"><span class="literal">---</span> 第 <span class="number">1</span> 步 <span class="literal">---</span></span><br><span class="line">🧠 正在调用 deepseek<span class="literal">-v4-flash</span> 模型...</span><br><span class="line">✅ 大语言模型响应成功:</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;thought&quot;</span>: <span class="string">&quot;需要搜索华为最新手机的信息&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action&quot;</span>: <span class="string">&quot;Search&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action_input&quot;</span>: <span class="string">&quot;华为最新手机 2025&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">🤔 思考: 需要搜索华为最新手机的信息</span><br><span class="line">🎬 行动: Search[华为最新手机 <span class="number">2025</span>]</span><br><span class="line">🔍 正在执行 [<span class="type">SerpApi</span>] 网页搜索: 华为最新手机 <span class="number">2025</span></span><br><span class="line">👀 观察: [<span class="number">1</span>] 华为手机- 华为官网</span><br><span class="line">探索并选购华为最新手机，了解Mate 系列、Pura 系列、Pocket 系列、nova 系列、畅享系列及相关配件，体验鸿蒙AI 、影像、通信等功能。</span><br><span class="line"></span><br><span class="line">[<span class="number">2</span>] <span class="number">2026</span>最新华为手机大全</span><br><span class="line">荣耀X80 Pro Max ￥<span class="number">1999</span> ; HUAWEI Mate <span class="number">80</span> ￥<span class="number">4699</span> ; REDMI Note <span class="number">17</span> Pro ￥<span class="number">1599</span> ; REDMI K90至尊版 ￥<span class="number">2999</span> ; HUAWEI nova <span class="number">16</span> ￥<span class="number">2999</span>.</span><br><span class="line"></span><br><span class="line">[<span class="number">3</span>] 华为发布会- 华为官网</span><br><span class="line"><span class="number">2025.11</span>.<span class="number">25</span>华为Mate <span class="number">80</span> 系列| Mate X7 及全场景新品发布会华为全新发布Mate <span class="number">80</span> 系列、Mate X7、MatePad Edge、WATCH Ultimate <span class="number">2</span>、华为智慧屏MateTV Max、华为路由X3 Pro ...</span><br><span class="line"></span><br><span class="line"><span class="literal">---</span> 第 <span class="number">2</span> 步 <span class="literal">---</span></span><br><span class="line">🧠 正在调用 deepseek<span class="literal">-v4-flash</span> 模型...</span><br><span class="line">✅ 大语言模型响应成功:</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;thought&quot;</span>: <span class="string">&quot;根据搜索结果，华为最新发布的手机是Mate 80系列，发布于2025年11月25日。主要卖点包括鸿蒙AI、影像、通信等功能。&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action&quot;</span>: <span class="string">&quot;Finish&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action_input&quot;</span>: <span class="string">&quot;华为最新的手机是华为Mate 80系列（于2025年11月25日发布）。主要卖点包括：1. 鸿蒙AI：深度融合鸿蒙系统，提供智慧交互体验；2. 影像：强大的摄像系统，延续华为影像技术优势；3. 通信：支持先进的通信功能，如卫星通信等。&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">🤔 思考: 根据搜索结果，华为最新发布的手机是Mate <span class="number">80</span>系列，发布于<span class="number">2025</span>年<span class="number">11</span>月<span class="number">25</span>日。主要卖点包括鸿蒙AI、影像、通信等功能。</span><br><span class="line">最终答案:华为最新的手机是华为Mate <span class="number">80</span>系列（于<span class="number">2025</span>年<span class="number">11</span>月<span class="number">25</span>日发布）。主要卖点包括：<span class="number">1</span>. 鸿蒙AI：深度融合鸿蒙系统，提供智慧交互体验；<span class="number">2</span>. 影像：强大的摄像系统，延续华为影像技术优势；<span class="number">3</span>. 通信：支持先进的通信功能，如卫星通信等。</span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://www.yang--yang.com/2026/08/05/chapter04/" data-id="cuidXQhNJ2KQmXCJzdW1pJ7Bx" data-title="智能体经典范式构建" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ReAct/" rel="tag">ReAct</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="tag">大模型</a></li></ul>
-
-    </footer>
+</div><footer class="article-footer"><span>✦ 写于森林边缘</span><a href="/">返回首页 ↑</a></footer></div>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2026/08/05/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">前一篇</strong>
-      <div class="article-nav-title">
-        
-          Hello World
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
-  
 </article>
 
+  </main>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ai-agent/">AI Agent</a></li></ul>
-    </div>
-  </div>
+  <footer class="site-footer">
+    <span>在森林里学习，在星光下记录。</span>
+    <span>© 2026 YangYang</span>
+  </footer>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Coze/" rel="tag">Coze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dify/" rel="tag">Dify</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FastGPT/" rel="tag">FastGPT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReAct/" rel="tag">ReAct</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/n8n/" rel="tag">n8n</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="tag">大模型</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Agent/" style="font-size: 10px;">Agent</a> <a href="/tags/Coze/" style="font-size: 10px;">Coze</a> <a href="/tags/Dify/" style="font-size: 10px;">Dify</a> <a href="/tags/FastGPT/" style="font-size: 10px;">FastGPT</a> <a href="/tags/ReAct/" style="font-size: 10px;">ReAct</a> <a href="/tags/n8n/" style="font-size: 10px;">n8n</a> <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="font-size: 10px;">大模型</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/08/">八月 2026</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2026/08/06/chapter05/">基于低代码平台的智能体搭建-coze</a>
-          </li>
-        
-          <li>
-            <a href="/2026/08/05/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2026/08/05/chapter04/">智能体经典范式构建</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2026 YangYang<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
+  <script>
+    window.FAIRY_ASSETS = {
+      IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
+      IMAGE_FAIRY_CASTING: '/images/fairy/fairy-casting-transparent.png',
+      IMAGE_BACKGROUND_OVERALL: '/images/fairy/forest-background.png',
+      IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
+    };
+  </script>
+  <script src="/js/forest-fairy.js"></script>
 </body>
 </html>

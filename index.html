@@ -1,628 +1,118 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Agent 学习笔记与实践记录">
   <title>YangYang</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="YangYang">
-<meta property="og:url" content="https://www.yang--yang.com/index.html">
-<meta property="og:site_name" content="YangYang">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="YangYang">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="YangYang" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
-
+  <link rel="stylesheet" href="/css/forest-fairy.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">`r`n  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`r`n  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
 <meta name="generator" content="Hexo 8.1.2"></head>
-
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">YangYang</a>
-      </h1>
+  <div class="moss-orb moss-orb-one"></div>
+  <div class="moss-orb moss-orb-two"></div>
+  <div id="fairy-sprite" aria-hidden="true"></div>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">✦</span>
+      <span>
+        <strong>YangYang</strong>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
       
+      
+        <a href="/">首页</a>
+      
+        <a href="/categories/ai-agent/">AI Agent 学习</a>
+      
+        <a href="/archives/">文章归档</a>
+      
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+  </header>
+
+  <main class="site-main">
+    <section class="hero reveal">
+  <div class="hero-copy">
+    <p class="eyebrow">✦ Welcome to the enchanted grove</p>
+    <h1>AI Agent<br><em>学习笔记</em></h1>
+    <p class="hero-description">把每一次探索、实验与思考，收藏成森林里闪烁的星光。</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="/categories/ai-agent/">进入专栏 <span>→</span></a>
+      <a class="button button-ghost" href="/archives/">浏览全部文章</a>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.yang--yang.com"></form>
-      </div>
-    </div>
   </div>
-</header>
-
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-chapter05" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/08/06/chapter05/" class="article-date">
-  <time class="dt-published" datetime="2026-08-06T01:51:00.000Z" itemprop="datePublished">2026-08-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ai-agent/">AI Agent</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/08/06/chapter05/">基于低代码平台的智能体搭建-coze</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><strong>Coze</strong></p>
-<ul>
-<li><strong>核心定位</strong>：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。</li>
-<li><strong>特点分析</strong>：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简化了分发流程。</li>
-<li><strong>适用人群</strong>：AI 应用的入门用户、产品经理、运营人员，以及希望快速将创意变为可交互产品的个人创作者。</li>
-</ul>
-<p><strong>Dify</strong></p>
-<ul>
-<li><strong>核心定位</strong>：Dify 是一个开源的、功能全面的 LLM 应用开发与运营平台[2]，旨在为开发者提供从原型构建到生产部署的一站式解决方案。</li>
-<li><strong>特点分析</strong>：它融合了后端服务和模型运营的理念，支持 Agent 工作流、RAG Pipeline、数据标注与微调等多种能力。对于追求专业、稳定、可扩展的企业级应用而言，Dify 提供了坚实的基础。</li>
-<li><strong>适用人群</strong>：有一定技术背景的开发者、需要构建可扩展的企业级 AI 应用的团队。</li>
-</ul>
-<p><strong>FastGPT</strong></p>
-<ul>
-<li><strong>核心定位</strong>：FastGPT 是一个开源的、基于 LLM 大语言模型的知识库问答平台与 Agent 构建工具[3]，专注于提供简单易用的 RAG（检索增强生成）解决方案和可视化工作流编排能力。</li>
-<li><strong>特点分析</strong>：FastGPT 最核心的优势在于其对知识库问答场景的极致优化。它提供了从数据导入、自动文本分块、向量化存储到智能检索的完整 RAG 链路，并支持通过直观的可视化界面（Flow 模块）编排复杂的对话流程和 Agent 工作流。平台采用模型中立设计，可灵活对接 OpenAI、Claude、通义千问等多种国内外主流大模型，同时提供了完善的 API 接口和插件市场，便于与企业微信、钉钉、飞书等现有系统快速集成。</li>
-<li><strong>适用人群</strong>：希望基于私有知识库快速搭建智能客服、企业内部知识助手、文档问答机器人的开发者和中小企业团队，以及对 RAG 技术感兴趣但希望降低实现门槛的技术爱好者。</li>
-</ul>
-<p><strong>n8n</strong></p>
-<ul>
-<li><strong>核心定位</strong>：n8n 本质上是一个开源工作流自动化工具[4]，而非纯粹的 LLM 平台。近年来，它积极集成了 AI 能力。</li>
-<li><strong>特点分析</strong>：n8n 的强项在于“连接”。它拥有数百个预置的节点，可以轻松地将各类 SaaS 服务、数据库、API 连接成复杂的自动化业务流程。你可以在这个流程中嵌入 LLM 节点，使其成为整个自动化链路中的一环。虽然在 LLM 功能的专一度上不如前两者，但其通用自动化能力是独一无二的。不过，其学习曲线也相对陡峭。</li>
-<li><strong>适用人群</strong>：需要将 AI 能力深度整合进现有业务流程、实现高度定制化自动化的开发者和企业。</li>
-</ul>
-<p>在接下来的小节中，我们将逐一上手体验这些平台，通过实际操作来更直观地感受它们各自的魅力。</p>
-<h3 id="Coze构建“每日AI简报”助手"><a href="#Coze构建“每日AI简报”助手" class="headerlink" title="Coze构建“每日AI简报”助手"></a>Coze构建“每日AI简报”助手</h3><p>新注册的coze什么都还没有配备：</p>
-<h4 id="先注册团队"><a href="#先注册团队" class="headerlink" title="先注册团队"></a>先注册团队</h4><p><img src="/images/chapter05/image-20260805213617609-1785938790932-3.png" alt="image-20260805213617609"></p>
-<h4 id="创建智能体"><a href="#创建智能体" class="headerlink" title="创建智能体"></a>创建智能体</h4><p><img src="/images/chapter05/image-20260805213717327-1785938841871-6-1785980944567-3.png" alt="image-20260805213717327"></p>
-<p><img src="/images/chapter05/image-20260805213750768-1785938869420-9-1785980951814-6.png" alt="image-20260805213750768"></p>
-<h4 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h4><p>给智能体安装插件<code>RSS Reader</code>：</p>
-<p><img src="/images/chapter05/image-20260805213848913-1785938878558-12-1785980956999-9.png" alt="image-20260805213848913"></p>
-<p><img src="/images/chapter05/image-20260805214113308-1785938893338-15-1785980963225-12.png" alt="image-20260805214113308"></p>
-<p><img src="/images/chapter05/image-20260805214026359-1785939016915-21.png" alt="image-20260805214026359"></p>
-<p>同样的方法添加<code>github</code>,<code>Arxiv</code>插件</p>
-<p><img src="/images/chapter05/image-20260805214445655-1785938938218-18-1785980977700-16.png" alt="image-20260805214445655"></p>
-<p><img src="/images/chapter05/image-20260805214606290-1785939035724-24-1785980990879-19.png" alt="image-20260805214606290"></p>
-<p>插件添加完成：</p>
-<p><img src="/images/chapter05/image-20260805214708077-1785939042409-27-1785980997569-22.png" alt="image-20260805214708077"></p>
-<h4 id="插件配置"><a href="#插件配置" class="headerlink" title="插件配置"></a>插件配置</h4><p><img src="/images/chapter05/image-20260805215907245-1785939050993-30-1785981005193-25.png" alt="image-20260805215907245"></p>
-<p><img src="/images/chapter05/image-20260805215944874-1785939061420-33-1785981014764-28.png" alt="image-20260805215944874"></p>
-<h4 id="编排连接"><a href="#编排连接" class="headerlink" title="编排连接"></a>编排连接</h4><p><img src="/images/chapter05/image-20260805221917397-1785981019670-31.png" alt="image-20260805221917397"></p>
-<p>添加节点，配置节点</p>
-<p><img src="/images/chapter05/image-20260805222330786-1785981025077-34.png" alt="image-20260805222330786"></p>
-<h4 id="创建提示词"><a href="#创建提示词" class="headerlink" title="创建提示词"></a>创建提示词</h4><p><img src="/images/chapter05/image-20260805225223898-1785981030415-37.png" alt="image-20260805225223898"></p>
-<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p><img src="/images/chapter05/image-20260805225041107-1785981036865-40.png" alt="image-20260805225041107"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://www.yang--yang.com/2026/08/06/chapter05/" data-id="cuidkPZB5irNvHWWTL1-LuaI-" data-title="基于低代码平台的智能体搭建-coze" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Coze/" rel="tag">Coze</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dify/" rel="tag">Dify</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FastGPT/" rel="tag">FastGPT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/n8n/" rel="tag">n8n</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/08/05/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2026-08-05T15:19:18.061Z" itemprop="datePublished">2026-08-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/08/05/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://www.yang--yang.com/2026/08/05/hello-world/" data-id="cuid1X1EVq5vJcwgtfndEs15r" data-title="Hello World" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-chapter04" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/08/05/chapter04/" class="article-date">
-  <time class="dt-published" datetime="2026-08-05T13:42:00.000Z" itemprop="datePublished">2026-08-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ai-agent/">AI Agent</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/08/05/chapter04/">智能体经典范式构建</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Chat-Completions-格式"><a href="#Chat-Completions-格式" class="headerlink" title="Chat Completions 格式"></a><strong>Chat Completions 格式</strong></h3><blockquote>
-<p>大模型 API 调用最核心的消息格式</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">exampleMessages = [</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;You are a helpful assistant that writes Python code.&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;写一个快速排序算法&quot;</span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>这种写法非常常见，但并不是所有大模型调用都完全一样</p>
-<p>每条消息都有：</p>
-<ul>
-<li>role:角色</li>
-<li>content：内容</li>
-</ul>
-<p><strong>role</strong>：目前主流 API（OpenAI、通义、DeepSeek、Claude 等）基本都有类似概念</p>
-<table>
-<thead>
-<tr>
-<th>role</th>
-<th>含义</th>
-<th>谁发送</th>
-<th>优先级</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>system</td>
-<td>系统指令</td>
-<td>开发者</td>
-<td>最高</td>
-</tr>
-<tr>
-<td>user</td>
-<td>用户输入</td>
-<td>用户</td>
-<td>中</td>
-</tr>
-<tr>
-<td>assistant</td>
-<td>模型回答</td>
-<td>AI</td>
-<td>中</td>
-</tr>
-<tr>
-<td>tool</td>
-<td>工具返回结果</td>
-<td>外部工具</td>
-<td>特殊</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p><strong>assistant：模型历史回答</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">messages=[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;role&quot;</span>:<span class="string">&quot;user&quot;</span>,</span><br><span class="line">        <span class="string">&quot;content&quot;</span>:<span class="string">&quot;介绍一下Python&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;role&quot;</span>:<span class="string">&quot;assistant&quot;</span>,</span><br><span class="line">        <span class="string">&quot;content&quot;</span>:<span class="string">&quot;Python是一门编程语言...&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;role&quot;</span>:<span class="string">&quot;user&quot;</span>,</span><br><span class="line">        <span class="string">&quot;content&quot;</span>:<span class="string">&quot;它适合做什么？&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">于是模型知道：<span class="string">&quot;它&quot;</span> = Python。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>tool：工具调用结果</strong> 这是 Agent 最重要的部分</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">你让 Agent 查询天气。</span><br><span class="line"></span><br><span class="line">流程：</span><br><span class="line"></span><br><span class="line">第一步</span><br><span class="line"></span><br><span class="line">用户：</span><br><span class="line"></span><br><span class="line">北京天气怎么样？</span><br><span class="line"></span><br><span class="line">模型：</span><br><span class="line"></span><br><span class="line">我要调用天气工具</span><br><span class="line"></span><br><span class="line">消息：</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"> &quot;role&quot;:&quot;assistant&quot;,</span><br><span class="line"> &quot;tool_calls&quot;:[</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;:&quot;weather&quot;,</span><br><span class="line">      &quot;arguments&quot;:&#123;</span><br><span class="line">          &quot;city&quot;:&quot;北京&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">然后你的程序调用天气 API：</span><br><span class="line"></span><br><span class="line">返回：</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"> &quot;role&quot;:&quot;tool&quot;,</span><br><span class="line"> &quot;content&quot;:&quot;北京今天晴，25度&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">再给模型：</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line"> user,</span><br><span class="line"> assistant(tool_call),</span><br><span class="line"> tool(result)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">模型：</span><br><span class="line"></span><br><span class="line">北京今天晴，25度，适合出行。</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="智能体范式ReAct-Reason-Act"><a href="#智能体范式ReAct-Reason-Act" class="headerlink" title="智能体范式ReAct (Reason + Act)"></a>智能体范式<strong>ReAct (Reason + Act)</strong></h3><blockquote>
-<p>ReAct由Shunyu Yao于2022年提出[1]，其核心思想是模仿人类解决问题的方式，将<strong>推理 (Reasoning)</strong> 与<strong>行动 (Acting)</strong> 显式地结合起来，形成一个“思考-行动-观察”的循环。</p>
-</blockquote>
-<p>这种机制特别适用于以下场景：</p>
-<ul>
-<li><strong>需要外部知识的任务</strong>：如查询实时信息（天气、新闻、股价）、搜索专业领域的知识等。</li>
-<li><strong>需要精确计算的任务</strong>：将数学问题交给计算器工具，避免LLM的计算错误。</li>
-<li><strong>需要与API交互的任务</strong>：如操作数据库、调用某个服务的API来完成特定功能。</li>
-</ul>
-<h3 id="Plan-and-Solve"><a href="#Plan-and-Solve" class="headerlink" title="Plan-and-Solve"></a>Plan-and-Solve</h3><blockquote>
-<p>先规划 (Plan)，后执行 (Solve)</p>
-</blockquote>
-<p>Plan-and-Solve Prompting 由 Lei Wang 在2023年提出[2]。其核心动机是为了解决思维链在处理多步骤、复杂问题时容易“偏离轨道”的问题。</p>
-<p>Plan-and-Solve 将整个流程解耦为两个核心阶段：</p>
-<ol>
-<li><strong>规划阶段 (Planning Phase)</strong>： 首先，智能体会接收用户的完整问题。它的第一个任务不是直接去解决问题或调用工具，而是<strong>将问题分解，并制定出一个清晰、分步骤的行动计划</strong>。这个计划本身就是一次大语言模型的调用产物。</li>
-<li><strong>执行阶段 (Solving Phase)</strong>： 在获得完整的计划后，智能体进入执行阶段。它会<strong>严格按照计划中的步骤，逐一执行</strong>。每一步的执行都可能是一次独立的 LLM 调用，或者是对上一步结果的加工处理，直到计划中的所有步骤都完成，最终得出答案。</li>
-</ol>
-<h3 id="Reflection"><a href="#Reflection" class="headerlink" title="Reflection"></a>Reflection</h3><p>在 ReAct 和 Plan-and-Solve 范式中，智能体一旦完成了任务，其工作流程便告结束。然而，它们生成的初始答案，无论是行动轨迹还是最终结果，都可能存在谬误或有待改进之处。Reflection 机制的核心思想，正是为智能体引入一种<strong>事后（post-hoc）的自我校正循环</strong>，使其能够像人类一样，审视自己的工作，发现不足，并进行迭代优化。</p>
-<blockquote>
-<p>Reflection 机制的灵感来源于人类的学习过程：我们完成初稿后会进行校对，解出数学题后会进行验算。这一思想在多个研究中得到了体现，例如 Shinn, Noah 在2023年提出的 Reflexion 框架[3]。其核心工作流程可以概括为一个简洁的三步循环：<strong>执行 -&gt; 反思 -&gt; 优化</strong>。</p>
-</blockquote>
-<ol>
-<li><p><strong>执行 (Execution)</strong>：首先，智能体使用我们熟悉的方法（如 ReAct 或 Plan-and-Solve）尝试完成任务，生成一个初步的解决方案或行动轨迹。这可以看作是“初稿”。</p>
-</li>
-<li><p>反思 (Reflection)</p>
-<p>：接着，智能体进入反思阶段。它会调用一个独立的、或者带有特殊提示词的大语言模型实例，来扮演一个“评审员”的角色。这个“评审员”会审视第一步生成的“初稿”，并从多个维度进行评估，例如：</p>
-<ul>
-<li><strong>事实性错误</strong>：是否存在与常识或已知事实相悖的内容？</li>
-<li><strong>逻辑漏洞</strong>：推理过程是否存在不连贯或矛盾之处？</li>
-<li><strong>效率问题</strong>：是否有更直接、更简洁的路径来完成任务？</li>
-<li><strong>遗漏信息</strong>：是否忽略了问题的某些关键约束或方面？ 根据评估，它会生成一段结构化的<strong>反馈 (Feedback)</strong>，指出具体的问题所在和改进建议。</li>
-</ul>
-</li>
-<li><p><strong>优化 (Refinement)</strong>：最后，智能体将“初稿”和“反馈”作为新的上下文，再次调用大语言模型，要求它根据反馈内容对初稿进行修正，生成一个更完善的“修订稿”。</p>
-</li>
-</ol>
-<h3 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h3><h4 id="1、本章介绍了三种经典的智能体范式-ReAct、Plan-and-Solve-和-Reflection。请分析"><a href="#1、本章介绍了三种经典的智能体范式-ReAct、Plan-and-Solve-和-Reflection。请分析" class="headerlink" title="1、本章介绍了三种经典的智能体范式:ReAct、Plan-and-Solve 和 Reflection。请分析:"></a>1、本章介绍了三种经典的智能体范式:<code>ReAct</code>、<code>Plan-and-Solve</code> 和 <code>Reflection</code>。请分析:</h4><h5 id="（1）这三种范式在”思考”与”行动”的组织方式上有什么本质区别？"><a href="#（1）这三种范式在”思考”与”行动”的组织方式上有什么本质区别？" class="headerlink" title="（1）这三种范式在”思考”与”行动”的组织方式上有什么本质区别？"></a>（1）这三种范式在”思考”与”行动”的组织方式上有什么本质区别？</h5><p>三种智能体范式最大的区别在于：</p>
-<blockquote>
-<p><strong>思考发生在什么时候？行动是否立即执行？是否有事后检查和修正机制？</strong></p>
-</blockquote>
-<p>可以从以下几个角度比较：</p>
-<table>
-<thead>
-<tr>
-<th>范式</th>
-<th>思考方式</th>
-<th>行动方式</th>
-<th>核心特点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ReAct</td>
-<td>边思考边行动</td>
-<td>思考一步，行动一步</td>
-<td>强调实时交互和工具调用</td>
-</tr>
-<tr>
-<td>Plan-and-Solve</td>
-<td>先完整规划，再执行</td>
-<td>按计划逐步行动</td>
-<td>强调任务分解和长期规划</td>
-</tr>
-<tr>
-<td>Reflection</td>
-<td>行动后反思改进</td>
-<td>根据反馈调整下一轮行动</td>
-<td>强调自我纠错和优化</td>
-</tr>
-</tbody></table>
-<h5 id="（2）如果要设计一个”智能家居控制助手”（需要控制灯光、空调、窗帘等多个设备，并根据用户习惯自动调节），你会选择哪种范式作为基础架构？为什么？"><a href="#（2）如果要设计一个”智能家居控制助手”（需要控制灯光、空调、窗帘等多个设备，并根据用户习惯自动调节），你会选择哪种范式作为基础架构？为什么？" class="headerlink" title="（2）如果要设计一个”智能家居控制助手”（需要控制灯光、空调、窗帘等多个设备，并根据用户习惯自动调节），你会选择哪种范式作为基础架构？为什么？"></a>（2）如果要设计一个”智能家居控制助手”（需要控制灯光、空调、窗帘等多个设备，并根据用户习惯自动调节），你会选择哪种范式作为基础架构？为什么？</h5><p>场景分析：智能家居助手具有几个特点</p>
-<ol>
-<li><p>设备很多（灯光, 空调, 窗帘, 门锁, 摄像头, 音响)</p>
-</li>
-<li><p>环境实时变化</p>
-</li>
-<li><p>需要根据习惯自动调整</p>
-</li>
-</ol>
-<p>基于以上分析，<strong>选择 ReAct 作为基础架构</strong></p>
-<p>智能家居本质是：</p>
-<blockquote>
-<p>感知环境 → 判断 → 执行动作 → 获取反馈 → 再调整</p>
-</blockquote>
-<p>非常符合 ReAct：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户请求 → Reason:理解用户意图 → Act:控制设备 → Observation:读取设备状态 → Reason:判断是否完成 → Act:继续调整</span><br></pre></td></tr></table></figure>
-
-<p>为什么不是 Plan-and-Solve？(因为智能家居环境变化快, ReAct 更适合动态环境)</p>
-<p>为什么不是 Reflection？(Reflection 更适合：写代码、写文章、生成方案，智能家居更多关注：实时响应，而不是生成高质量文本。)</p>
-<h5 id="（3）是否可以将这三种范式进行组合使用？若可以，请尝试设计一个混合范式的智能体架构，并说明其适用场景。"><a href="#（3）是否可以将这三种范式进行组合使用？若可以，请尝试设计一个混合范式的智能体架构，并说明其适用场景。" class="headerlink" title="（3）是否可以将这三种范式进行组合使用？若可以，请尝试设计一个混合范式的智能体架构，并说明其适用场景。"></a>（3）是否可以将这三种范式进行组合使用？若可以，请尝试设计一个混合范式的智能体架构，并说明其适用场景。</h5><p>可以，而且实际系统通常都会组合</p>
-<p>单一范式都有缺陷：</p>
-<ul>
-<li>ReAct：缺少长期规划</li>
-<li>Plan：缺少环境适应</li>
-<li>Reflection：增加成本</li>
-</ul>
-<p>组合后可以形成更强大的 Agent。</p>
-<p>一个混合智能家居 Agent 架构设计：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户 → Plan-and-Solve规划层(制定长期目标和任务计划) → ReAct执行层(实时控制设备和获取状态) → Reflection层(分析执行效果并优化策略) → 用户习惯模型</span><br></pre></td></tr></table></figure>
-
-
-
-<p>混合架构适合场景：</p>
-<table>
-<thead>
-<tr>
-<th>场景</th>
-<th>推荐组合</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>智能家居</td>
-<td>Plan + ReAct + Reflection</td>
-</tr>
-<tr>
-<td>自动驾驶</td>
-<td>ReAct + Reflection</td>
-</tr>
-<tr>
-<td>AI程序员</td>
-<td>Plan + ReAct + Reflection</td>
-</tr>
-<tr>
-<td>企业流程自动化</td>
-<td>Plan + ReAct</td>
-</tr>
-<tr>
-<td>搜索助手</td>
-<td>ReAct</td>
-</tr>
-<tr>
-<td>内容创作</td>
-<td>Reflection</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p> 推荐以 ReAct 为核心，结合 Plan-and-Solve 负责长期任务规划，再加入 Reflection 优化用户习惯模型。</p>
-</blockquote>
-<p>最终形成:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">长期规划（Plan）</span><br><span class="line">        ↓</span><br><span class="line">实时执行（ReAct）</span><br><span class="line">        ↓</span><br><span class="line">经验优化（Reflection）</span><br></pre></td></tr></table></figure>
-
-<h4 id="在4-2节的-ReAct-实现中，我们使用了正则表达式来解析大语言模型的输出（如-Thought-和-Action）。请思考"><a href="#在4-2节的-ReAct-实现中，我们使用了正则表达式来解析大语言模型的输出（如-Thought-和-Action）。请思考" class="headerlink" title="在4.2节的 ReAct 实现中，我们使用了正则表达式来解析大语言模型的输出（如 Thought 和 Action）。请思考:"></a>在4.2节的 <code>ReAct</code> 实现中，我们使用了正则表达式来解析大语言模型的输出（如 <code>Thought</code> 和 <code>Action</code>）。请思考:</h4><h5 id="1-当前的解析方法存在哪些潜在的脆弱性？在什么情况下可能会失败？"><a href="#1-当前的解析方法存在哪些潜在的脆弱性？在什么情况下可能会失败？" class="headerlink" title="(1)当前的解析方法存在哪些潜在的脆弱性？在什么情况下可能会失败？"></a>(1)当前的解析方法存在哪些潜在的脆弱性？在什么情况下可能会失败？</h5><p>正则解析的问题：</p>
-<table>
-<thead>
-<tr>
-<th>问题</th>
-<th>原因</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>格式敏感</td>
-<td>依赖固定字符串</td>
-</tr>
-<tr>
-<td>容易误匹配</td>
-<td>自然语言不确定</td>
-</tr>
-<tr>
-<td>复杂参数困难</td>
-<td>无法理解结构</td>
-</tr>
-<tr>
-<td>维护成本高</td>
-<td>规则越来越复杂</td>
-</tr>
-<tr>
-<td>容错能力弱</td>
-<td>LLM输出不可控</td>
-</tr>
-</tbody></table>
-<h5 id="2-除了正则表达式，还有哪些更鲁棒的输出解析方案？"><a href="#2-除了正则表达式，还有哪些更鲁棒的输出解析方案？" class="headerlink" title="(2)除了正则表达式，还有哪些更鲁棒的输出解析方案？"></a>(2)除了正则表达式，还有哪些更鲁棒的输出解析方案？</h5><p><strong>方案1：JSON 格式输出</strong></p>
-<blockquote>
-<p>推荐</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">让模型输出：</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;thought&quot;</span>: <span class="string">&quot;需要查询天气&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action&quot;</span>: <span class="string">&quot;weather&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action_input&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;city&quot;</span>: <span class="string">&quot;北京&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">然后：</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">result = json.loads(response)</span><br><span class="line"></span><br><span class="line">action = result[<span class="string">&quot;action&quot;</span>]</span><br><span class="line">params = result[<span class="string">&quot;action_input&quot;</span>]</span><br></pre></td></tr></table></figure>
-
-<p>优势：结构明确，易解析，支持嵌套参数 方便调试</p>
-<p>缺点：需要模型严格输出 JSON，老模型可能生成非法 JSON</p>
-<p><strong>方案2：Function Calling &#x2F; Tool Calling</strong></p>
-<blockquote>
-<p>目前<strong>工业界</strong>更推荐的方法,模型不会自己编造格式，而是调用 API 定义好的函数</p>
-</blockquote>
-<p>定义工具:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tools = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span>:<span class="string">&quot;weather&quot;</span>,</span><br><span class="line">        <span class="string">&quot;description&quot;</span>:<span class="string">&quot;查询天气&quot;</span>,</span><br><span class="line">        <span class="string">&quot;parameters&quot;</span>:&#123;</span><br><span class="line">            <span class="string">&quot;city&quot;</span>:<span class="string">&quot;string&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>模型返回：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"> <span class="attr">&quot;tool_call&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;weather&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;arguments&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;city&quot;</span><span class="punctuation">:</span><span class="string">&quot;北京&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>优点：类型安全,参数自动校验,工具管理方便</p>
-<p>缺点：依赖模型支持,实现复杂一些</p>
-<p>目前：<strong>OpenAI Agents、LangChain、AutoGen</strong> 都大量使用这种方式。</p>
-<p><strong>方案3：Structured Output（结构化输出）</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">定义：</span><br><span class="line">class AgentAction(BaseModel):</span><br><span class="line">    thought:str</span><br><span class="line">    action:str</span><br><span class="line">    action_input:str</span><br><span class="line">    </span><br><span class="line">模型返回：</span><br><span class="line">&#123;</span><br><span class="line"> &quot;thought&quot;:&quot;查询天气&quot;,</span><br><span class="line"> &quot;action&quot;:&quot;weather&quot;,</span><br><span class="line"> &quot;action_input&quot;:&quot;北京&quot;</span><br><span class="line">&#125;</span><br><span class="line">然后框架自动验证</span><br></pre></td></tr></table></figure>
-
-<p>优势：比 JSON 更严格。</p>
-<p><strong>方案4：XML 格式</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">thought</span>&gt;</span></span><br><span class="line">查询天气</span><br><span class="line"><span class="tag">&lt;/<span class="name">thought</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">action</span>&gt;</span></span><br><span class="line">weather</span><br><span class="line"><span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span>&gt;</span></span><br><span class="line">北京</span><br><span class="line"><span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>优点：层级清晰,易解析</p>
-<p>缺点：Token 消耗较高</p>
-<h5 id="3-尝试修改本章的代码，使用一种更可靠的输出格式，并对比两种方案的优缺点"><a href="#3-尝试修改本章的代码，使用一种更可靠的输出格式，并对比两种方案的优缺点" class="headerlink" title="(3)尝试修改本章的代码，使用一种更可靠的输出格式，并对比两种方案的优缺点"></a>(3)尝试修改本章的代码，使用一种更可靠的输出格式，并对比两种方案的优缺点</h5><p>修改：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># (此处省略 REACT_PROMPT_TEMPLATE 的定义)正则</span></span><br><span class="line"><span class="comment"># REACT_PROMPT_TEMPLATE = &quot;&quot;&quot;</span></span><br><span class="line"><span class="comment"># 请注意，你是一个有能力调用外部工具的智能助手。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可用工具如下：</span></span><br><span class="line"><span class="comment"># &#123;tools&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 请严格按照以下格式进行回应：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Thought: 你的思考过程，用于分析问题、拆解任务和规划下一步行动。</span></span><br><span class="line"><span class="comment"># Action: 你决定采取的行动，必须是以下格式之一：</span></span><br><span class="line"><span class="comment"># - `&#123;&#123;tool_name&#125;&#125;[&#123;&#123;tool_input&#125;&#125;]`：调用一个可用工具。</span></span><br><span class="line"><span class="comment"># - `Finish[最终答案]`：当你认为已经获得最终答案时。</span></span><br><span class="line"><span class="comment"># - 当你收集到足够的信息，能够回答用户的最终问题时，你必须在`Action:`字段后使用 `Finish[最终答案]` 来输出最终答案。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 现在，请开始解决以下问题：</span></span><br><span class="line"><span class="comment"># Question: &#123;question&#125;</span></span><br><span class="line"><span class="comment"># History: &#123;history&#125;</span></span><br><span class="line"><span class="comment"># &quot;&quot;&quot;</span></span><br><span class="line"><span class="comment"># json</span></span><br><span class="line">REACT_PROMPT_TEMPLATE = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">你是一个可以调用外部工具的智能助手。</span></span><br><span class="line"><span class="string">可用工具：</span></span><br><span class="line"><span class="string">&#123;tools&#125;</span></span><br><span class="line"><span class="string">请严格输出JSON格式。</span></span><br><span class="line"><span class="string">格式：</span></span><br><span class="line"><span class="string">&#123;&#123;</span></span><br><span class="line"><span class="string">    &quot;thought&quot;: &quot;你的思考过程&quot;,</span></span><br><span class="line"><span class="string">    &quot;action&quot;: &quot;你的行动&quot;,</span></span><br><span class="line"><span class="string">    &quot;action_input&quot;: &quot;行动参数&quot;</span></span><br><span class="line"><span class="string">&#125;&#125;</span></span><br><span class="line"><span class="string">action规则：</span></span><br><span class="line"><span class="string">1. 调用工具：</span></span><br><span class="line"><span class="string">&#123;&#123;</span></span><br><span class="line"><span class="string">    &quot;thought&quot;:&quot;需要搜索相关信息&quot;,</span></span><br><span class="line"><span class="string">    &quot;action&quot;:&quot;Search&quot;,</span></span><br><span class="line"><span class="string">    &quot;action_input&quot;:&quot;华为最新手机&quot;</span></span><br><span class="line"><span class="string">&#125;&#125;</span></span><br><span class="line"><span class="string">2. 完成任务：</span></span><br><span class="line"><span class="string">&#123;&#123;</span></span><br><span class="line"><span class="string">    &quot;thought&quot;:&quot;已经获得足够信息&quot;,</span></span><br><span class="line"><span class="string">    &quot;action&quot;:&quot;Finish&quot;,</span></span><br><span class="line"><span class="string">    &quot;action_input&quot;:&quot;最终答案&quot;</span></span><br><span class="line"><span class="string">&#125;&#125;</span></span><br><span class="line"><span class="string">不要输出Markdown。</span></span><br><span class="line"><span class="string">不要输出额外解释。</span></span><br><span class="line"><span class="string">问题：</span></span><br><span class="line"><span class="string">&#123;question&#125;</span></span><br><span class="line"><span class="string">历史：</span></span><br><span class="line"><span class="string">&#123;history&#125;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_parse_output</span>(<span class="params">self, text</span>):</span><br><span class="line">        <span class="comment"># JSON格式</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            data = json.loads(text)</span><br><span class="line">            thought = data.get(<span class="string">&quot;thought&quot;</span>)</span><br><span class="line">            action = data.get(<span class="string">&quot;action&quot;</span>)</span><br><span class="line">            action_input = data.get(<span class="string">&quot;action_input&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> (thought, action, action_input)</span><br><span class="line">        <span class="keyword">except</span> json.JSONDecodeError:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;JSON解析失败&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> (<span class="literal">None</span>,<span class="literal">None</span>,<span class="literal">None</span>)</span><br><span class="line">            </span><br><span class="line"><span class="comment"># # 正则解析</span></span><br><span class="line">            <span class="comment"># thought, action = self._parse_output(response_text)</span></span><br><span class="line">            <span class="comment"># json解析</span></span><br><span class="line">            thought, action, action_input = <span class="variable language_">self</span>._parse_output(response_text)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> thought: <span class="built_in">print</span>(<span class="string">f&quot;🤔 思考: <span class="subst">&#123;thought&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> action: <span class="built_in">print</span>(<span class="string">&quot;警告：未能解析出有效的Action，流程终止。&quot;</span>); <span class="keyword">break</span></span><br><span class="line">            <span class="comment"># # 正则</span></span><br><span class="line">            <span class="comment"># if action.startswith(&quot;Finish&quot;):</span></span><br><span class="line">            <span class="comment">#     # 如果是Finish指令，提取最终答案并结束</span></span><br><span class="line">            <span class="comment">#     final_answer = self._parse_action_input(action)</span></span><br><span class="line">            <span class="comment">#     print(f&quot;🎉 最终答案: &#123;final_answer&#125;&quot;)</span></span><br><span class="line">            <span class="comment">#     return final_answer</span></span><br><span class="line">            <span class="comment">#json</span></span><br><span class="line">            <span class="keyword">if</span> action == <span class="string">&quot;Finish&quot;</span>:</span><br><span class="line">                final_answer = action_input</span><br><span class="line">                <span class="built_in">print</span>( <span class="string">f&quot;最终答案:<span class="subst">&#123;final_answer&#125;</span>&quot;</span>)</span><br><span class="line">                <span class="keyword">return</span> final_answer</span><br><span class="line">            <span class="comment"># # 正则</span></span><br><span class="line">            <span class="comment"># tool_name, tool_input = self._parse_action(action)</span></span><br><span class="line">            <span class="comment"># json</span></span><br><span class="line">            tool_name = action</span><br><span class="line">            tool_input = action_input</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>输出：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">(hello<span class="literal">-agents</span>) <span class="built_in">PS</span> E:\AI\hello<span class="literal">-agents</span>\code\chapter4&gt; python ReAct.py</span><br><span class="line">工具 <span class="string">&#x27;Search&#x27;</span> 已注册。</span><br><span class="line"></span><br><span class="line"><span class="literal">---</span> 第 <span class="number">1</span> 步 <span class="literal">---</span></span><br><span class="line">🧠 正在调用 deepseek<span class="literal">-v4-flash</span> 模型...</span><br><span class="line">✅ 大语言模型响应成功:</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;thought&quot;</span>: <span class="string">&quot;需要搜索华为最新手机的信息&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action&quot;</span>: <span class="string">&quot;Search&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action_input&quot;</span>: <span class="string">&quot;华为最新手机 2025&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">🤔 思考: 需要搜索华为最新手机的信息</span><br><span class="line">🎬 行动: Search[华为最新手机 <span class="number">2025</span>]</span><br><span class="line">🔍 正在执行 [<span class="type">SerpApi</span>] 网页搜索: 华为最新手机 <span class="number">2025</span></span><br><span class="line">👀 观察: [<span class="number">1</span>] 华为手机- 华为官网</span><br><span class="line">探索并选购华为最新手机，了解Mate 系列、Pura 系列、Pocket 系列、nova 系列、畅享系列及相关配件，体验鸿蒙AI 、影像、通信等功能。</span><br><span class="line"></span><br><span class="line">[<span class="number">2</span>] <span class="number">2026</span>最新华为手机大全</span><br><span class="line">荣耀X80 Pro Max ￥<span class="number">1999</span> ; HUAWEI Mate <span class="number">80</span> ￥<span class="number">4699</span> ; REDMI Note <span class="number">17</span> Pro ￥<span class="number">1599</span> ; REDMI K90至尊版 ￥<span class="number">2999</span> ; HUAWEI nova <span class="number">16</span> ￥<span class="number">2999</span>.</span><br><span class="line"></span><br><span class="line">[<span class="number">3</span>] 华为发布会- 华为官网</span><br><span class="line"><span class="number">2025.11</span>.<span class="number">25</span>华为Mate <span class="number">80</span> 系列| Mate X7 及全场景新品发布会华为全新发布Mate <span class="number">80</span> 系列、Mate X7、MatePad Edge、WATCH Ultimate <span class="number">2</span>、华为智慧屏MateTV Max、华为路由X3 Pro ...</span><br><span class="line"></span><br><span class="line"><span class="literal">---</span> 第 <span class="number">2</span> 步 <span class="literal">---</span></span><br><span class="line">🧠 正在调用 deepseek<span class="literal">-v4-flash</span> 模型...</span><br><span class="line">✅ 大语言模型响应成功:</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;thought&quot;</span>: <span class="string">&quot;根据搜索结果，华为最新发布的手机是Mate 80系列，发布于2025年11月25日。主要卖点包括鸿蒙AI、影像、通信等功能。&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action&quot;</span>: <span class="string">&quot;Finish&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action_input&quot;</span>: <span class="string">&quot;华为最新的手机是华为Mate 80系列（于2025年11月25日发布）。主要卖点包括：1. 鸿蒙AI：深度融合鸿蒙系统，提供智慧交互体验；2. 影像：强大的摄像系统，延续华为影像技术优势；3. 通信：支持先进的通信功能，如卫星通信等。&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">🤔 思考: 根据搜索结果，华为最新发布的手机是Mate <span class="number">80</span>系列，发布于<span class="number">2025</span>年<span class="number">11</span>月<span class="number">25</span>日。主要卖点包括鸿蒙AI、影像、通信等功能。</span><br><span class="line">最终答案:华为最新的手机是华为Mate <span class="number">80</span>系列（于<span class="number">2025</span>年<span class="number">11</span>月<span class="number">25</span>日发布）。主要卖点包括：<span class="number">1</span>. 鸿蒙AI：深度融合鸿蒙系统，提供智慧交互体验；<span class="number">2</span>. 影像：强大的摄像系统，延续华为影像技术优势；<span class="number">3</span>. 通信：支持先进的通信功能，如卫星通信等。</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://www.yang--yang.com/2026/08/05/chapter04/" data-id="cuidXQhNJ2KQmXCJzdW1pJ7Bx" data-title="智能体经典范式构建" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ReAct/" rel="tag">ReAct</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="tag">大模型</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
+  <div class="hero-sigil" aria-hidden="true"><span>✦</span><small>LEARN<br>CREATE<br>SHARE</small></div>
 </section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ai-agent/">AI Agent</a></li></ul>
-    </div>
-  </div>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Coze/" rel="tag">Coze</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dify/" rel="tag">Dify</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FastGPT/" rel="tag">FastGPT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReAct/" rel="tag">ReAct</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/n8n/" rel="tag">n8n</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="tag">大模型</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Agent/" style="font-size: 10px;">Agent</a> <a href="/tags/Coze/" style="font-size: 10px;">Coze</a> <a href="/tags/Dify/" style="font-size: 10px;">Dify</a> <a href="/tags/FastGPT/" style="font-size: 10px;">FastGPT</a> <a href="/tags/ReAct/" style="font-size: 10px;">ReAct</a> <a href="/tags/n8n/" style="font-size: 10px;">n8n</a> <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="font-size: 10px;">大模型</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/08/">八月 2026</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2026/08/06/chapter05/">基于低代码平台的智能体搭建-coze</a>
-          </li>
-        
-          <li>
-            <a href="/2026/08/05/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2026/08/05/chapter04/">智能体经典范式构建</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
+<section class="content-grid">
+  <div class="main-column">
+    <div class="section-heading reveal"><span>01 / Latest notes</span><h2>最近的探索</h2></div>
+    <div class="post-list">
       
-      &copy; 2026 YangYang<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+        <article class="post-card reveal" style="--delay: 0ms">
+          <div class="post-card-top"><time datetime="2026-08-06T01:51:00.000Z">2026.08.06</time><span class="leaf-dot">✦</span></div>
+          <h3><a href="/2026/08/06/chapter05/">基于低代码平台的智能体搭建-coze</a></h3>
+          <p>Coze
+
+核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。
+特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，…</p>
+          <a class="read-more" href="/2026/08/06/chapter05/">继续阅读 <span>↗</span></a>
+        </article>
+      
+        <article class="post-card reveal" style="--delay: 80ms">
+          <div class="post-card-top"><time datetime="2026-08-05T15:19:18.061Z">2026.08.05</time><span class="leaf-dot">✦</span></div>
+          <h3><a href="/2026/08/05/hello-world/">Hello World</a></h3>
+          <p>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in …</p>
+          <a class="read-more" href="/2026/08/05/hello-world/">继续阅读 <span>↗</span></a>
+        </article>
+      
+        <article class="post-card reveal" style="--delay: 160ms">
+          <div class="post-card-top"><time datetime="2026-08-05T13:42:00.000Z">2026.08.05</time><span class="leaf-dot">✦</span></div>
+          <h3><a href="/2026/08/05/chapter04/">智能体经典范式构建</a></h3>
+          <p>Chat Completions 格式
+大模型 API 调用最核心的消息格式
+
+1234exampleMessages = [    &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a he…</p>
+          <a class="read-more" href="/2026/08/05/chapter04/">继续阅读 <span>↗</span></a>
+        </article>
+      
     </div>
   </div>
-</footer>
-
+  <aside class="side-column">
+    <div class="side-card reveal">
+      <span class="card-kicker">THE COLUMN</span>
+      <h3>AI Agent<br><em>学习路线</em></h3>
+      <p>从大模型基础，到 ReAct、工具调用与低代码实践，慢慢搭建自己的智能体世界。</p>
+      <a class="text-link" href="/categories/ai-agent/">查看专栏 <span>→</span></a>
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
+    <div class="side-card tags-card reveal">
+      <span class="card-kicker">TOPICS</span>
+      <div class="tag-cloud">
+        <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/"># 大模型</a><a href="/tags/ReAct/"># ReAct</a><a href="/tags/Agent/"># Agent</a><a href="/tags/Coze/"># Coze</a><a href="/tags/Dify/"># Dify</a><a href="/tags/FastGPT/"># FastGPT</a><a href="/tags/n8n/"># n8n</a>
+      </div>
+    </div>
+  </aside>
+</section>
 
+  </main>
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+  <footer class="site-footer">
+    <span>在森林里学习，在星光下记录。</span>
+    <span>© 2026 YangYang</span>
+  </footer>
 
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
+  <script>
+    window.FAIRY_ASSETS = {
+      IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
+      IMAGE_FAIRY_CASTING: '/images/fairy/fairy-casting-transparent.png',
+      IMAGE_BACKGROUND_OVERALL: '/images/fairy/forest-background.png',
+      IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
+    };
+  </script>
+  <script src="/js/forest-fairy.js"></script>
 </body>
 </html>
