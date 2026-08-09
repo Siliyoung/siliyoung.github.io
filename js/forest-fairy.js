@@ -44,11 +44,38 @@
       fairy.classList.remove('casting');
       fairy.style.backgroundImage = `url("${assets.IMAGE_FAIRY_IDLE || ''}")`;
     });
+    function placeFairy(x, y) {
+      pointerX = x;
+      pointerY = y;
+      currentX = x;
+      currentY = y;
+      fairy.style.left = `${x - 4}px`;
+      fairy.style.top = `${y - 7}px`;
+    }
+
+    window.addEventListener('touchstart', function (event) {
+      const touch = event.touches[0];
+      if (!touch) return;
+      placeFairy(touch.clientX, touch.clientY);
+      fairy.classList.add('casting');
+      fairy.style.backgroundImage = `url("${assets.IMAGE_FAIRY_CASTING || ''}")`;
+      createSparkles(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    window.addEventListener('touchmove', function (event) {
+      const touch = event.touches[0];
+      if (touch) placeFairy(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    window.addEventListener('touchend', function () {
+      fairy.classList.remove('casting');
+      fairy.style.backgroundImage = `url("${assets.IMAGE_FAIRY_IDLE || ''}")`;
+    }, { passive: true });
   }
 
   function setupCopyButtons() {
     document.querySelectorAll('.article-content figure.highlight, .article-content > pre').forEach(function (block) {
-      const code = block.querySelector('pre') || block;
+      const code = block.matches('figure.highlight') ? block.querySelector('.code pre') : (block.querySelector('pre') || block);
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'copy-code-button';
