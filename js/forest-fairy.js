@@ -73,6 +73,61 @@
     }, { passive: true });
   }
 
+  function setupAmbientForest() {
+    const scene = document.querySelector('.ambient-forest');
+    if (!scene) return;
+    window.addEventListener('mousemove', function (event) {
+      const x = (event.clientX / window.innerWidth - .5) * 2;
+      const y = (event.clientY / window.innerHeight - .5) * 2;
+      scene.style.setProperty('--parallax-x', `${x * 8}px`);
+      scene.style.setProperty('--parallax-y', `${y * 6}px`);
+    }, { passive: true });
+  }
+  function setupSearch() {
+    const toggle = document.querySelector('.search-toggle');
+    const panel = document.getElementById('search-panel');
+    const input = document.getElementById('site-search');
+    const close = document.getElementById('search-close');
+    const results = document.getElementById('search-results');
+    const index = Array.isArray(window.SEARCH_INDEX) ? window.SEARCH_INDEX : [];
+    if (!toggle || !panel || !input || !results) return;
+
+    function renderResults(query) {
+      const keyword = query.trim().toLowerCase();
+      if (!keyword) {
+        results.innerHTML = '<div class="search-empty">输入关键词搜索文章</div>';
+        return;
+      }
+      const matches = index.filter(function (item) {
+        return `${item.title} ${item.excerpt}`.toLowerCase().includes(keyword);
+      }).slice(0, 8);
+      results.innerHTML = matches.length
+        ? matches.map(function (item) {
+          return `<a class="search-result" href="${item.path}"><strong>${item.title}</strong><small>${item.date} · ${item.excerpt}</small></a>`;
+        }).join('')
+        : '<div class="search-empty">没有找到相关文章</div>';
+    }
+
+    toggle.addEventListener('click', function () {
+      const opened = panel.classList.toggle('open');
+      panel.setAttribute('aria-hidden', String(!opened));
+      if (opened) {
+        input.focus();
+        renderResults(input.value);
+      }
+    });
+    input.addEventListener('input', function () { renderResults(input.value); });
+    if (close) close.addEventListener('click', function () {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
   function setupCopyButtons() {
     document.querySelectorAll('.article-content figure.highlight, .article-content > pre').forEach(function (block) {
       const code = block.matches('figure.highlight') ? block.querySelector('.code pre') : (block.querySelector('pre') || block);
@@ -138,6 +193,8 @@
     });
   }
 
+  setupAmbientForest();
+  setupSearch();
   setupCopyButtons();
 
   if (!canReveal) return;

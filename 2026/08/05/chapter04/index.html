@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="AI Agent 学习笔记与实践记录">
   <title>智能体经典范式构建 · YangYang</title>
-  <link rel="stylesheet" href="/css/forest-fairy.css">
+  <link rel="stylesheet" href="/css/forest-fairy.css?v=20260810-9">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
@@ -13,33 +13,55 @@
 <body>
   <div class="moss-orb moss-orb-one"></div>
   <div class="moss-orb moss-orb-two"></div>
+  <div id="ambient-background" class="ambient-forest" aria-hidden="true">
+    <div class="ambient-glow ambient-glow-one"></div>
+    <div class="ambient-glow ambient-glow-two"></div>
+    <div class="ambient-moon">✦</div>
+    <div class="firefly-field"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="leaf-field"><span>❧</span><span>❧</span><span>❧</span></div>
+    <div class="pollen-field"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-constellation"><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-garden"><span>✿</span><span>✾</span><span>✿</span></div>
+    <div class="ambient-stars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-petals"><span>❋</span><span>✧</span><span>❋</span><span>✧</span><span>❋</span><span>✧</span></div>
+  </div>
   <div id="fairy-sprite" aria-hidden="true"></div>
   <div id="sparkle-layer" aria-hidden="true"></div>
 
   <header class="site-header">
     <a class="brand" href="/">
       <span class="brand-mark">✦</span>
-      <span>
-        <strong>YangYang</strong>
-      </span>
+      <span><strong>YangYang</strong></span>
     </a>
     <nav class="site-nav" aria-label="主导航">
       
       
         <a href="/">首页</a>
       
-        <a href="/categories/ai-agent/">AI Agent 学习</a>
+        <a href="/categories/notes/">随记</a>
+      
+        <a href="/categories/study-notes/">学习笔记</a>
+      
+        <a href="/categories/works/">作品展示</a>
       
         <a href="/archives/">文章归档</a>
       
     </nav>
+    <button class="search-toggle" type="button" aria-label="搜索文章">⌕</button>
     <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+    <div class="search-panel" id="search-panel" aria-hidden="true">
+      <div class="search-panel-inner">
+        <input id="site-search" type="search" placeholder="搜索文章标题或内容…" autocomplete="off">
+        <button id="search-close" type="button" aria-label="关闭搜索">×</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>
   </header>
 
   <main class="site-main">
     <article class="article-page">
   <header class="article-hero reveal">
-    <span class="card-kicker">AI Agent 学习</span>
+    <span class="card-kicker">学习笔记</span>
     <h1>智能体经典范式构建</h1>
     <div class="article-meta"><time datetime="2026-08-05T13:42:00.000Z">2026 年 08 月 05 日</time><span>·</span><span>23 min read</span></div>
   </header>
@@ -304,17 +326,21 @@
 <p>输出：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">(hello<span class="literal">-agents</span>) <span class="built_in">PS</span> E:\AI\hello<span class="literal">-agents</span>\code\chapter4&gt; python ReAct.py</span><br><span class="line">工具 <span class="string">&#x27;Search&#x27;</span> 已注册。</span><br><span class="line"></span><br><span class="line"><span class="literal">---</span> 第 <span class="number">1</span> 步 <span class="literal">---</span></span><br><span class="line">🧠 正在调用 deepseek<span class="literal">-v4-flash</span> 模型...</span><br><span class="line">✅ 大语言模型响应成功:</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;thought&quot;</span>: <span class="string">&quot;需要搜索华为最新手机的信息&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action&quot;</span>: <span class="string">&quot;Search&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action_input&quot;</span>: <span class="string">&quot;华为最新手机 2025&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">🤔 思考: 需要搜索华为最新手机的信息</span><br><span class="line">🎬 行动: Search[华为最新手机 <span class="number">2025</span>]</span><br><span class="line">🔍 正在执行 [<span class="type">SerpApi</span>] 网页搜索: 华为最新手机 <span class="number">2025</span></span><br><span class="line">👀 观察: [<span class="number">1</span>] 华为手机- 华为官网</span><br><span class="line">探索并选购华为最新手机，了解Mate 系列、Pura 系列、Pocket 系列、nova 系列、畅享系列及相关配件，体验鸿蒙AI 、影像、通信等功能。</span><br><span class="line"></span><br><span class="line">[<span class="number">2</span>] <span class="number">2026</span>最新华为手机大全</span><br><span class="line">荣耀X80 Pro Max ￥<span class="number">1999</span> ; HUAWEI Mate <span class="number">80</span> ￥<span class="number">4699</span> ; REDMI Note <span class="number">17</span> Pro ￥<span class="number">1599</span> ; REDMI K90至尊版 ￥<span class="number">2999</span> ; HUAWEI nova <span class="number">16</span> ￥<span class="number">2999</span>.</span><br><span class="line"></span><br><span class="line">[<span class="number">3</span>] 华为发布会- 华为官网</span><br><span class="line"><span class="number">2025.11</span>.<span class="number">25</span>华为Mate <span class="number">80</span> 系列| Mate X7 及全场景新品发布会华为全新发布Mate <span class="number">80</span> 系列、Mate X7、MatePad Edge、WATCH Ultimate <span class="number">2</span>、华为智慧屏MateTV Max、华为路由X3 Pro ...</span><br><span class="line"></span><br><span class="line"><span class="literal">---</span> 第 <span class="number">2</span> 步 <span class="literal">---</span></span><br><span class="line">🧠 正在调用 deepseek<span class="literal">-v4-flash</span> 模型...</span><br><span class="line">✅ 大语言模型响应成功:</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;thought&quot;</span>: <span class="string">&quot;根据搜索结果，华为最新发布的手机是Mate 80系列，发布于2025年11月25日。主要卖点包括鸿蒙AI、影像、通信等功能。&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action&quot;</span>: <span class="string">&quot;Finish&quot;</span>,</span><br><span class="line">    <span class="string">&quot;action_input&quot;</span>: <span class="string">&quot;华为最新的手机是华为Mate 80系列（于2025年11月25日发布）。主要卖点包括：1. 鸿蒙AI：深度融合鸿蒙系统，提供智慧交互体验；2. 影像：强大的摄像系统，延续华为影像技术优势；3. 通信：支持先进的通信功能，如卫星通信等。&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">🤔 思考: 根据搜索结果，华为最新发布的手机是Mate <span class="number">80</span>系列，发布于<span class="number">2025</span>年<span class="number">11</span>月<span class="number">25</span>日。主要卖点包括鸿蒙AI、影像、通信等功能。</span><br><span class="line">最终答案:华为最新的手机是华为Mate <span class="number">80</span>系列（于<span class="number">2025</span>年<span class="number">11</span>月<span class="number">25</span>日发布）。主要卖点包括：<span class="number">1</span>. 鸿蒙AI：深度融合鸿蒙系统，提供智慧交互体验；<span class="number">2</span>. 影像：强大的摄像系统，延续华为影像技术优势；<span class="number">3</span>. 通信：支持先进的通信功能，如卫星通信等。</span><br></pre></td></tr></table></figure>
 
-</div><footer class="article-footer"><span>✦ 写于森林边缘</span><a href="/">返回首页 ↑</a></footer></div>
+</div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
   </div>
 </article>
 
   </main>
 
   <footer class="site-footer">
-    <span>在森林里学习，在星光下记录。</span>
+    <span>记录学习与实践</span>
     <span>© 2026 YangYang</span>
   </footer>
 
+  <script>
+    
+    window.SEARCH_INDEX = [{"title":"智能体经典范式构建","path":"/2026/08/05/chapter04/","date":"2026.08.05","excerpt":"Chat Completions 格式 大模型 API 调用最核心的消息格式 1234exampleMessages = [ &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python"},{"title":"Hello World","path":"/2026/08/05/hello-world/","date":"2026.08.05","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask"},{"title":"基于低代码平台的智能体搭建-coze","path":"/2026/08/06/chapter05/","date":"2026.08.06","excerpt":"Coze 核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简"}];
+  </script>
   <script>
     window.FAIRY_ASSETS = {
       IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
@@ -323,6 +349,6 @@
       IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
     };
   </script>
-  <script src="/js/forest-fairy.js"></script>
+  <script src="/js/forest-fairy.js?v=20260810-9"></script>
 </body>
 </html>
