@@ -16,21 +16,31 @@
 
   if (fairy) {
     fairy.style.backgroundImage = `url("${assets.IMAGE_FAIRY_IDLE || ''}")`;
-    let pointerX = window.innerWidth / 2;
-    let pointerY = window.innerHeight / 2;
-    let currentX = pointerX;
-    let currentY = pointerY;
+    let pointerX = 0;
+    let pointerY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let hasPointer = false;
+    fairy.classList.add('fairy-hidden');
 
     window.addEventListener('mousemove', function (event) {
       pointerX = event.clientX;
       pointerY = event.clientY;
+      if (!hasPointer) {
+        currentX = pointerX;
+        currentY = pointerY;
+        hasPointer = true;
+        fairy.classList.remove('fairy-hidden');
+      }
     }, { passive: true });
 
     function followPointer() {
-      currentX += (pointerX - currentX) * .25;
-      currentY += (pointerY - currentY) * .25;
-      fairy.style.left = `${currentX - 4}px`;
-      fairy.style.top = `${currentY - 7}px`;
+      if (hasPointer) {
+        currentX += (pointerX - currentX) * .25;
+        currentY += (pointerY - currentY) * .25;
+        fairy.style.left = `${currentX - 4}px`;
+        fairy.style.top = `${currentY - 7}px`;
+      }
       requestAnimationFrame(followPointer);
     }
     followPointer();
@@ -49,6 +59,8 @@
       pointerY = y;
       currentX = x;
       currentY = y;
+      hasPointer = true;
+      fairy.classList.remove('fairy-hidden');
       fairy.style.left = `${x - 4}px`;
       fairy.style.top = `${y - 7}px`;
     }
@@ -82,6 +94,60 @@
       scene.style.setProperty('--parallax-x', `${x * 8}px`);
       scene.style.setProperty('--parallax-y', `${y * 6}px`);
     }, { passive: true });
+  }
+  function setupCalendar() {
+    const calendar = document.getElementById('forest-calendar');
+    const grid = document.getElementById('calendar-grid');
+    const title = document.getElementById('calendar-title');
+    if (!calendar || !grid || !title) return;
+    const posts = Array.isArray(window.CALENDAR_POSTS) ? window.CALENDAR_POSTS : [];
+    const grouped = {};
+    posts.forEach(function (post) { (grouped[post.date] ||= []).push(post); });
+    let viewDate = new Date();
+    let mode = 'month';
+    const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+    function renderMonth() {
+      const year = viewDate.getFullYear();
+      const month = viewDate.getMonth();
+      title.textContent = `${year} · ${String(month + 1).padStart(2, '0')}`;
+      grid.innerHTML = '';
+      grid.className = 'calendar-grid month-view';
+      const first = new Date(year, month, 1).getDay();
+      const total = new Date(year, month + 1, 0).getDate();
+      for (let i = 0; i < first; i += 1) grid.insertAdjacentHTML('beforeend', '<span class="calendar-empty"></span>');
+      for (let day = 1; day <= total; day += 1) {
+        const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayPosts = grouped[key] || [];
+        const cell = document.createElement(dayPosts.length ? 'button' : 'span');
+        cell.className = `calendar-day${dayPosts.length ? ' has-post' : ''}`;
+        cell.type = 'button';
+        cell.innerHTML = `${day}${dayPosts.length ? '<i>✦</i>' : ''}`;
+        if (dayPosts.length) cell.addEventListener('click', () => showPosts(key));
+        grid.appendChild(cell);
+      }
+    }
+    function renderYear() {
+      const year = viewDate.getFullYear();
+      title.textContent = `${year} 年`;
+      grid.innerHTML = '';
+      grid.className = 'calendar-grid year-view';
+      for (let month = 0; month < 12; month += 1) {
+        const monthCell = document.createElement('button');
+        monthCell.type = 'button';
+        monthCell.className = 'calendar-month-cell';
+        const count = posts.filter((post) => post.date.startsWith(`${year}-${String(month + 1).padStart(2, '0')}`)).length;
+        monthCell.innerHTML = `<strong>${month + 1}月</strong><span>${count ? `✦ ${count} 篇` : '—'}</span>`;
+        monthCell.addEventListener('click', () => { mode = 'month'; viewDate = new Date(year, month, 1); update(); });
+        grid.appendChild(monthCell);
+      }
+    }function showPosts(key) {
+      const [year, month, day] = key.split('-');
+      window.location.href = `/archives/${year}/${month}/${day}/`;
+    }
+    function update() { mode === 'month' ? renderMonth() : renderYear(); }
+    document.getElementById('calendar-prev').addEventListener('click', () => { mode === 'month' ? viewDate.setMonth(viewDate.getMonth() - 1) : viewDate.setFullYear(viewDate.getFullYear() - 1); update(); });
+    document.getElementById('calendar-next').addEventListener('click', () => { mode === 'month' ? viewDate.setMonth(viewDate.getMonth() + 1) : viewDate.setFullYear(viewDate.getFullYear() + 1); update(); });    title.addEventListener('click', () => { if (mode === 'month') { mode = 'year'; update(); } });
+    update();
   }
   function setupSearch() {
     const toggle = document.querySelector('.search-toggle');
@@ -194,6 +260,7 @@
   }
 
   setupAmbientForest();
+  setupCalendar();
   setupSearch();
   setupCopyButtons();
 

@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <title>API调用故障排查笔记 · YangYang</title>
+  <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body>
+  <div class="moss-orb moss-orb-one"></div>
+  <div class="moss-orb moss-orb-two"></div>
+  <div id="ambient-background" class="ambient-forest" aria-hidden="true">
+    <div class="ambient-glow ambient-glow-one"></div>
+    <div class="ambient-glow ambient-glow-two"></div>
+    <div class="ambient-moon">✦</div>
+    <div class="firefly-field"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="leaf-field"><span>❧</span><span>❧</span><span>❧</span></div>
+    <div class="pollen-field"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-constellation"><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-garden"><span>✿</span><span>✾</span><span>✿</span></div>
+    <div class="ambient-stars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-petals"><span>❋</span><span>✧</span><span>❋</span><span>✧</span><span>❋</span><span>✧</span></div>
+  </div>
+  <div id="fairy-sprite" aria-hidden="true"></div>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">✦</span>
+      <span><strong>YangYang</strong></span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      
+        <a href="/">首页</a>
+      
+        <a href="/categories/notes/">随记</a>
+      
+        <a href="/categories/study-notes/">学习笔记</a>
+      
+        <a href="/categories/works/">作品展示</a>
+      
+        <a href="/archives/">文章归档</a>
+      
+    </nav>
+    <button class="search-toggle" type="button" aria-label="搜索文章">⌕</button>
+    <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+    <div class="search-panel" id="search-panel" aria-hidden="true">
+      <div class="search-panel-inner">
+        <input id="site-search" type="search" placeholder="搜索文章标题或内容…" autocomplete="off">
+        <button id="search-close" type="button" aria-label="关闭搜索">×</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">随记</span>
+    <h1>API调用故障排查笔记</h1>
+    <div class="article-meta"><time datetime="2026-08-12T07:09:23.000Z">2026 年 08 月 12 日</time><span>·</span><span>10 min read</span></div>
+  </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#API-%E8%B0%83%E7%94%A8%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%E7%AC%94%E8%AE%B0"><span class="toc-text">API 调用故障排查笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E6%AC%A1%E9%81%87%E5%88%B0%E8%BF%87%E7%9A%84%E4%B8%BB%E8%A6%81%E9%97%AE%E9%A2%98"><span class="toc-text">这次遇到过的主要问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A1%B5%E9%9D%A2%E6%8A%A5-timeout%EF%BC%8C%E4%BD%86%E5%90%8E%E7%AB%AF%E6%8E%A5%E5%8F%A3%E5%85%B6%E5%AE%9E%E8%BF%94%E5%9B%9E%E6%AD%A3%E5%B8%B8"><span class="toc-text">1. 页面报 timeout，但后端接口其实返回正常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8E%A5%E5%8F%A3-200%EF%BC%8C%E4%BD%86%E5%AE%9E%E9%99%85%E4%B8%8A%E6%B2%A1%E6%9C%89%E8%B0%83%E7%94%A8%E5%88%B0-AI"><span class="toc-text">2. 接口 200，但实际上没有调用到 AI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-env-%E9%87%8C%E6%98%8E%E6%98%8E%E5%86%99%E4%BA%86-API-KEY%EF%BC%8C%E4%BB%A3%E7%A0%81%E5%8D%B4%E8%AF%BB%E4%B8%8D%E5%88%B0"><span class="toc-text">3. .env 里明明写了 API_KEY，代码却读不到</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E5%A4%B1%E8%B4%A5%EF%BC%8C%E5%9B%A0%E4%B8%BA%E8%BF%98%E5%9C%A8%E8%AF%B7%E6%B1%82-127-0-0-1"><span class="toc-text">4. 真机调试失败，因为还在请求 127.0.0.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E9%85%8D%E7%BD%AE%E6%98%8E%E6%98%8E%E4%BF%AE%E5%A5%BD%E4%BA%86%EF%BC%8C%E4%BD%86%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C%E8%BF%98%E6%98%AF%E6%97%A7%E7%9A%84"><span class="toc-text">5. 配置明明修好了，但运行结果还是旧的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-WXSS-WXML-JS-%E7%BC%96%E8%AF%91%E6%8A%A5%E4%B9%B1%E7%A0%81"><span class="toc-text">6. WXSS&#x2F;WXML&#x2F;JS 编译报乱码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E6%AC%A1%E6%9C%80%E7%BB%88%E7%A1%AE%E8%AE%A4%E6%89%93%E9%80%9A%E7%9A%84%E8%B0%83%E7%94%A8%E9%93%BE"><span class="toc-text">这次最终确认打通的调用链</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%A1%BE%E9%A1%B5"><span class="toc-text">回顾页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%97%AE%E9%A1%B5"><span class="toc-text">问问页</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E6%8E%92%E6%9F%A5%E9%A1%BA%E5%BA%8F"><span class="toc-text">标准排查顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-1-%E6%AD%A5%EF%BC%9A%E7%9C%8B%E8%AF%B7%E6%B1%82%E6%9C%89%E6%B2%A1%E6%9C%89%E6%89%93%E5%88%B0%E5%90%8E%E7%AB%AF"><span class="toc-text">第 1 步：看请求有没有打到后端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-2-%E6%AD%A5%EF%BC%9A%E7%9C%8B%E6%8E%A5%E5%8F%A3%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81"><span class="toc-text">第 2 步：看接口返回状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-3-%E6%AD%A5%EF%BC%9A%E7%9C%8B%E6%9C%89%E6%B2%A1%E6%9C%89%E7%9C%9F%E6%AD%A3%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E6%A8%A1%E5%9E%8B"><span class="toc-text">第 3 步：看有没有真正调用外部模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-4-%E6%AD%A5%EF%BC%9A%E7%A1%AE%E8%AE%A4%E6%98%AF%E4%B8%8D%E6%98%AF-fallback"><span class="toc-text">第 4 步：确认是不是 fallback</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-5-%E6%AD%A5%EF%BC%9A%E9%AA%8C%E8%AF%81-env-%E6%98%AF%E5%90%A6%E7%9C%9F%E7%9A%84%E7%94%9F%E6%95%88"><span class="toc-text">第 5 步：验证 .env 是否真的生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-6-%E6%AD%A5%EF%BC%9A%E6%A3%80%E6%9F%A5%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81"><span class="toc-text">第 6 步：检查文件编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-7-%E6%AD%A5%EF%BC%9A%E5%BD%BB%E5%BA%95%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="toc-text">第 7 步：彻底重启服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%94%A8%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98"><span class="toc-text">实用命令备忘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%90%8E%E7%AB%AF"><span class="toc-text">启动后端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81-env-%E9%87%8C%E7%9A%84%E8%81%8A%E5%A4%A9%E9%85%8D%E7%BD%AE%E6%98%AF%E5%90%A6%E8%AF%BB%E5%88%B0"><span class="toc-text">验证 .env 里的聊天配置是否读到</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E5%BD%93%E5%89%8D%E4%BB%A3%E7%A0%81%E7%9C%8B%E5%88%B0%E7%9A%84%E8%81%8A%E5%A4%A9-embedding-%E9%85%8D%E7%BD%AE"><span class="toc-text">验证当前代码看到的聊天 &#x2F; embedding 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%94%B5%E8%84%91%E5%B1%80%E5%9F%9F%E7%BD%91-IP"><span class="toc-text">查电脑局域网 IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E6%98%AF%E5%90%A6%E6%9C%89%E6%AE%8B%E7%95%99-Python-%E8%BF%9B%E7%A8%8B"><span class="toc-text">查是否有残留 Python 进程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol></aside>
+    <div class="article-card reveal"><div class="article-content"><h1 id="API-调用故障排查笔记"><a href="#API-调用故障排查笔记" class="headerlink" title="API 调用故障排查笔记"></a>API 调用故障排查笔记</h1><p>更新时间：2026-08-12</p>
+<h2 id="这次遇到过的主要问题"><a href="#这次遇到过的主要问题" class="headerlink" title="这次遇到过的主要问题"></a>这次遇到过的主要问题</h2><h3 id="1-页面报-timeout，但后端接口其实返回正常"><a href="#1-页面报-timeout，但后端接口其实返回正常" class="headerlink" title="1. 页面报 timeout，但后端接口其实返回正常"></a>1. 页面报 timeout，但后端接口其实返回正常</h3><p>表现：</p>
+<ul>
+<li>小程序页面提示超时</li>
+<li>但后端日志里能看到 <code>GET /api/review-insights 200 OK</code></li>
+</ul>
+<p>结论：</p>
+<ul>
+<li>不能只看前端提示</li>
+<li>要以“后端有没有收到请求、有没有正常返回”为准</li>
+</ul>
+<p>这次的关键日志：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INFO:app.main:review_insights:done records=7 elapsed_ms=1.8</span><br><span class="line">INFO:     127.0.0.1:62034 - &quot;GET /api/review-insights HTTP/1.1&quot; 200 OK</span><br></pre></td></tr></table></figure>
+
+<p>说明回顾接口本身没有超时</p>
+<hr>
+<h3 id="2-接口-200，但实际上没有调用到-AI"><a href="#2-接口-200，但实际上没有调用到-AI" class="headerlink" title="2. 接口 200，但实际上没有调用到 AI"></a>2. 接口 200，但实际上没有调用到 AI</h3><p>表现：</p>
+<ul>
+<li>页面有内容</li>
+<li>但内容像模板，不像 AI 真正生成</li>
+</ul>
+<p>根因：</p>
+<ul>
+<li>接口虽然返回了</li>
+<li>但走的是 fallback，而不是 DeepSeek</li>
+</ul>
+<p>这次后来专门加了标记：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">review_insights:done records=7 ai_used=False</span><br></pre></td></tr></table></figure>
+
+<p>经验：</p>
+<ul>
+<li>HTTP 200 不等于 AI 生效</li>
+<li>要额外区分“接口成功”和“模型真的调用成功”</li>
+</ul>
+<hr>
+<h3 id="3-env-里明明写了-API-KEY，代码却读不到"><a href="#3-env-里明明写了-API-KEY，代码却读不到" class="headerlink" title="3. .env 里明明写了 API_KEY，代码却读不到"></a>3. <code>.env</code> 里明明写了 <code>API_KEY</code>，代码却读不到</h3><p>表现：</p>
+<ul>
+<li><code>BASE_URL</code>、<code>MODEL</code> 能读到</li>
+<li><code>API_KEY</code> 读不到</li>
+<li>后端日志出现：</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING:app.ai:chat:missing_api_key base=https://api.deepseek.com model=deepseek-chat</span><br></pre></td></tr></table></figure>
+
+<p>根因：</p>
+<ul>
+<li><code>.env</code> 文件第一行带 BOM</li>
+<li>实际解析出来的键名不是 <code>API_KEY</code></li>
+<li>而是 <code>\ufeffAPI_KEY</code></li>
+</ul>
+<p>验证方式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python <span class="literal">-c</span> <span class="string">&quot;from dotenv import dotenv_values; from pathlib import Path; cfg = dotenv_values(Path(r&#x27;D:\WeChatProjects\server\.env&#x27;)); print(list(cfg.keys()))&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这次实际查到的是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;\ufeffAPI_KEY&#x27;, &#x27;BASE_URL&#x27;, &#x27;MODEL&#x27;, &#x27;EMBEDDING_API_KEY&#x27;, &#x27;EMBEDDING_BASE_URL&#x27;, &#x27;EMBEDDING_MODEL&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>解决方式：</p>
+<ul>
+<li>把 <code>server/.env</code> 重新保存成 UTF-8 无 BOM</li>
+</ul>
+<p>验证修复是否生效：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\WeChatProjects\server</span><br><span class="line">python <span class="literal">-c</span> <span class="string">&quot;from dotenv import load_dotenv; from pathlib import Path; import os; load_dotenv(Path(&#x27;.env&#x27;)); print(bool(os.getenv(&#x27;API_KEY&#x27;)), os.getenv(&#x27;BASE_URL&#x27;), os.getenv(&#x27;MODEL&#x27;))&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>正确结果应类似：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">True https://api.deepseek.com deepseek-chat</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-真机调试失败，因为还在请求-127-0-0-1"><a href="#4-真机调试失败，因为还在请求-127-0-0-1" class="headerlink" title="4. 真机调试失败，因为还在请求 127.0.0.1"></a>4. 真机调试失败，因为还在请求 <code>127.0.0.1</code></h3><p>表现：</p>
+<ul>
+<li>开发者工具里能用</li>
+<li>真机调试全部失败</li>
+<li>控制台里请求地址还是：</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000/api/...</span><br></pre></td></tr></table></figure>
+
+<p>根因：</p>
+<ul>
+<li>在电脑上，<code>127.0.0.1</code> 指当前电脑</li>
+<li>在真机上，<code>127.0.0.1</code> 指手机自己</li>
+</ul>
+<p>解决方式：</p>
+<ul>
+<li>改成电脑的局域网 IP</li>
+</ul>
+<p>这次电脑实际可用 IP：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.0.XXX</span><br></pre></td></tr></table></figure>
+
+<p>所以真机调试应该请求：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.0.XXX:8000</span><br></pre></td></tr></table></figure>
+
+<p>后端启动也必须用：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python <span class="literal">-m</span> uvicorn app.main:app <span class="literal">--reload</span> <span class="literal">--host</span> <span class="number">0.0</span>.<span class="number">0.0</span> <span class="literal">--port</span> <span class="number">8000</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="5-配置明明修好了，但运行结果还是旧的"><a href="#5-配置明明修好了，但运行结果还是旧的" class="headerlink" title="5. 配置明明修好了，但运行结果还是旧的"></a>5. 配置明明修好了，但运行结果还是旧的</h3><p>表现：</p>
+<ul>
+<li>本地单独测试函数已经成功</li>
+<li>页面里仍然像旧逻辑</li>
+</ul>
+<p>根因：</p>
+<ul>
+<li>旧的 uvicorn 进程或 reload 子进程没彻底退出</li>
+</ul>
+<p>解决方式：</p>
+<ol>
+<li>先停掉后端</li>
+<li>确认没有残留 Python 进程</li>
+<li>再重新启动</li>
+</ol>
+<p>检查方式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Process</span> python | <span class="built_in">Select-Object</span> Id, ProcessName, Path</span><br></pre></td></tr></table></figure>
+
+<p>如果还有旧进程，要先停掉再重启</p>
+<hr>
+<h3 id="6-WXSS-WXML-JS-编译报乱码"><a href="#6-WXSS-WXML-JS-编译报乱码" class="headerlink" title="6. WXSS&#x2F;WXML&#x2F;JS 编译报乱码"></a>6. WXSS&#x2F;WXML&#x2F;JS 编译报乱码</h3><p>表现：</p>
+<ul>
+<li>小程序编译报：</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unexpected `�` at pos 1</span><br></pre></td></tr></table></figure>
+
+<p>根因：</p>
+<ul>
+<li>文件开头带 BOM</li>
+<li>或者文件被 Windows&#x2F;终端错误编码写坏</li>
+</ul>
+<p>处理方式：</p>
+<ul>
+<li>统一保存成 UTF-8 无 BOM</li>
+<li>尤其是：<ul>
+<li><code>.env</code></li>
+<li><code>.wxss</code></li>
+<li><code>.wxml</code></li>
+<li><code>.js</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="这次最终确认打通的调用链"><a href="#这次最终确认打通的调用链" class="headerlink" title="这次最终确认打通的调用链"></a>这次最终确认打通的调用链</h2><h3 id="回顾页"><a href="#回顾页" class="headerlink" title="回顾页"></a>回顾页</h3><p>成功日志：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INFO:httpx:HTTP Request: POST https://api.deepseek.com/chat/completions &quot;HTTP/1.1 200 OK&quot;</span><br><span class="line">INFO:app.ai:chat:ok model=deepseek-chat elapsed_ms=5359.4</span><br><span class="line">INFO:app.main:review_insights:done records=7 ai_used=True elapsed_ms=5372.6</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>回顾页已经真实调用了 DeepSeek</li>
+<li>不再只是 fallback</li>
+</ul>
+<h3 id="问问页"><a href="#问问页" class="headerlink" title="问问页"></a>问问页</h3><p>成功日志：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INFO:httpx:HTTP Request: POST https://api.voyageai.com/v1/embeddings &quot;HTTP/1.1 200 OK&quot;</span><br><span class="line">INFO:app.ai:embed:remote_ok model=voyage-4-lite count=1 elapsed_ms=1066.7</span><br><span class="line">INFO:httpx:HTTP Request: POST https://api.deepseek.com/chat/completions &quot;HTTP/1.1 200 OK&quot;</span><br><span class="line">INFO:app.ai:chat:ok model=deepseek-chat elapsed_ms=1499.6</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>问问页已经真实调用了 Voyage Embedding</li>
+<li>也真实调用了 DeepSeek 聊天</li>
+</ul>
+<hr>
+<h2 id="标准排查顺序"><a href="#标准排查顺序" class="headerlink" title="标准排查顺序"></a>标准排查顺序</h2><p>以后再遇到 API 调用问题，建议按这个顺序查</p>
+<h3 id="第-1-步：看请求有没有打到后端"><a href="#第-1-步：看请求有没有打到后端" class="headerlink" title="第 1 步：看请求有没有打到后端"></a>第 1 步：看请求有没有打到后端</h3><p>看 uvicorn 终端里是否出现：</p>
+<ul>
+<li><code>GET /api/...</code></li>
+<li><code>POST /api/...</code></li>
+</ul>
+<p>如果根本没有，优先查：</p>
+<ul>
+<li>请求地址</li>
+<li>端口</li>
+<li>服务是否启动</li>
+<li>真机是否还在访问 <code>127.0.0.1</code></li>
+</ul>
+<h3 id="第-2-步：看接口返回状态"><a href="#第-2-步：看接口返回状态" class="headerlink" title="第 2 步：看接口返回状态"></a>第 2 步：看接口返回状态</h3><p>重点看：</p>
+<ul>
+<li><code>200 OK</code></li>
+<li><code>4xx</code></li>
+<li><code>5xx</code></li>
+</ul>
+<h3 id="第-3-步：看有没有真正调用外部模型"><a href="#第-3-步：看有没有真正调用外部模型" class="headerlink" title="第 3 步：看有没有真正调用外部模型"></a>第 3 步：看有没有真正调用外部模型</h3><p>重点看：</p>
+<ul>
+<li><code>chat:ok</code></li>
+<li><code>chat:missing_api_key</code></li>
+<li><code>chat:failed</code></li>
+<li><code>embed:remote_ok</code></li>
+<li><code>embed:remote_failed</code></li>
+</ul>
+<h3 id="第-4-步：确认是不是-fallback"><a href="#第-4-步：确认是不是-fallback" class="headerlink" title="第 4 步：确认是不是 fallback"></a>第 4 步：确认是不是 fallback</h3><p>重点看：</p>
+<ul>
+<li><code>ai_used=True</code></li>
+<li><code>ai_used=False</code></li>
+</ul>
+<h3 id="第-5-步：验证-env-是否真的生效"><a href="#第-5-步：验证-env-是否真的生效" class="headerlink" title="第 5 步：验证 .env 是否真的生效"></a>第 5 步：验证 <code>.env</code> 是否真的生效</h3><p>不要只看文件内容，要直接跑：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python <span class="literal">-c</span> <span class="string">&quot;from dotenv import load_dotenv; from pathlib import Path; import os; load_dotenv(Path(&#x27;.env&#x27;)); print(bool(os.getenv(&#x27;API_KEY&#x27;)))&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第-6-步：检查文件编码"><a href="#第-6-步：检查文件编码" class="headerlink" title="第 6 步：检查文件编码"></a>第 6 步：检查文件编码</h3><p>如果是：</p>
+<ul>
+<li><code>.env</code></li>
+<li><code>.js</code></li>
+<li><code>.wxml</code></li>
+<li><code>.wxss</code></li>
+</ul>
+<p>出现奇怪乱码、首字符报错、变量读不到，都要怀疑 BOM 或编码</p>
+<h3 id="第-7-步：彻底重启服务"><a href="#第-7-步：彻底重启服务" class="headerlink" title="第 7 步：彻底重启服务"></a>第 7 步：彻底重启服务</h3><p>不要默认热更新一定可靠</p>
+<hr>
+<h2 id="实用命令备忘"><a href="#实用命令备忘" class="headerlink" title="实用命令备忘"></a>实用命令备忘</h2><h3 id="启动后端"><a href="#启动后端" class="headerlink" title="启动后端"></a>启动后端</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\WeChatProjects\server</span><br><span class="line">python <span class="literal">-m</span> uvicorn app.main:app <span class="literal">--reload</span> <span class="literal">--host</span> <span class="number">0.0</span>.<span class="number">0.0</span> <span class="literal">--port</span> <span class="number">8000</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="验证-env-里的聊天配置是否读到"><a href="#验证-env-里的聊天配置是否读到" class="headerlink" title="验证 .env 里的聊天配置是否读到"></a>验证 <code>.env</code> 里的聊天配置是否读到</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\WeChatProjects\server</span><br><span class="line">python <span class="literal">-c</span> <span class="string">&quot;from dotenv import load_dotenv; from pathlib import Path; import os; load_dotenv(Path(&#x27;.env&#x27;)); print(bool(os.getenv(&#x27;API_KEY&#x27;)), os.getenv(&#x27;BASE_URL&#x27;), os.getenv(&#x27;MODEL&#x27;))&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="验证当前代码看到的聊天-embedding-配置"><a href="#验证当前代码看到的聊天-embedding-配置" class="headerlink" title="验证当前代码看到的聊天 &#x2F; embedding 配置"></a>验证当前代码看到的聊天 &#x2F; embedding 配置</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\WeChatProjects\server</span><br><span class="line">python <span class="literal">-c</span> <span class="string">&quot;from app.ai import _chat_cfg, _embed_cfg; k,b,m=_chat_cfg(); ek,eb,em=_embed_cfg(); print(&#x27;chat_has_key=&#x27;, bool(k)); print(&#x27;chat_base=&#x27;, b); print(&#x27;chat_model=&#x27;, m); print(&#x27;embed_has_key=&#x27;, bool(ek)); print(&#x27;embed_base=&#x27;, eb); print(&#x27;embed_model=&#x27;, em)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查电脑局域网-IP"><a href="#查电脑局域网-IP" class="headerlink" title="查电脑局域网 IP"></a>查电脑局域网 IP</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig</span><br></pre></td></tr></table></figure>
+
+<h3 id="查是否有残留-Python-进程"><a href="#查是否有残留-Python-进程" class="headerlink" title="查是否有残留 Python 进程"></a>查是否有残留 Python 进程</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Process</span> python | <span class="built_in">Select-Object</span> Id, ProcessName, Path</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>页面超时，不一定是后端超时  </li>
+<li>接口 200，不一定真的用了 AI  </li>
+<li><code>.env</code> 有值，不等于运行时真的读到了  </li>
+<li>真机失败，第一时间先看请求 URL  </li>
+<li>Windows 下 BOM 和编码问题非常高频  </li>
+<li>热更新不可靠时，要彻底重启进程</li>
+</ol>
+</div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>记录学习与实践</span>
+    <span>© 2026 YangYang</span>
+  </footer>
+
+  <script>
+    
+    window.SEARCH_INDEX = [{"title":"AI桌面机器人","path":"/2026/08/10/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/","date":"2026.08.10","excerpt":"最近学了一些嵌入式的知识，STM32芯片，FreeRTOS，看见有很多的ai机器人项目，于是乎想要复刻一个桌面机器人并二创 复刻项目地址：https://oshwhub.com/movecall/moji2 嘉立创的开源项目，Moji2.0 Moji 2.0桌面AI机器人，采用ESP32-C5主控和1.5寸视网膜屏。插接式屏幕免焊接，支持自定义表情。具备双频"},{"title":"智能体经典范式构建","path":"/2026/08/05/chapter04/","date":"2026.08.05","excerpt":"Chat Completions 格式 大模型 API 调用最核心的消息格式 1234exampleMessages = [ &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python"},{"title":"基于coze的智能体搭建","path":"/2026/08/06/chapter05/","date":"2026.08.06","excerpt":"Coze 核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简"},{"title":"基于Dify的智能体搭建","path":"/2026/08/10/%E5%9F%BA%E4%BA%8EDify%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.10","excerpt":"Dify 核心定位：Dify 是一个开源的、功能全面的 LLM 应用开发与运营平台，旨在为开发者提供从原型构建到生产部署的一站式解决方案。 特点分析：它融合了后端服务和模型运营的理念，支持 Agent 工作流、RAG Pipeline、数据标注与微调等多种能力。对于追求专业、稳定、可扩展的企业级应用而言，Dify 提供了坚实的基础。 适用人群：有一定技术背景"},{"title":"Hello World","path":"/2026/08/05/hello-world/","date":"2026.08.05","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask"},{"title":"API调用故障排查笔记","path":"/2026/08/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8API%E5%A4%B1%E8%B4%A5/","date":"2026.08.12","excerpt":"API 调用故障排查笔记更新时间：2026-08-12 这次遇到过的主要问题1. 页面报 timeout，但后端接口其实返回正常表现： 小程序页面提示超时 但后端日志里能看到 GET /api/review-insights 200 OK 结论： 不能只看前端提示 要以“后端有没有收到请求、有没有正常返回”为准 这次的关键日志： 12INFO:app.mai"}];
+  </script>
+  <script>
+    window.FAIRY_ASSETS = {
+      IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
+      IMAGE_FAIRY_CASTING: '/images/fairy/fairy-casting-transparent.png',
+      IMAGE_BACKGROUND_OVERALL: '/images/fairy/forest-background.png',
+      IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
+    };
+  </script>
+  <script src="/js/forest-fairy.js?v=20260812-4"></script>
+</body>
+</html>
