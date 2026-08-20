@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <title>如何使自己具有“前瞻性”,从被动信息获取到构建自己的技术雷达 · YangYang</title>
+  <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body>
+  <div class="moss-orb moss-orb-one"></div>
+  <div class="moss-orb moss-orb-two"></div>
+  <div id="ambient-background" class="ambient-forest" aria-hidden="true">
+    <div class="ambient-glow ambient-glow-one"></div>
+    <div class="ambient-glow ambient-glow-two"></div>
+    <div class="ambient-moon">✦</div>
+    <div class="firefly-field"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="leaf-field"><span>❧</span><span>❧</span><span>❧</span></div>
+    <div class="pollen-field"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-constellation"><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-garden"><span>✿</span><span>✾</span><span>✿</span></div>
+    <div class="ambient-stars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-petals"><span>❋</span><span>✧</span><span>❋</span><span>✧</span><span>❋</span><span>✧</span></div>
+  </div>
+  <div id="fairy-sprite" aria-hidden="true"></div>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">✦</span>
+      <span><strong>YangYang</strong></span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      
+        <a href="/">首页</a>
+      
+        <a href="/categories/notes/">随记</a>
+      
+        <a href="/categories/study-notes/">学习笔记</a>
+      
+        <a href="/categories/works/">作品展示</a>
+      
+        <a href="/archives/">文章归档</a>
+      
+    </nav>
+    <button class="search-toggle" type="button" aria-label="搜索文章">⌕</button>
+    <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+    <div class="search-panel" id="search-panel" aria-hidden="true">
+      <div class="search-panel-inner">
+        <input id="site-search" type="search" placeholder="搜索文章标题或内容…" autocomplete="off">
+        <button id="search-close" type="button" aria-label="关闭搜索">×</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">随记</span>
+    <h1>如何使自己具有“前瞻性”,从被动信息获取到构建自己的技术雷达</h1>
+    <div class="article-meta"><time datetime="2026-08-20T07:38:00.000Z">2026 年 08 月 20 日</time><span>·</span><span>8 min read</span></div>
+  </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E6%94%B9%E5%8F%98%E4%B8%80%E4%B8%AA%E8%A7%82%E5%BF%B5%EF%BC%9A%E4%B8%8D%E8%A6%81%E8%BF%BD%E5%B7%A5%E5%85%B7%EF%BC%8C%E8%BF%BD%E2%80%9C%E9%97%AE%E9%A2%98%E2%80%9D"><span class="toc-text">先改变一个观念：不要追工具，追“问题”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E8%AE%AE%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84%E2%80%9C%E6%8A%80%E6%9C%AF%E9%9B%B7%E8%BE%BE%E2%80%9D"><span class="toc-text">建议建立自己的“技术雷达”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%BA%90%E4%B9%9F%E4%B8%8D%E8%A6%81%E9%9D%A0%E2%80%9C%E7%AD%89%E5%88%AB%E4%BA%BA%E5%91%8A%E8%AF%89%E4%BD%A0%E2%80%9D"><span class="toc-text">信息源也不要靠“等别人告诉你”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F%E5%BA%94%E8%AF%A5%E4%BB%8E%E2%80%9C%E5%BC%80%E5%A7%8B%E5%AD%A6%E2%80%9D%E8%BD%AC%E5%88%B0%E2%80%9C%E5%BC%80%E5%A7%8B%E5%81%9A%E2%80%9C"><span class="toc-text">学习方式应该从“开始学”转到“开始做“</span></a></li></ol></aside>
+    <div class="article-card reveal"><div class="article-content"><p>感觉目前依赖的是一种被动的信息获取方式</p>
+<blockquote>
+<p>别人用了一个好工具 → 告诉你 → 你才知道 → 然后发现别人已经用了很久</p>
+</blockquote>
+<p>真正有“前瞻性”的人，并不是每天知道最多新工具的人，而是慢慢建立了一套自己的<strong>技术雷达（Technology Radar）</strong>：知道去哪里发现变化，怎么判断哪些变化重要，以及怎么快速试用。</p>
+<p>而且现在这个问题比几年前更明显。</p>
+<p>显示，AI&#x2F;Agent 已经开始改变开发者使用的语言、工具乃至整个开发流程；例如 TypeScript 在 2025 年首次成为 GitHub 上使用最广的语言，而 AI 相关项目和 Agent 工作流增长非常快。所以会感觉“东西越来越多”，不是错觉。</p>
+<h3 id="先改变一个观念：不要追工具，追“问题”"><a href="#先改变一个观念：不要追工具，追“问题”" class="headerlink" title="先改变一个观念：不要追工具，追“问题”"></a>先改变一个观念：不要追工具，追“问题”</h3><p>比如看到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cursor → Claude Code → Codex → MCP → GitHub Actions → Docker → Vercel → Supabase → Cloudflare</span><br></pre></td></tr></table></figure>
+
+<p>如果逐个追，会永远追不完。</p>
+<p>但换一个视角，它们其实属于几个稳定很多的问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">我想做一个产品</span><br><span class="line">│</span><br><span class="line">├── 如何写代码？</span><br><span class="line">│   ├── IDE</span><br><span class="line">│   ├── AI Coding</span><br><span class="line">│   └── Agent</span><br><span class="line">│</span><br><span class="line">├── 如何管理代码？</span><br><span class="line">│   └── Git / GitHub</span><br><span class="line">│</span><br><span class="line">├── 如何让软件运行？</span><br><span class="line">│   ├── Docker</span><br><span class="line">│   ├── Serverless</span><br><span class="line">│   └── Cloud</span><br><span class="line">│</span><br><span class="line">├── 如何自动测试和部署？</span><br><span class="line">│   └── CI/CD</span><br><span class="line">│</span><br><span class="line">├── 如何存数据？</span><br><span class="line">│   ├── PostgreSQL</span><br><span class="line">│   ├── Redis</span><br><span class="line">│   └── Object Storage</span><br><span class="line">│</span><br><span class="line">├── 服务之间怎么交流？</span><br><span class="line">│   ├── HTTP / REST</span><br><span class="line">│   ├── RPC</span><br><span class="line">│   ├── Queue</span><br><span class="line">│   └── Event</span><br><span class="line">│</span><br><span class="line">└── AI 怎么接入这些东西？</span><br><span class="line">    ├── API</span><br><span class="line">    ├── Tool Calling</span><br><span class="line">    ├── MCP</span><br><span class="line">    └── Agent</span><br></pre></td></tr></table></figure>
+
+<p><strong>前瞻性来自掌握这张地图，而不是背地图上的品牌</strong></p>
+<p>所以以后有人跟你说：</p>
+<blockquote>
+<p>“最近 X 特别好用。”</p>
+</blockquote>
+<p>你的第一反应不要是：</p>
+<blockquote>
+<p>“完了，我又不知道。”</p>
+</blockquote>
+<p>而应该是：</p>
+<blockquote>
+<p>“X 在整个软件开发链路中解决哪个问题？”</p>
+</blockquote>
+<p>只要这个问题能回答出来，你其实已经抓住 70% 了。</p>
+<h3 id="建议建立自己的“技术雷达”"><a href="#建议建立自己的“技术雷达”" class="headerlink" title="建议建立自己的“技术雷达”"></a>建议建立自己的“技术雷达”</h3><p>可以只维护 4 个区域：</p>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>意思</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Adopt</td>
+<td>已经在用</td>
+<td>Git、Docker、Postgres</td>
+</tr>
+<tr>
+<td>Trial</td>
+<td>正在认真尝试</td>
+<td>Claude Code、某个框架</td>
+</tr>
+<tr>
+<td>Assess</td>
+<td>值得关注</td>
+<td>MCP、Agent frameworks</td>
+</tr>
+<tr>
+<td>Ignore</td>
+<td>暂时不管</td>
+<td>与自己方向无关的技术</td>
+</tr>
+</tbody></table>
+<p>关键在最后一个：<strong>Ignore。</strong></p>
+<p>很多人最容易犯的错误是觉得：</p>
+<blockquote>
+<p>Kubernetes 要学、Rust 要学、LLM 要学、React 要学、Flutter 要学、云原生要学……</p>
+</blockquote>
+<p>结果每个都懂一点，没有任何一个真正能用。</p>
+<p>真正有前瞻性的人反而非常善于说：</p>
+<blockquote>
+<p>“我知道这个东西存在，但现在不学。”</p>
+</blockquote>
+<p>Thoughtworks 很多年一直就在用 Technology Radar 这种思路观察技术：不是简单做“热门技术排行榜”，而是区分哪些应该采用、试验、评估。你完全可以做一个自己的技术雷达。</p>
+<h3 id="信息源也不要靠“等别人告诉你”"><a href="#信息源也不要靠“等别人告诉你”" class="headerlink" title="信息源也不要靠“等别人告诉你”"></a>信息源也不要靠“等别人告诉你”</h3><p>可以建立三层信息源</p>
+<h4 id="第一层是弱信号源，用来发现“最近大家在折腾什么”："><a href="#第一层是弱信号源，用来发现“最近大家在折腾什么”：" class="headerlink" title="第一层是弱信号源，用来发现“最近大家在折腾什么”："></a>第一层是<strong>弱信号源</strong>，用来发现“最近大家在折腾什么”：</h4><p>GitHub Trending、GitHub Explore、Hacker News、Reddit 的编程社区、X 上你认可的工程师，以及一些技术 Newsletter。</p>
+<p>不需要认真学，只需要频繁看到关键词。</p>
+<p>比如一个月内连续看到</p>
+<p><code>MCP MCP MCP Agent MCP Claude Code MCP Server</code></p>
+<p>你的大脑就应该亮灯：</p>
+<blockquote>
+<p>“这个东西可能值得进入 Assess。”</p>
+</blockquote>
+<h4 id="第二层是趋势验证源"><a href="#第二层是趋势验证源" class="headerlink" title="第二层是趋势验证源"></a>第二层是<strong>趋势验证源</strong></h4><p>例如 GitHub Octoverse、Thoughtworks Technology Radar、CNCF 等。它们能帮助你区分：</p>
+<blockquote>
+<p>“这是 Twitter 上突然火了两周”</p>
+</blockquote>
+<p>和</p>
+<blockquote>
+<p>“整个行业真的在迁移。”</p>
+</blockquote>
+<p>例如 </p>
+<p>，生成式 AI 已经不是少数人的实验：AI 相关仓库超过 430 万，超过 110 万公共仓库已经在使用 LLM SDK；GitHub 自己把 AI&#x2F;Agent 工作流描述为逐渐进入普通工程实践。</p>
+<h4 id="第三层才是深度学习源"><a href="#第三层才是深度学习源" class="headerlink" title="第三层才是深度学习源"></a>第三层才是<strong>深度学习源</strong></h4><p>官方文档、GitHub README、源码、架构文档、conference talk。</p>
+<p>也就是说：</p>
+<blockquote>
+<p>社交媒体负责“发现”，<br> 报告负责“判断”，<br> 官方资料负责“学习”。</p>
+</blockquote>
+<p>不要反过来。</p>
+<h4 id="还有一个非常重要的能力：学会看“连接”"><a href="#还有一个非常重要的能力：学会看“连接”" class="headerlink" title="还有一个非常重要的能力：学会看“连接”"></a>还有一个非常重要的能力：学会看“连接”</h4><p>很多初学者会有这样的疑问：：</p>
+<blockquote>
+<p>“各种平台之间如何协作。”</p>
+</blockquote>
+<p>这其实是非常好的问题。</p>
+<p>很多人学习计算机时，脑子里是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Java</span><br><span class="line">数据结构</span><br><span class="line">操作系统</span><br><span class="line">数据库</span><br><span class="line">计算机网络</span><br><span class="line">React</span><br><span class="line">Docker</span><br><span class="line">Linux</span><br></pre></td></tr></table></figure>
+
+<p>每一门都是孤岛。</p>
+<p>但实际软件世界更像：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">用户</span><br><span class="line"> ↓</span><br><span class="line">浏览器</span><br><span class="line"> ↓</span><br><span class="line">React / Next.js</span><br><span class="line"> ↓ HTTP</span><br><span class="line">Backend</span><br><span class="line"> ↓</span><br><span class="line">PostgreSQL</span><br><span class="line"> ↓</span><br><span class="line">Redis</span><br><span class="line"></span><br><span class="line">代码</span><br><span class="line"> ↓</span><br><span class="line">GitHub</span><br><span class="line"> ↓</span><br><span class="line">GitHub Actions</span><br><span class="line"> ↓</span><br><span class="line">Docker</span><br><span class="line"> ↓</span><br><span class="line">Cloud</span><br><span class="line"> ↓</span><br><span class="line">Monitoring</span><br></pre></td></tr></table></figure>
+
+<p>再进入现在的 AI 开发:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">你</span><br><span class="line"> ↓</span><br><span class="line">AI Coding Agent</span><br><span class="line"> ↓</span><br><span class="line">Git Repository</span><br><span class="line"> ↓</span><br><span class="line">Terminal / Tools</span><br><span class="line"> ↓</span><br><span class="line">MCP / API</span><br><span class="line"> ↓</span><br><span class="line">GitHub / Database / Cloud / Browser</span><br></pre></td></tr></table></figure>
+
+<p>所以以后学一个东西，强迫自己回答五个问题：</p>
+<ol>
+<li>它解决什么问题？</li>
+<li>它的输入是什么？</li>
+<li>它的输出是什么？</li>
+<li>它上游是谁？</li>
+<li>它下游是谁？</li>
+</ol>
+<p>你的知识就会开始从“知识点”变成“系统”。</p>
+<p>而<strong>系统思维本身就是前瞻性的重要来源。</strong></p>
+<h3 id="学习方式应该从“开始学”转到“开始做“"><a href="#学习方式应该从“开始学”转到“开始做“" class="headerlink" title="学习方式应该从“开始学”转到“开始做“"></a>学习方式应该从“<strong>开始学</strong>”转到“<strong>开始做</strong>“</h3><p>不要今天学 Docker 教程,明天学 Redis 教程,后天学 Next.js 教程</p>
+<p>而是每隔一段时间做一个<strong>完整的小产品</strong>。</p>
+<p>例如：</p>
+<blockquote>
+<p>“做一个 AI 学习助手。”</p>
+</blockquote>
+<p>然后逼自己经历:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">前端→后端→数据库→AI API→认证→Git→测试→Docker→CI/CD→部署→域名→日志</span><br></pre></td></tr></table></figure>
+
+<p>做到某一步，自然会问：</p>
+<blockquote>
+<p>“有没有更好的部署方法？”</p>
+</blockquote>
+<p>然后可能发现 Vercel &#x2F; Railway &#x2F; Fly.io &#x2F; Cloudflare。</p>
+<p>做到另一处：</p>
+<blockquote>
+<p>“AI 怎么访问我的数据库或者 GitHub？”</p>
+</blockquote>
+<p>自然会碰到 tool calling &#x2F; MCP &#x2F; agent。</p>
+<p>这种发现方式比刷：</p>
+<blockquote>
+<p>《2026程序员必须掌握的50个工具》</p>
+</blockquote>
+<p>有效很多。</p>
+<p>因为你的知识是<strong>长在问题上的</strong>。</p>
+<h4 id="AI-时代还有一个变化值得特别注意"><a href="#AI-时代还有一个变化值得特别注意" class="headerlink" title="AI 时代还有一个变化值得特别注意"></a>AI 时代还有一个变化值得特别注意</h4><p>以后优秀工程师与普通工程师之间的区别，可能越来越不是：</p>
+<blockquote>
+<p>谁写代码写得快。</p>
+</blockquote>
+<p>而是：</p>
+<blockquote>
+<p>谁能定义问题、拆任务、选择工具、组合系统、验证结果。</p>
+</blockquote>
+<p>GitHub 对高级 AI 工具用户的研究也出现了类似趋势：开发者的工作开始更多转向 <strong>理解工作（understanding）、指导工作（directing）、验证工作（verifying）</strong>。</p>
+<p>所以千万不要因为 AI 能写代码就觉得：</p>
+<blockquote>
+<p>“那我还学数据结构、OS、网络干嘛？”</p>
+</blockquote>
+<p>恰恰相反。</p>
+<p>AI 可以很容易给你一些代码，但是如果不了解相应的知识，可能根本无法判断它写得对不对</p>
+<p><strong>基础知识决定你的判断上限，新工具决定你的执行速度</strong></p>
+</div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>记录学习与实践</span>
+    <span>© 2026 YangYang</span>
+  </footer>
+
+  <script>
+    
+    window.SEARCH_INDEX = [{"title":"AI桌面机器人","path":"/2026/08/10/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/","date":"2026.08.10","excerpt":"最近学了一些嵌入式的知识，STM32芯片，FreeRTOS，看见有很多的ai机器人项目，于是乎想要复刻一个桌面机器人并二创 复刻项目地址：https://oshwhub.com/movecall/moji2 嘉立创的开源项目，Moji2.0 Moji 2.0桌面AI机器人，采用ESP32-C5主控和1.5寸视网膜屏。插接式屏幕免焊接，支持自定义表情。具备双频"},{"title":"Hello World","path":"/2026/08/05/hello-world/","date":"2026.08.05","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask"},{"title":"智能体经典范式构建","path":"/2026/08/05/chapter04/","date":"2026.08.05","excerpt":"Chat Completions 格式 大模型 API 调用最核心的消息格式 1234exampleMessages = [ &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python"},{"title":"基于coze的智能体搭建","path":"/2026/08/06/chapter05/","date":"2026.08.06","excerpt":"Coze 核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简"},{"title":"基于Dify的智能体搭建","path":"/2026/08/10/%E5%9F%BA%E4%BA%8EDify%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.10","excerpt":"Dify 核心定位：Dify 是一个开源的、功能全面的 LLM 应用开发与运营平台，旨在为开发者提供从原型构建到生产部署的一站式解决方案。 特点分析：它融合了后端服务和模型运营的理念，支持 Agent 工作流、RAG Pipeline、数据标注与微调等多种能力。对于追求专业、稳定、可扩展的企业级应用而言，Dify 提供了坚实的基础。 适用人群：有一定技术背景"},{"title":"API调用故障排查笔记","path":"/2026/08/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8API%E5%A4%B1%E8%B4%A5/","date":"2026.08.12","excerpt":"API 调用故障排查笔记更新时间：2026-08-12 这次遇到过的主要问题1. 页面报 timeout，但后端接口其实返回正常表现： 小程序页面提示超时 但后端日志里能看到 GET /api/review-insights 200 OK 结论： 不能只看前端提示 要以“后端有没有收到请求、有没有正常返回”为准 这次的关键日志： 12INFO:app.mai"},{"title":"如何使自己具有“前瞻性”,从被动信息获取到构建自己的技术雷达","path":"/2026/08/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E8%87%AA%E5%B7%B1%E5%85%B7%E6%9C%89%E5%89%8D%E7%9E%BB%E6%80%A7%EF%BC%8C%E4%BB%8E%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E5%88%B0%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9B%B7%E8%BE%BE/","date":"2026.08.20","excerpt":"感觉目前依赖的是一种被动的信息获取方式 别人用了一个好工具 → 告诉你 → 你才知道 → 然后发现别人已经用了很久 真正有“前瞻性”的人，并不是每天知道最多新工具的人，而是慢慢建立了一套自己的技术雷达（Technology Radar）：知道去哪里发现变化，怎么判断哪些变化重要，以及怎么快速试用。 而且现在这个问题比几年前更明显。 显示，AI&#x2F;Ag"},{"title":"基于FastGPT平台的智能体搭建","path":"/2026/08/20/%E5%9F%BA%E4%BA%8EFastGPT%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.20","excerpt":"官网地址：https://fastgpt.cn/ "}];
+  </script>
+  <script>
+    window.FAIRY_ASSETS = {
+      IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
+      IMAGE_FAIRY_CASTING: '/images/fairy/fairy-casting-transparent.png',
+      IMAGE_BACKGROUND_OVERALL: '/images/fairy/forest-background.png',
+      IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
+    };
+  </script>
+  <script src="/js/forest-fairy.js?v=20260812-4"></script>
+</body>
+</html>
