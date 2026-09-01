@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <title>怎样写出好的prompt？ · YangYang</title>
+  <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body>
+  <div class="moss-orb moss-orb-one"></div>
+  <div class="moss-orb moss-orb-two"></div>
+  <div id="ambient-background" class="ambient-forest" aria-hidden="true">
+    <div class="ambient-glow ambient-glow-one"></div>
+    <div class="ambient-glow ambient-glow-two"></div>
+    <div class="ambient-moon">✦</div>
+    <div class="firefly-field"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="leaf-field"><span>❧</span><span>❧</span><span>❧</span></div>
+    <div class="pollen-field"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-constellation"><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-garden"><span>✿</span><span>✾</span><span>✿</span></div>
+    <div class="ambient-stars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-petals"><span>❋</span><span>✧</span><span>❋</span><span>✧</span><span>❋</span><span>✧</span></div>
+  </div>
+  <div id="fairy-sprite" aria-hidden="true"></div>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">✦</span>
+      <span><strong>YangYang</strong></span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      
+        <a href="/">首页</a>
+      
+        <a href="/categories/notes/">随记</a>
+      
+        <a href="/categories/study-notes/">学习笔记</a>
+      
+        <a href="/categories/works/">作品展示</a>
+      
+        <a href="/archives/">文章归档</a>
+      
+    </nav>
+    <button class="search-toggle" type="button" aria-label="搜索文章">⌕</button>
+    <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+    <div class="search-panel" id="search-panel" aria-hidden="true">
+      <div class="search-panel-inner">
+        <input id="site-search" type="search" placeholder="搜索文章标题或内容…" autocomplete="off">
+        <button id="search-close" type="button" aria-label="关闭搜索">×</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">随记</span>
+    <h1>怎样写出好的prompt？</h1>
+    <div class="article-meta"><time datetime="2026-08-12T07:09:23.000Z">2026 年 08 月 12 日</time><span>·</span><span>8 min read</span></div>
+  </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E6%8A%8A%E4%BB%BB%E5%8A%A1%E6%8F%8F%E8%BF%B0%E6%B8%85%E6%A5%9A"><span class="toc-text">先把任务描述清楚</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E7%9C%9F%E6%AD%A3%E5%BD%B1%E5%93%8D%E7%BB%93%E6%9E%9C%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-text">补充真正影响结果的信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%99%E7%BB%93%E6%9E%9C%E5%8A%A0%E4%B8%8A%E5%BF%85%E8%A6%81%E7%9A%84%E9%99%90%E5%88%B6"><span class="toc-text">给结果加上必要的限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E3%80%81%E7%A4%BA%E4%BE%8B%E5%92%8C%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F%E9%83%BD%E5%8F%AA%E6%98%AF%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7"><span class="toc-text">角色、示例和输出格式都只是辅助工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E4%BB%BB%E5%8A%A1%E6%9C%80%E5%A5%BD%E6%8B%86%E5%BC%80%E5%AE%8C%E6%88%90"><span class="toc-text">复杂任务最好拆开完成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E7%9A%84-Prompt-%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF%E4%B8%8D%E6%96%AD%E4%BF%AE%E6%94%B9%E5%87%BA%E6%9D%A5%E7%9A%84"><span class="toc-text">好的 Prompt 本质上是不断修改出来的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-text">最后的理解</span></a></li></ol></aside>
+    <div class="article-card reveal"><div class="article-content"><p>接触生成式 AI 一段时间后，会逐渐发现一个很明显的现象：同样使用 ChatGPT、Claude、Gemini 等工具，不同 Prompt 得到的结果可能差别很大。有些回答结构完整、观点清晰，几乎可以直接使用；有些回答却比较空泛，甚至没有真正解决问题。</p>
+<p>刚开始接触 Prompt 时，很容易把它理解成“向 AI 提问题的方式”。随着使用次数增加，会发现 Prompt 更像是一份<strong>任务说明书</strong>。它的作用不是让问题显得更复杂，而是帮助 AI 理解任务目标、背景、限制条件以及最终需要什么样的结果。</p>
+<p>简单来说，Prompt 写得好不好，很大程度上决定了 AI 需要“猜”多少内容。需要猜测的地方越多，回答偏离实际需求的概率通常也越高。</p>
+<h2 id="先把任务描述清楚"><a href="#先把任务描述清楚" class="headerlink" title="先把任务描述清楚"></a>先把任务描述清楚</h2><p>很多效果不理想的 Prompt，并不是缺少什么高级技巧，而是一开始的任务就比较模糊。</p>
+<p>例如：</p>
+<blockquote>
+<p>帮忙优化一下这段内容。</p>
+</blockquote>
+<p>“优化”其实包含很多可能性。可能是缩短文字，也可能是改善逻辑、修改语气、提高说服力，或者只是检查语法。如果没有进一步说明，AI 只能自行判断“优化”到底意味着什么。</p>
+<p>换成更具体的表达后，任务就清晰很多：</p>
+<blockquote>
+<p>将下面这段内容压缩到 300 字以内，保留核心观点，删除重复表达，语气保持自然。</p>
+</blockquote>
+<p>类似的情况还有“分析一下”“写得更好一点”“做一个方案”等。这些表达本身没有问题，只是范围比较大。实际使用时，如果能把动作和目标说清楚，结果通常会稳定很多，例如“比较两个方案的优缺点，并从成本、实施难度和长期价值三个方面给出推荐”。</p>
+<p>学习 Prompt 的过程中，一个越来越明显的感受是：<strong>好的 Prompt 往往不是写得复杂，而是动词足够明确。</strong> 分析、总结、比较、提取、分类、改写、解释、评价，这些动作越清楚，AI 越容易知道接下来应该做什么。</p>
+<h2 id="补充真正影响结果的信息"><a href="#补充真正影响结果的信息" class="headerlink" title="补充真正影响结果的信息"></a>补充真正影响结果的信息</h2><p>只说明任务还不够时，就需要加入背景。</p>
+<p>例如，“写一封项目延期说明邮件”已经可以生成内容，但如果进一步说明项目原计划的上线时间、延期原因、预计延期多久，以及客户最关注的问题，生成的邮件通常会更接近实际场景。</p>
+<p>背景信息的作用，是帮助 AI 理解任务为什么会出现，以及回答时应该优先考虑哪些因素。但背景并不是越多越好。如果加入大量与结果无关的信息，反而容易让重点变得模糊。</p>
+<p>一个比较实用的判断方式是：<strong>这条信息会不会影响最终答案？</strong> 如果会影响，就值得加入；如果几乎不会影响，就没有必要为了让 Prompt 显得完整而强行补充。</p>
+<p>除了背景，目标读者也很重要。同样是解释“什么是 API”，面向完全没有编程基础的人，回答应该更通俗，可能需要使用生活中的比喻；面向已经有开发经验的人，内容就可以更加技术化。明确读者，其实是在帮助 AI 决定应该使用什么语言、解释到什么程度，以及哪些知识可以默认已经掌握。</p>
+<h2 id="给结果加上必要的限制"><a href="#给结果加上必要的限制" class="headerlink" title="给结果加上必要的限制"></a>给结果加上必要的限制</h2><p>任务和背景明确之后，还可以通过限制条件进一步控制结果，例如字数、语气、结构、内容范围和输出格式。</p>
+<p>比如：</p>
+<ul>
+<li>控制在 800 字以内；</li>
+<li>语言自然，不要使用过多专业术语；</li>
+<li>分成问题、原因和解决方案三个部分；</li>
+<li>给出 5 个建议，并说明各自的适用场景；</li>
+<li>使用 Markdown 表格输出；</li>
+<li>不使用夸张的营销表达。</li>
+</ul>
+<p>这些要求的作用，不是把 Prompt 写得更长，而是减少输出中不需要的可能性。</p>
+<p>刚开始学习 Prompt 时，很容易产生一种想法：要求写得越多，结果越好。实际使用后会发现并不是这样。过多的限制不仅增加阅读成本，不同要求之间还可能互相冲突。</p>
+<p>因此，更合适的做法是只保留真正重要的约束。比如一篇文章最终需要发布在博客中，那么 Markdown 格式、文章长度和目标读者可能很重要；至于每一段必须多少字、必须使用多少个案例，就未必需要提前规定。</p>
+<h2 id="角色、示例和输出格式都只是辅助工具"><a href="#角色、示例和输出格式都只是辅助工具" class="headerlink" title="角色、示例和输出格式都只是辅助工具"></a>角色、示例和输出格式都只是辅助工具</h2><p>Prompt 中经常会出现“请作为一名资深产品经理”“请作为一名专业编辑”这样的角色设定。角色确实有用，因为它能够帮助 AI 选择更合适的分析视角。</p>
+<p>例如，同样分析一款产品，以普通消费者的视角，可能更关注价格、使用体验和功能；以产品经理的视角，则可能更关注用户需求、产品定位、竞争差异和商业价值。</p>
+<p>不过，角色不应该为了形式而存在。“作为一名专家”往往没有太多实际信息，而“从产品经理的角度，重点分析用户需求、产品价值和商业模式”会清晰得多。角色真正有价值的地方，不是身份本身，而是它能不能帮助任务确定一种明确的思考方式。</p>
+<p>示例也是类似的工具。如果某种风格很难通过抽象描述说清楚，直接提供一个参考往往更加有效。例如，与其要求“写得高级一点”，不如给出一小段希望接近的表达，并说明需要保留哪些特点，比如“简洁、克制、有一定情绪感，不使用夸张词汇”。</p>
+<p>输出格式同样非常实用。如果结果需要直接整理到文档、表格或其他系统中，可以提前规定格式。相比生成完成后再重新整理，直接要求按照 Markdown 表格、固定字段或 JSON 输出会方便很多。</p>
+<p>把这些内容组合起来，一个比较通用的 Prompt 可以写成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">角色：从产品运营的角度进行分析。</span><br><span class="line"></span><br><span class="line">背景：某款效率工具主要面向刚进入职场的年轻用户，目前新用户数量增长，但次日留存较低。</span><br><span class="line"></span><br><span class="line">任务：分析用户留存较低的可能原因，并提出优化建议。</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line">1. 从产品体验、用户需求和使用场景三个方面分析；</span><br><span class="line">2. 区分“可能原因”和“需要进一步验证的数据”；</span><br><span class="line">3. 最后给出三个优先级最高的改进方向。</span><br><span class="line"></span><br><span class="line">输出格式：使用 Markdown，按照“问题分析—验证方式—优化建议”的结构输出。</span><br></pre></td></tr></table></figure>
+
+<p>这个模板并不是必须每次完整使用。简单任务可能一句话就足够，复杂任务再逐步增加背景、限制和格式即可。</p>
+<h2 id="复杂任务最好拆开完成"><a href="#复杂任务最好拆开完成" class="headerlink" title="复杂任务最好拆开完成"></a>复杂任务最好拆开完成</h2><p>实际使用中，一个很常见的问题是希望用一条 Prompt 完成一个非常大的任务，例如直接要求生成完整商业计划、完整营销方案或者完整课程设计。</p>
+<p>AI 可以一次生成很多内容，但任务范围太大时，每个部分往往只能浅浅涉及，前后也更容易出现逻辑不一致。</p>
+<p>相比一次生成全部内容，把任务拆成几步通常更加稳定。例如，商业计划可以先分析目标用户和核心需求，再分析市场和竞争产品，然后设计商业模式，最后再把前面的结果整理成完整方案。</p>
+<p>这样做的好处是，每一步都可以检查。如果目标用户分析已经出现偏差，就可以在进入市场分析之前及时修正，而不需要等整份内容生成结束后再全部推翻。</p>
+<p>因此，Prompt 并不一定是一条写得很长的指令。很多时候，<strong>多轮、短而明确的 Prompt，比一条试图解决所有问题的“万能 Prompt”更有效。</strong></p>
+<p>如果任务开始时连需要哪些信息都不确定，也可以先让 AI 列出完成任务所需要的关键问题，再根据这些问题补充信息。复杂任务中，先把问题问对，往往比急着生成答案更重要。</p>
+<h2 id="好的-Prompt-本质上是不断修改出来的"><a href="#好的-Prompt-本质上是不断修改出来的" class="headerlink" title="好的 Prompt 本质上是不断修改出来的"></a>好的 Prompt 本质上是不断修改出来的</h2><p>学习 Prompt 后最大的变化之一，是不再追求第一条 Prompt 就得到完美答案。</p>
+<p>真实的使用过程更像是：</p>
+<p><strong>提出任务 → 查看结果 → 找出问题 → 补充要求 → 再次修改。</strong></p>
+<p>例如第一次生成的文章太正式，可以要求减少书面表达；内容太泛，可以要求增加具体场景和案例；结构重复，可以要求合并相似观点，按照“问题—原因—方法”的顺序重新组织。</p>
+<p>有时候还可以让 AI 在生成后自行检查，例如检查是否真正回答了核心问题、是否存在重复内容、逻辑是否连贯、有没有缺少依据的结论，然后再输出修改后的版本。这并不能保证所有问题都被发现，但对于较长的文章、报告和方案，通常能增加一层简单的质量控制。</p>
+<p>因此，与其寻找所谓的“万能 Prompt”，更值得掌握的是一种迭代方式。Prompt 本身不是固定模板，而是随着结果不断调整的一种沟通过程。</p>
+<h2 id="最后的理解"><a href="#最后的理解" class="headerlink" title="最后的理解"></a>最后的理解</h2><p>经过一段时间学习后，会发现 Prompt Engineering 看起来是在研究“怎样向 AI 提问”，实际上更接近一种<strong>把模糊需求转化成清晰任务的能力</strong>。</p>
+<p>一个比较实用的总结是：</p>
+<blockquote>
+<p><strong>好的 Prompt &#x3D; 清晰的任务 + 必要的背景 + 合理的限制 + 明确的输出方式</strong></p>
+</blockquote>
+<p>任务复杂时，再加入合适的角色、示例、任务拆分和检查步骤。</p>
+<p>真正重要的并不是记住多少 Prompt 模板，而是能够判断：问题到底是什么、哪些信息会影响结果、最终希望得到什么，以及应该怎样判断答案是否合格。</p>
+<p>从这个角度来看，学习写 Prompt 的过程，其实也在训练表达和思考能力。AI 可以快速生成答案，但在生成答案之前，仍然需要先把问题定义清楚。</p>
+<p>**Prompt 不需要写得复杂，重要的是让需求变得明确。**3</p>
+</div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>记录学习与实践</span>
+    <span>© 2026 YangYang</span>
+  </footer>
+
+  <script>
+    
+    window.SEARCH_INDEX = [{"title":"AI桌面机器人","path":"/2026/08/10/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/","date":"2026.08.10","excerpt":"最近学习了一些嵌入式相关知识，包括 STM32、FreeRTOS 等，也看到不少 AI 桌面机器人项目。相比直接购买成品，我更想亲手完成从硬件组装、固件修改到云端服务部署的完整过程，于是选择复刻一台桌面机器人，并在此基础上继续开发自己的功能。 硬件复刻项目地址：https://oshwhub.com/movecall/moji2 硬件采用嘉立创开源平台上的 "},{"title":"Hello World","path":"/2026/08/05/hello-world/","date":"2026.08.05","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask"},{"title":"智能体经典范式构建","path":"/2026/08/05/chapter04/","date":"2026.08.05","excerpt":"Chat Completions 格式 大模型 API 调用最核心的消息格式 1234exampleMessages = [ &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python"},{"title":"基于coze的智能体搭建","path":"/2026/08/06/chapter05/","date":"2026.08.06","excerpt":"Coze 核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简"},{"title":"基于Dify的智能体搭建","path":"/2026/08/10/%E5%9F%BA%E4%BA%8EDify%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.10","excerpt":"Dify 核心定位：Dify 是一个开源的、功能全面的 LLM 应用开发与运营平台，旨在为开发者提供从原型构建到生产部署的一站式解决方案。 特点分析：它融合了后端服务和模型运营的理念，支持 Agent 工作流、RAG Pipeline、数据标注与微调等多种能力。对于追求专业、稳定、可扩展的企业级应用而言，Dify 提供了坚实的基础。 适用人群：有一定技术背景"},{"title":"API调用故障排查笔记","path":"/2026/08/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8API%E5%A4%B1%E8%B4%A5/","date":"2026.08.12","excerpt":"API 调用故障排查笔记更新时间：2026-08-12 这次遇到过的主要问题1. 页面报 timeout，但后端接口其实返回正常表现： 小程序页面提示超时 但后端日志里能看到 GET /api/review-insights 200 OK 结论： 不能只看前端提示 要以“后端有没有收到请求、有没有正常返回”为准 这次的关键日志： 12INFO:app.mai"},{"title":"如何使自己具有“前瞻性”,从被动信息获取到构建自己的技术雷达","path":"/2026/08/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E8%87%AA%E5%B7%B1%E5%85%B7%E6%9C%89%E5%89%8D%E7%9E%BB%E6%80%A7%EF%BC%8C%E4%BB%8E%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E5%88%B0%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9B%B7%E8%BE%BE/","date":"2026.08.20","excerpt":"感觉目前依赖的是一种被动的信息获取方式 别人用了一个好工具 → 告诉你 → 你才知道 → 然后发现别人已经用了很久 真正有“前瞻性”的人，并不是每天知道最多新工具的人，而是慢慢建立了一套自己的技术雷达（Technology Radar）：知道去哪里发现变化，怎么判断哪些变化重要，以及怎么快速试用。 而且现在这个问题比几年前更明显。GitHub 的 2025 "},{"title":"基于FastGPT平台的智能体搭建","path":"/2026/08/20/%E5%9F%BA%E4%BA%8EFastGPT%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.20","excerpt":"官网地址：https://fastgpt.cn/ FastGPT 最核心的竞争力在于其强大的知识库能力。平台支持多种文件格式的导入，包括 Word、Markdown、PDF 等常见文档类型。 构建”智能投顾助手”案例说明： 本案例将基于 FastGPT 平台，结合知识库、MCP 工具和工作流编排，构建一个专业的”智能投顾助手”。该助手能够回答金融投资理论问题"},{"title":"也祝日志-AI 私人记录微信小程序","path":"/2026/09/01/%E4%B9%9F%E7%A5%9D%E6%97%A5%E5%BF%97-AI%20%E7%A7%81%E4%BA%BA%E8%AE%B0%E5%BD%95%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/","date":"2026.09.01","excerpt":"写在前面“也祝日志”是我独立完成并发布的一款微信小程序，目前已经可以在微信中搜索使用。 我最初想解决的问题并不只是“找一个地方记日记”。普通笔记能够保存内容，却很难在记录积累之后回答这些问题：最近一段时间我在关注什么？以前遇到过类似的问题吗？当时是怎么处理的？零散记录之间是否存在持续出现的主题？ 因此，我把它设计成一个安静的个人记忆空间：用户先记录真实经历，"},{"title":"怎样写出好的prompt？","path":"/2026/08/12/%E6%80%8E%E6%A0%B7%E5%86%99%E5%87%BA%E5%A5%BD%E7%9A%84prompt/","date":"2026.08.12","excerpt":"接触生成式 AI 一段时间后，会逐渐发现一个很明显的现象：同样使用 ChatGPT、Claude、Gemini 等工具，不同 Prompt 得到的结果可能差别很大。有些回答结构完整、观点清晰，几乎可以直接使用；有些回答却比较空泛，甚至没有真正解决问题。 刚开始接触 Prompt 时，很容易把它理解成“向 AI 提问题的方式”。随着使用次数增加，会发现 Pro"},{"title":"什么是冒烟测试","path":"/2026/09/01/%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%92%E7%83%9F%E6%B5%8B%E8%AF%95/","date":"2026.09.01","excerpt":"当我在借助AI开发小程序的时候，AI会自动帮我进行冒烟测试，但我对测试领域并不是很了解，以及有哪些测试，各种测试是怎样工作的，有哪些功能。 “冒烟测试”这个名字其实很容易让人困惑。后来真正放到软件开发流程里理解，就会发现它并不复杂：冒烟测试就是在开始完整测试之前，先快速检查系统最核心的功能是否还能正常工作。 它解决的不是“系统有没有 Bug”这个大问题，而是"}];
+  </script>
+  <script>
+    window.FAIRY_ASSETS = {
+      IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
+      IMAGE_FAIRY_CASTING: '/images/fairy/fairy-casting-transparent.png',
+      IMAGE_BACKGROUND_OVERALL: '/images/fairy/forest-background.png',
+      IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
+    };
+  </script>
+  <script src="/js/forest-fairy.js?v=20260812-4"></script>
+</body>
+</html>

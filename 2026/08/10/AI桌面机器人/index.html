@@ -63,24 +63,82 @@
   <header class="article-hero reveal">
     <span class="card-kicker">作品展示</span>
     <h1>AI桌面机器人</h1>
-    <div class="article-meta"><time datetime="2026-08-10T14:42:00.000Z">2026 年 08 月 10 日</time><span>·</span><span>1 min read</span></div>
+    <div class="article-meta"><time datetime="2026-08-10T14:42:00.000Z">2026 年 08 月 10 日</time><span>·</span><span>9 min read</span></div>
   </header>
   <div class="article-layout">
-    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%88%BB"><span class="toc-text">复刻</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E6%9D%BF-%E8%B4%B4%E7%89%87"><span class="toc-text">打板-贴片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E8%A3%85-%E6%B5%8B%E8%AF%95"><span class="toc-text">组装-测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%B3%E8%A6%81%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8A%9F%E8%83%BD%EF%BC%9A"><span class="toc-text">想要实现的功能：</span></a></li></ol></aside>
-    <div class="article-card reveal"><div class="article-content"><p>最近学了一些嵌入式的知识，STM32芯片，FreeRTOS，看见有很多的ai机器人项目，于是乎想要复刻一个桌面机器人并二创</p>
-<h2 id="复刻"><a href="#复刻" class="headerlink" title="复刻"></a>复刻</h2><p>项目地址：<a target="_blank" rel="noopener" href="https://oshwhub.com/movecall/moji2">https://oshwhub.com/movecall/moji2</a></p>
-<p>嘉立创的开源项目，Moji2.0 </p>
+    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E5%A4%8D%E5%88%BB"><span class="toc-text">硬件复刻</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E6%9D%BF%E4%B8%8E%E8%B4%B4%E7%89%87"><span class="toc-text">打板与贴片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E8%A3%85%E4%B8%8E%E6%B5%8B%E8%AF%95"><span class="toc-text">组装与测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%BC%94%E7%A4%BA"><span class="toc-text">项目演示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%88%9D%E6%83%B3%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">最初想实现的功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E8%AF%AD%E9%9F%B3%E9%97%AE%E7%AD%94%E5%88%B0%E4%B8%AA%E4%BA%BA%E8%AF%AD%E9%9F%B3-Agent"><span class="toc-text">从语音问答到个人语音 Agent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D"><span class="toc-text">流式语音对话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Function-Calling-%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%89%A7%E8%A1%8C"><span class="toc-text">Function Calling 与工具执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E7%A6%BB%E7%BA%BF%E6%8F%90%E9%86%92"><span class="toc-text">任务持久化与离线提醒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%86%E5%BD%A2%E5%B1%8F%E5%B9%95%E7%95%8C%E9%9D%A2"><span class="toc-text">圆形屏幕界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E8%BF%90%E8%A1%8C%E4%B8%8E%E8%B4%B9%E7%94%A8%E4%BF%9D%E6%8A%A4"><span class="toc-text">服务运行与费用保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">开发过程中遇到的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E5%AE%8C%E6%88%90%E6%83%85%E5%86%B5"><span class="toc-text">当前完成情况</span></a></li></ol></aside>
+    <div class="article-card reveal"><div class="article-content"><p>最近学习了一些嵌入式相关知识，包括 STM32、FreeRTOS 等，也看到不少 AI 桌面机器人项目。相比直接购买成品，我更想亲手完成从硬件组装、固件修改到云端服务部署的完整过程，于是选择复刻一台桌面机器人，并在此基础上继续开发自己的功能。</p>
+<h2 id="硬件复刻"><a href="#硬件复刻" class="headerlink" title="硬件复刻"></a>硬件复刻</h2><p>项目地址：<a target="_blank" rel="noopener" href="https://oshwhub.com/movecall/moji2">https://oshwhub.com/movecall/moji2</a></p>
+<p>硬件采用嘉立创开源平台上的 Moji 2.0 方案。</p>
 <blockquote>
-<p>Moji 2.0桌面AI机器人，采用ESP32-C5主控和1.5寸视网膜屏。插接式屏幕免焊接，支持自定义表情。具备双频Wi-Fi 6，提供流畅智能的桌面AI体验。</p>
+<p>Moji 2.0 桌面 AI 机器人采用 ESP32-C5 主控和 1.5 寸圆形视网膜屏，屏幕通过连接器安装，支持自定义表情，并具备双频 Wi-Fi 6 连接能力。</p>
 </blockquote>
-<h3 id="打板-贴片"><a href="#打板-贴片" class="headerlink" title="打板-贴片"></a>打板-贴片</h3><p><img src="/images/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/image-20260810231752563.png" alt="image-20260810231752563"></p>
-<h3 id="组装-测试"><a href="#组装-测试" class="headerlink" title="组装-测试"></a>组装-测试</h3><p><img src="/images/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/image-20260810231900204.png" alt="image-20260810231900204"></p>
-<h2 id="想要实现的功能："><a href="#想要实现的功能：" class="headerlink" title="想要实现的功能："></a>想要实现的功能：</h2><ul>
-<li>番茄钟</li>
-<li>闹钟</li>
-<li>聊天</li>
-<li>喝水提醒</li>
+<h3 id="打板与贴片"><a href="#打板与贴片" class="headerlink" title="打板与贴片"></a>打板与贴片</h3><p><img src="/images/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/image-20260810231752563.png" alt="image-20260810231752563"></p>
+<h3 id="组装与测试"><a href="#组装与测试" class="headerlink" title="组装与测试"></a>组装与测试</h3><p><img src="/images/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/image-20260810231900204.png" alt="image-20260810231900204"></p>
+<h3 id="项目演示"><a href="#项目演示" class="headerlink" title="项目演示"></a>项目演示</h3><p>目前的真机运行效果已经录制为视频，包含语音交互和部分功能展示：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12ktn6GEEz/">前往哔哩哔哩观看项目演示</a></p>
+<h2 id="最初想实现的功能"><a href="#最初想实现的功能" class="headerlink" title="最初想实现的功能"></a>最初想实现的功能</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> 番茄钟</li>
+<li><input checked="" disabled="" type="checkbox"> 闹钟与提醒</li>
+<li><input checked="" disabled="" type="checkbox"> 多轮语音对话</li>
+<li><input checked="" disabled="" type="checkbox"> 待办事项与喝水提醒</li>
 </ul>
+<p>真正开始开发后，我发现难点并不只是给界面增加几个页面。语音从麦克风上传到服务器，再经过识别、模型回答、语音合成并回到扬声器，中间涉及设备协议、音频格式、网络状态和多个云服务。要让机器人不仅能聊天，还能可靠地执行任务，需要同时改造设备端和服务端。</p>
+<h2 id="从语音问答到个人语音-Agent"><a href="#从语音问答到个人语音-Agent" class="headerlink" title="从语音问答到个人语音 Agent"></a>从语音问答到个人语音 Agent</h2><p>我希望自己能够控制模型选择、调用额度和功能扩展，而不是只能使用固定的语音服务。因此，我在个人云服务器上搭建了 AI 网关，设备仍然负责唤醒、录音、播放和界面显示，服务器负责会话管理以及 AI 能力编排。</p>
+<p>当前链路可以概括为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">本地唤醒词</span><br><span class="line">    ↓</span><br><span class="line">ESP32-C5 采集语音并编码为 Opus</span><br><span class="line">    ↓ WebSocket</span><br><span class="line">个人服务器上的 FastAPI AI 网关</span><br><span class="line">    ↓</span><br><span class="line">ASR 语音识别 → LLM 生成或调用工具 → 分句 TTS</span><br><span class="line">    ↓ WebSocket</span><br><span class="line">ESP32-C5 播放语音并更新 LVGL 界面</span><br></pre></td></tr></table></figure>
+
+<p>AI 网关通过 Nginx 提供 HTTPS&#x2F;WSS 入口，并使用设备令牌完成连接鉴权。当前 ASR、LLM 和 TTS 使用 DashScope 提供的模型服务，模型名称、音色和调用限制都可以通过服务端配置切换。因此，这个项目的“自建后端”主要指协议接入、对话编排、工具执行、状态管理和设备控制由自己掌握，并不代表模型本身运行在这台轻量服务器上。</p>
+<h2 id="流式语音对话"><a href="#流式语音对话" class="headerlink" title="流式语音对话"></a>流式语音对话</h2><p>最初的实现需要等待大模型生成完整答案，再对整段文字进行语音合成。回答稍长时，用户说完话后会有比较明显的空白等待。</p>
+<p>为降低等待时间，我将回答过程改为流式生成，并按照中文标点把增量文本切分成适合播报的短句。第一句话生成后就立即送入 TTS，后续句子继续在后台生成，从而实现“边生成、边合成、边播放”。</p>
+<p>设备端使用 VAD 判断一轮说话何时结束，服务器保留有限轮数的上下文，使一次唤醒后可以继续追问。播放过程中再次说出唤醒词，会向网关发送中断事件，停止当前音频并重新进入聆听状态，避免只能等机器人把整段回答说完。</p>
+<h2 id="Function-Calling-与工具执行"><a href="#Function-Calling-与工具执行" class="headerlink" title="Function Calling 与工具执行"></a>Function Calling 与工具执行</h2><p>如果语音助手只能回答问题，很多日常功能仍然停留在“说完就结束”。因此，我实现了一个通用 Function Calling 框架，将工具的注册、参数描述、参数校验、调用执行和结果回传统一起来。模型只负责判断用户意图和选择工具，具体操作由网关中受控的函数完成。</p>
+<p>目前接入了 14 个工具，主要分为以下几类：</p>
+<ul>
+<li>实时信息：当前时间、当前位置、天气和服务器状态；</li>
+<li>专注管理：创建、查询、暂停、继续或取消番茄钟；</li>
+<li>任务管理：创建、查询、完成和删除待办事项；</li>
+<li>提醒能力：创建、查询和取消闹钟或提醒；</li>
+<li>每日简报：汇总当天的天气、未完成待办和提醒。</li>
+</ul>
+<p>例如询问“今天天气怎么样”时，网关会根据设备请求的公网 IP 获取城市级位置，再调用 Open-Meteo 查询天气；询问服务器状态时，设备会进入状态大屏，持续展示 CPU、磁盘以及网络收发速率。工具返回的数据还可以通过设备事件直接驱动界面，而不只是让模型把结果念出来。</p>
+<p>位置判断使用的是公网 IP，只能得到城市级的近似位置，不会获得 GPS 级精确坐标。公网 IP 仅在当前请求上下文中用于位置和天气查询，不写入对话历史。</p>
+<h2 id="任务持久化与离线提醒"><a href="#任务持久化与离线提醒" class="headerlink" title="任务持久化与离线提醒"></a>任务持久化与离线提醒</h2><p>待办和提醒数据保存在服务端 SQLite 中，便于语音创建、查询和汇总。但如果所有定时任务都只保存在云端，设备断网时就无法按时提醒。</p>
+<p>为解决这个问题，网关在创建带时间的待办或提醒后，同时向 ESP32 下发调度命令。设备使用 NVS 保存最多 16 条本地提醒，到点后即使暂时无法连接服务器，也能显示提醒页面并播放提示音。提醒被取消、待办被完成或删除时，服务端也会同步取消设备上的本地任务。</p>
+<p>这套设计并不是简单复制两份数据：SQLite 负责长期任务管理和每日简报，NVS 只保留设备必须独立执行的定时信息，两端各自承担更适合自己的职责。</p>
+<h2 id="圆形屏幕界面"><a href="#圆形屏幕界面" class="headerlink" title="圆形屏幕界面"></a>圆形屏幕界面</h2><p>这块设备使用 1.5 寸圆形屏幕，实际扫描 I²C 总线后没有发现可用的触摸控制器，因此交互仍以语音和唤醒词为主。界面设计也需要考虑圆形屏幕四角不可见、有效区域较小的问题。</p>
+<p>目前使用 LVGL 完成了几类页面：</p>
+<ul>
+<li>待机表盘：以时间为视觉中心，显示日期、电量、中文城市、天气、温度和湿度；</li>
+<li>对话页面：统一为深色背景，并根据思考、回答等状态切换较大的表情；</li>
+<li>番茄钟页面：突出显示倒计时，支持开始、暂停、继续、查询和取消；</li>
+<li>服务器状态页：动态绘制 CPU、磁盘、RX 和 TX 曲线，并根据数据波动自动调整纵轴范围；</li>
+<li>提醒页面：显示提醒类型、触发时间和事项内容，同时播放提示音。</li>
+</ul>
+<p>其中 RX 表示服务器接收数据的速率，TX 表示服务器发送数据的速率。状态页面为两条曲线使用不同颜色，并在右上角图例中保持一致，便于在小屏幕上快速区分。</p>
+<p>待机页面的天气不会频繁调用大模型。当前固件已经加入每 30 分钟一次的独立刷新逻辑，刷新时只请求网关的轻量天气接口，不消耗 ASR、LLM 或 TTS 额度；如果请求失败，设备会保留上一次有效天气，而不是把页面替换成空值。该固件已经完成编译和真机烧录，服务端刷新接口仍待同步部署后才能形成完整闭环。</p>
+<h2 id="服务运行与费用保护"><a href="#服务运行与费用保护" class="headerlink" title="服务运行与费用保护"></a>服务运行与费用保护</h2><p>服务部署在个人轻量应用服务器上，通过 systemd 管理进程。考虑到个人项目不需要生产级集群，但需要避免程序异常或调用失控，我增加了以下保护：</p>
+<ul>
+<li>限制单设备并发会话、每分钟对话次数和每日总调用次数；</li>
+<li>为 ASR、LLM 和 TTS 分别设置超时、有限重试和并发上限；</li>
+<li>限制单轮输入时长、回答长度、单会话时长和最大对话轮数；</li>
+<li>记录每日用量，但不保存原始音频和完整对话内容；</li>
+<li>当每日调用量达到 80%、95% 和 100% 时，通过 QQ 邮箱发送告警；</li>
+<li>配置服务健康检查、内存上限和异常自动重启。</li>
+</ul>
+<p>天气和 IP 定位分别使用 Open-Meteo 与 IPWhois 的免费接口。单台设备每半小时刷新一次天气，理论上约为每天 48 次天气请求；城市定位有缓存，不会在每次表盘刷新时重复查询。它们不会消耗 DashScope 的模型额度，但仍需要遵守第三方服务的免费调用限制和署名要求。</p>
+<h2 id="开发过程中遇到的问题"><a href="#开发过程中遇到的问题" class="headerlink" title="开发过程中遇到的问题"></a>开发过程中遇到的问题</h2><p>这次开发中，最耗时间的并不是某一个页面，而是端云联调中的细节：</p>
+<ol>
+<li>设备启动时曾在扫描 Wi-Fi、检查版本和连接服务器之间循环。最终通过检查 PSRAM 配置和串口日志定位问题，使设备能够稳定进入系统。</li>
+<li>语音链路连接成功但没有声音时，需要逐段验证 WebSocket 握手、Opus 数据、采样率、TTS 输出和设备端 I²S 播放，而不能只看“服务器已连接”。</li>
+<li>多轮对话和播放打断会同时操作 WebSocket。如果接收和播放互相阻塞，唤醒词虽然被检测到，扬声器仍不会立即停止。最终将接收循环与音频发送解耦，并使用中断事件终止当前播放。</li>
+<li>云端提醒实现简单，但不能解决断网场景。将必要的调度能力下沉到设备并写入 NVS 后，提醒才真正具备可用性。</li>
+<li>圆形屏幕的可视区域比矩形分辨率更受限，城市、电量和湿度文字都需要向中心收缩，图表纵轴也要根据实时数据动态缩放。</li>
+</ol>
+<p>这些问题让我逐渐把项目从“功能能跑”推进到“交互闭环能够稳定使用”。</p>
+<h2 id="当前完成情况"><a href="#当前完成情况" class="headerlink" title="当前完成情况"></a>当前完成情况</h2><p>目前已经完成硬件组装、ESP32-C5 固件修改、个人 AI 网关部署和端云真机联调。机器人可以进行流式多轮语音对话，通过唤醒词打断回答，并使用自然语言查询实时信息、控制番茄钟、管理待办和创建提醒；待机表盘、对话表情、服务器监控和任务提醒也都能在圆形屏幕上进行对应展示。</p>
+<p>项目仍有继续优化的空间。例如，半小时天气刷新接口需要部署到服务器，模型免费额度耗尽时还可以增加自动降级策略，提醒也可以扩展为周期任务。后续我还计划整理部署脚本和配置说明，让固件、网关和第三方模型配置更容易复现。</p>
+<p>从最初复刻一块开源硬件，到后来自己设计语音链路、工具框架和任务调度，这个项目让我完整经历了嵌入式设备、实时音频、后端服务和 AI 应用编排之间的协作过程。对我来说，它已经不只是一个“会聊天的桌面摆件”，而是一台可以继续扩展的个人语音 Agent。</p>
 </div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
   </div>
 </article>
@@ -94,7 +152,7 @@
 
   <script>
     
-    window.SEARCH_INDEX = [{"title":"AI桌面机器人","path":"/2026/08/10/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/","date":"2026.08.10","excerpt":"最近学了一些嵌入式的知识，STM32芯片，FreeRTOS，看见有很多的ai机器人项目，于是乎想要复刻一个桌面机器人并二创 复刻项目地址：https://oshwhub.com/movecall/moji2 嘉立创的开源项目，Moji2.0 Moji 2.0桌面AI机器人，采用ESP32-C5主控和1.5寸视网膜屏。插接式屏幕免焊接，支持自定义表情。具备双频"},{"title":"Hello World","path":"/2026/08/05/hello-world/","date":"2026.08.05","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask"},{"title":"智能体经典范式构建","path":"/2026/08/05/chapter04/","date":"2026.08.05","excerpt":"Chat Completions 格式 大模型 API 调用最核心的消息格式 1234exampleMessages = [ &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python"},{"title":"基于coze的智能体搭建","path":"/2026/08/06/chapter05/","date":"2026.08.06","excerpt":"Coze 核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简"},{"title":"基于Dify的智能体搭建","path":"/2026/08/10/%E5%9F%BA%E4%BA%8EDify%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.10","excerpt":"Dify 核心定位：Dify 是一个开源的、功能全面的 LLM 应用开发与运营平台，旨在为开发者提供从原型构建到生产部署的一站式解决方案。 特点分析：它融合了后端服务和模型运营的理念，支持 Agent 工作流、RAG Pipeline、数据标注与微调等多种能力。对于追求专业、稳定、可扩展的企业级应用而言，Dify 提供了坚实的基础。 适用人群：有一定技术背景"},{"title":"API调用故障排查笔记","path":"/2026/08/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8API%E5%A4%B1%E8%B4%A5/","date":"2026.08.12","excerpt":"API 调用故障排查笔记更新时间：2026-08-12 这次遇到过的主要问题1. 页面报 timeout，但后端接口其实返回正常表现： 小程序页面提示超时 但后端日志里能看到 GET /api/review-insights 200 OK 结论： 不能只看前端提示 要以“后端有没有收到请求、有没有正常返回”为准 这次的关键日志： 12INFO:app.mai"},{"title":"如何使自己具有“前瞻性”,从被动信息获取到构建自己的技术雷达","path":"/2026/08/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E8%87%AA%E5%B7%B1%E5%85%B7%E6%9C%89%E5%89%8D%E7%9E%BB%E6%80%A7%EF%BC%8C%E4%BB%8E%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E5%88%B0%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9B%B7%E8%BE%BE/","date":"2026.08.20","excerpt":"感觉目前依赖的是一种被动的信息获取方式 别人用了一个好工具 → 告诉你 → 你才知道 → 然后发现别人已经用了很久 真正有“前瞻性”的人，并不是每天知道最多新工具的人，而是慢慢建立了一套自己的技术雷达（Technology Radar）：知道去哪里发现变化，怎么判断哪些变化重要，以及怎么快速试用。 而且现在这个问题比几年前更明显。GitHub 的 2025 "},{"title":"基于FastGPT平台的智能体搭建","path":"/2026/08/20/%E5%9F%BA%E4%BA%8EFastGPT%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.20","excerpt":"官网地址：https://fastgpt.cn/ FastGPT 最核心的竞争力在于其强大的知识库能力。平台支持多种文件格式的导入，包括 Word、Markdown、PDF 等常见文档类型。 构建”智能投顾助手”案例说明： 本案例将基于 FastGPT 平台，结合知识库、MCP 工具和工作流编排，构建一个专业的”智能投顾助手”。该助手能够回答金融投资理论问题"}];
+    window.SEARCH_INDEX = [{"title":"AI桌面机器人","path":"/2026/08/10/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/","date":"2026.08.10","excerpt":"最近学习了一些嵌入式相关知识，包括 STM32、FreeRTOS 等，也看到不少 AI 桌面机器人项目。相比直接购买成品，我更想亲手完成从硬件组装、固件修改到云端服务部署的完整过程，于是选择复刻一台桌面机器人，并在此基础上继续开发自己的功能。 硬件复刻项目地址：https://oshwhub.com/movecall/moji2 硬件采用嘉立创开源平台上的 "},{"title":"Hello World","path":"/2026/08/05/hello-world/","date":"2026.08.05","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask"},{"title":"智能体经典范式构建","path":"/2026/08/05/chapter04/","date":"2026.08.05","excerpt":"Chat Completions 格式 大模型 API 调用最核心的消息格式 1234exampleMessages = [ &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python"},{"title":"基于coze的智能体搭建","path":"/2026/08/06/chapter05/","date":"2026.08.06","excerpt":"Coze 核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简"},{"title":"基于Dify的智能体搭建","path":"/2026/08/10/%E5%9F%BA%E4%BA%8EDify%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.10","excerpt":"Dify 核心定位：Dify 是一个开源的、功能全面的 LLM 应用开发与运营平台，旨在为开发者提供从原型构建到生产部署的一站式解决方案。 特点分析：它融合了后端服务和模型运营的理念，支持 Agent 工作流、RAG Pipeline、数据标注与微调等多种能力。对于追求专业、稳定、可扩展的企业级应用而言，Dify 提供了坚实的基础。 适用人群：有一定技术背景"},{"title":"API调用故障排查笔记","path":"/2026/08/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8API%E5%A4%B1%E8%B4%A5/","date":"2026.08.12","excerpt":"API 调用故障排查笔记更新时间：2026-08-12 这次遇到过的主要问题1. 页面报 timeout，但后端接口其实返回正常表现： 小程序页面提示超时 但后端日志里能看到 GET /api/review-insights 200 OK 结论： 不能只看前端提示 要以“后端有没有收到请求、有没有正常返回”为准 这次的关键日志： 12INFO:app.mai"},{"title":"如何使自己具有“前瞻性”,从被动信息获取到构建自己的技术雷达","path":"/2026/08/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E8%87%AA%E5%B7%B1%E5%85%B7%E6%9C%89%E5%89%8D%E7%9E%BB%E6%80%A7%EF%BC%8C%E4%BB%8E%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E5%88%B0%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9B%B7%E8%BE%BE/","date":"2026.08.20","excerpt":"感觉目前依赖的是一种被动的信息获取方式 别人用了一个好工具 → 告诉你 → 你才知道 → 然后发现别人已经用了很久 真正有“前瞻性”的人，并不是每天知道最多新工具的人，而是慢慢建立了一套自己的技术雷达（Technology Radar）：知道去哪里发现变化，怎么判断哪些变化重要，以及怎么快速试用。 而且现在这个问题比几年前更明显。GitHub 的 2025 "},{"title":"基于FastGPT平台的智能体搭建","path":"/2026/08/20/%E5%9F%BA%E4%BA%8EFastGPT%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.20","excerpt":"官网地址：https://fastgpt.cn/ FastGPT 最核心的竞争力在于其强大的知识库能力。平台支持多种文件格式的导入，包括 Word、Markdown、PDF 等常见文档类型。 构建”智能投顾助手”案例说明： 本案例将基于 FastGPT 平台，结合知识库、MCP 工具和工作流编排，构建一个专业的”智能投顾助手”。该助手能够回答金融投资理论问题"},{"title":"也祝日志-AI 私人记录微信小程序","path":"/2026/09/01/%E4%B9%9F%E7%A5%9D%E6%97%A5%E5%BF%97-AI%20%E7%A7%81%E4%BA%BA%E8%AE%B0%E5%BD%95%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/","date":"2026.09.01","excerpt":"写在前面“也祝日志”是我独立完成并发布的一款微信小程序，目前已经可以在微信中搜索使用。 我最初想解决的问题并不只是“找一个地方记日记”。普通笔记能够保存内容，却很难在记录积累之后回答这些问题：最近一段时间我在关注什么？以前遇到过类似的问题吗？当时是怎么处理的？零散记录之间是否存在持续出现的主题？ 因此，我把它设计成一个安静的个人记忆空间：用户先记录真实经历，"},{"title":"怎样写出好的prompt？","path":"/2026/08/12/%E6%80%8E%E6%A0%B7%E5%86%99%E5%87%BA%E5%A5%BD%E7%9A%84prompt/","date":"2026.08.12","excerpt":"接触生成式 AI 一段时间后，会逐渐发现一个很明显的现象：同样使用 ChatGPT、Claude、Gemini 等工具，不同 Prompt 得到的结果可能差别很大。有些回答结构完整、观点清晰，几乎可以直接使用；有些回答却比较空泛，甚至没有真正解决问题。 刚开始接触 Prompt 时，很容易把它理解成“向 AI 提问题的方式”。随着使用次数增加，会发现 Pro"},{"title":"什么是冒烟测试","path":"/2026/09/01/%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%92%E7%83%9F%E6%B5%8B%E8%AF%95/","date":"2026.09.01","excerpt":"当我在借助AI开发小程序的时候，AI会自动帮我进行冒烟测试，但我对测试领域并不是很了解，以及有哪些测试，各种测试是怎样工作的，有哪些功能。 “冒烟测试”这个名字其实很容易让人困惑。后来真正放到软件开发流程里理解，就会发现它并不复杂：冒烟测试就是在开始完整测试之前，先快速检查系统最核心的功能是否还能正常工作。 它解决的不是“系统有没有 Bug”这个大问题，而是"}];
   </script>
   <script>
     window.FAIRY_ASSETS = {

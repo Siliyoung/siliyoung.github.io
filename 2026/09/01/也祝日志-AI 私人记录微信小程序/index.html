@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <title>也祝日志-AI 私人记录微信小程序 · YangYang</title>
+  <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body>
+  <div class="moss-orb moss-orb-one"></div>
+  <div class="moss-orb moss-orb-two"></div>
+  <div id="ambient-background" class="ambient-forest" aria-hidden="true">
+    <div class="ambient-glow ambient-glow-one"></div>
+    <div class="ambient-glow ambient-glow-two"></div>
+    <div class="ambient-moon">✦</div>
+    <div class="firefly-field"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="leaf-field"><span>❧</span><span>❧</span><span>❧</span></div>
+    <div class="pollen-field"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-constellation"><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-garden"><span>✿</span><span>✾</span><span>✿</span></div>
+    <div class="ambient-stars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-petals"><span>❋</span><span>✧</span><span>❋</span><span>✧</span><span>❋</span><span>✧</span></div>
+  </div>
+  <div id="fairy-sprite" aria-hidden="true"></div>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">✦</span>
+      <span><strong>YangYang</strong></span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      
+        <a href="/">首页</a>
+      
+        <a href="/categories/notes/">随记</a>
+      
+        <a href="/categories/study-notes/">学习笔记</a>
+      
+        <a href="/categories/works/">作品展示</a>
+      
+        <a href="/archives/">文章归档</a>
+      
+    </nav>
+    <button class="search-toggle" type="button" aria-label="搜索文章">⌕</button>
+    <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+    <div class="search-panel" id="search-panel" aria-hidden="true">
+      <div class="search-panel-inner">
+        <input id="site-search" type="search" placeholder="搜索文章标题或内容…" autocomplete="off">
+        <button id="search-close" type="button" aria-label="关闭搜索">×</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">作品</span>
+    <h1>也祝日志-AI 私人记录微信小程序</h1>
+    <div class="article-meta"><time datetime="2026-09-01T13:03:23.000Z">2026 年 09 月 01 日</time><span>·</span><span>18 min read</span></div>
+  </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A7%E5%93%81%E5%8A%9F%E8%83%BD"><span class="toc-text">产品功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="toc-text">整体架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E4%B8%80%E6%9D%A1%E8%AE%B0%E5%BD%95%E5%88%B0%E5%8F%AF%E6%A3%80%E7%B4%A2%E8%AE%B0%E5%BF%86"><span class="toc-text">从一条记录到可检索记忆</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BF%9D%E5%AD%98%E5%8E%9F%E5%A7%8B%E8%AE%B0%E5%BD%95"><span class="toc-text">1. 保存原始记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9E%84%E5%BB%BA-Embedding-%E6%96%87%E6%9C%AC"><span class="toc-text">2. 构建 Embedding 文本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%94%9F%E6%88%90%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%90%91%E9%87%8F"><span class="toc-text">3. 生成并保存向量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B7%E5%90%88-RAG%EF%BC%9A%E5%85%B3%E9%94%AE%E8%AF%8D%E3%80%81%E6%97%B6%E9%97%B4%E3%80%81%E6%A0%87%E7%AD%BE%E4%B8%8E%E5%90%91%E9%87%8F%E4%B8%80%E8%B5%B7%E5%B7%A5%E4%BD%9C"><span class="toc-text">混合 RAG：关键词、时间、标签与向量一起工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A7%84%E5%88%99%E5%BC%8F%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB"><span class="toc-text">1. 规则式意图识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%85%B3%E9%94%AE%E8%AF%8D%E4%B8%8E%E6%A0%87%E7%AD%BE%E8%AF%84%E5%88%86"><span class="toc-text">2. 关键词与标签评分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%97%B6%E9%97%B4%E7%AA%97%E5%8F%A3"><span class="toc-text">3. 时间窗口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%90%91%E9%87%8F%E7%9B%B8%E4%BC%BC%E5%BA%A6"><span class="toc-text">4. 向量相似度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%9E%8D%E5%90%88%E6%8E%92%E5%BA%8F"><span class="toc-text">5. 融合排序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%BD%AE%E9%97%AE%E7%AD%94%E4%B8%8E%E5%9B%9E%E7%AD%94%E7%94%9F%E6%88%90"><span class="toc-text">多轮问答与回答生成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BYOK-%E4%B8%8E%E5%B9%B3%E5%8F%B0%E8%B5%A0%E9%80%81%E9%A2%9D%E5%BA%A6"><span class="toc-text">BYOK 与平台赠送额度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E5%9B%9E%E9%A1%BE%E4%B8%8E%E6%97%B6%E9%97%B4%E7%BA%BF%E5%BF%AB%E7%85%A7"><span class="toc-text">AI 回顾与时间线快照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frontier%EF%BC%9A%E4%BB%8E%E5%A4%96%E9%83%A8%E4%BF%A1%E6%81%AF%E5%88%B0%E5%8F%AF%E8%AF%BB%E7%83%AD%E7%82%B9"><span class="toc-text">Frontier：从外部信息到可读热点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E3%80%81%E6%95%B0%E6%8D%AE%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%9A%90%E7%A7%81"><span class="toc-text">登录、数据隔离与隐私</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="toc-text">部署与自动化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%88%91%E8%AE%A4%E4%B8%BA%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E5%8F%96%E8%88%8D"><span class="toc-text">项目中我认为最重要的取舍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%85%88%E5%81%9A%E5%8F%AF%E8%A7%A3%E9%87%8A%E7%9A%84%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E7%9B%B4%E6%8E%A5%E5%BC%95%E5%85%A5%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">1. 先做可解释的混合检索，而不是直接引入向量数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%89%80%E6%9C%89%E5%A4%96%E9%83%A8-AI-%E8%B0%83%E7%94%A8%E9%83%BD%E8%A6%81%E6%9C%89%E5%A4%B1%E8%B4%A5%E8%B7%AF%E5%BE%84"><span class="toc-text">2. 所有外部 AI 调用都要有失败路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%9C%A8%E4%BD%93%E9%AA%8C%E5%92%8C%E6%88%90%E6%9C%AC%E4%B9%8B%E9%97%B4%E5%8A%A0%E5%85%A5-BYOK-%E8%BF%87%E6%B8%A1%E5%B1%82"><span class="toc-text">3. 在体验和成本之间加入 BYOK 过渡层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E4%B8%8D%E8%B6%B3%E4%B8%8E%E5%90%8E%E7%BB%AD%E6%96%B9%E5%90%91"><span class="toc-text">当前不足与后续方向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%9C%B0%E5%9B%BE"><span class="toc-text">代码地图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE"><span class="toc-text">结尾</span></a></li></ol></aside>
+    <div class="article-card reveal"><div class="article-content"><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>“也祝日志”是我独立完成并发布的一款微信小程序，目前已经可以在微信中搜索使用。</p>
+<p>我最初想解决的问题并不只是“找一个地方记日记”。普通笔记能够保存内容，却很难在记录积累之后回答这些问题：最近一段时间我在关注什么？以前遇到过类似的问题吗？当时是怎么处理的？零散记录之间是否存在持续出现的主题？</p>
+<p>因此，我把它设计成一个安静的个人记忆空间：用户先记录真实经历，系统再对记录进行整理、检索和回顾，并允许用户与过去的记录进行对话。项目最终形成了微信小程序、FastAPI、SQLite、LLM、Embedding 与 Dify 组成的完整应用链路。</p>
+<p>这篇文章不只展示页面，也会说明当前版本真正实现了什么、关键技术是怎样落地的，以及它仍然有哪些边界。</p>
+<h2 id="产品功能"><a href="#产品功能" class="headerlink" title="产品功能"></a>产品功能</h2><p>当前小程序主要包含五个底部导航入口：</p>
+<ul>
+<li><strong>时间线</strong>：按照年份、月份和记录节点浏览内容，支持折叠、编辑和删除。</li>
+<li><strong>回顾</strong>：查看稳定的基础统计，也可以主动生成并保存 AI 回顾。</li>
+<li><strong>记录</strong>：以较轻的书写界面添加标题、正文和标签。</li>
+<li><strong>问问</strong>：基于个人记录进行多轮问答，回答可以附带相关记录并跳转回时间线。</li>
+<li><strong>我的</strong>：管理头像、导出 CSV、查看 AI 使用状态和配置自己的 API Key。</li>
+</ul>
+<p>此外还有一个独立的“关注”页面，用于聚合 Hacker News、GitHub 热门仓库搜索结果和 RSS&#x2F;Atom 信息源，经 Dify 工作流整理后展示中文标题、摘要、分类和主题。</p>
+<h2 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h2><p>项目采用前后端分离结构：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">微信小程序</span><br><span class="line">  ├─ 记录 / 时间线 / 回顾 / 问问 / 我的</span><br><span class="line">  └─ 关注 Frontier</span><br><span class="line">          │ HTTPS + Bearer Token</span><br><span class="line">          ▼</span><br><span class="line">FastAPI 服务</span><br><span class="line">  ├─ 微信登录与用户数据隔离</span><br><span class="line">  ├─ 记录 CRUD 与聊天历史</span><br><span class="line">  ├─ 混合 RAG 检索</span><br><span class="line">  ├─ BYOK 与赠送额度路由</span><br><span class="line">  ├─ AI 回顾与周期任务</span><br><span class="line">  └─ Frontier 采集和 Dify enrichment</span><br><span class="line">          │</span><br><span class="line">          ▼</span><br><span class="line">SQLite</span><br><span class="line">  ├─ 用户、会话和个人配置</span><br><span class="line">  ├─ 记录与 Embedding</span><br><span class="line">  ├─ 问答历史与回顾快照</span><br><span class="line">  └─ 原始信息源与 AI 整理结果</span><br><span class="line"></span><br><span class="line">外部服务</span><br><span class="line">  ├─ 微信 jscode2session</span><br><span class="line">  ├─ OpenAI-compatible Chat API</span><br><span class="line">  ├─ Voyage-compatible Embedding API</span><br><span class="line">  ├─ Hacker News / GitHub Search API / RSS</span><br><span class="line">  └─ Dify Workflow API</span><br></pre></td></tr></table></figure>
+
+<p>前端使用微信小程序原生 WXML、WXSS 和 JavaScript，没有引入大型 UI 框架。后端使用 FastAPI 提供接口，SQLite 负责持久化，定时任务通过 systemd timer 运行。线上服务由 Uvicorn 承载应用进程，并通过 HTTPS 域名供小程序访问。</p>
+<h2 id="从一条记录到可检索记忆"><a href="#从一条记录到可检索记忆" class="headerlink" title="从一条记录到可检索记忆"></a>从一条记录到可检索记忆</h2><h3 id="1-保存原始记录"><a href="#1-保存原始记录" class="headerlink" title="1. 保存原始记录"></a>1. 保存原始记录</h3><p>用户提交标题、正文、分类和标签后，小程序调用 <code>POST /api/records</code>。后端首先校验正文，再读取该用户的 AI 配置并调用 <code>analyze_record</code>。</p>
+<p>如果用户已经配置聊天 API Key，模型会根据正文生成结构化的标题、摘要、分类和标签；如果没有配置，或远程调用失败，则使用本地关键词规则和文本截断生成兜底结果。用户主动填写的标题和分类优先保留，用户标签与 AI 标签会合并、去重并限制数量。</p>
+<p>这一步的意义是让原始正文多出一组高密度信息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">正文：今天部署小程序时接口一直报错，最后发现是服务器地址配置错了</span><br><span class="line">摘要：部署时因服务器地址错误导致接口无法连接</span><br><span class="line">分类：工作</span><br><span class="line">标签：小程序、部署、接口、报错</span><br></pre></td></tr></table></figure>
+
+<p>最终内容写入 <code>records</code> 表，成为关键词、标签、时间和语义检索共同使用的基础数据。</p>
+<h3 id="2-构建-Embedding-文本"><a href="#2-构建-Embedding-文本" class="headerlink" title="2. 构建 Embedding 文本"></a>2. 构建 Embedding 文本</h3><p>项目没有只向量化正文，而是通过 <code>build_embedding_text</code> 将多个字段拼接为一段带语义提示的文本：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">标题：小程序接口调试</span><br><span class="line">摘要：部署时因服务器地址错误导致接口无法连接</span><br><span class="line">正文：今天部署小程序时接口一直报错……</span><br><span class="line">分类：工作</span><br><span class="line">标签：小程序、部署、接口、报错</span><br></pre></td></tr></table></figure>
+
+<p>这样做可以同时利用标题和摘要的主题信息、正文的细节以及标签的显式语义。</p>
+<h3 id="3-生成并保存向量"><a href="#3-生成并保存向量" class="headerlink" title="3. 生成并保存向量"></a>3. 生成并保存向量</h3><p><code>embed_texts</code> 优先调用服务器统一配置的 Embedding API，当前默认兼容 Voyage 的 <code>/embeddings</code> 接口。成功后，向量和模型名称写入 <code>record_embeddings</code> 表，并通过 <code>record_id</code> 与原记录建立一对一关系。</p>
+<p>如果 Embedding API 未配置、网络异常或返回格式不合法，系统不会阻止用户保存记录，而是降级为本地 <code>local-hash-v1</code>：先对中英文词元做特征哈希，再生成并归一化 192 维向量。</p>
+<p>这个本地方案主要用于保证可用性，它不是本地神经网络 Embedding 模型，语义能力也不能与 Voyage 等专业模型等同。</p>
+<h2 id="混合-RAG：关键词、时间、标签与向量一起工作"><a href="#混合-RAG：关键词、时间、标签与向量一起工作" class="headerlink" title="混合 RAG：关键词、时间、标签与向量一起工作"></a>混合 RAG：关键词、时间、标签与向量一起工作</h2><p>用户在“问问”中发送问题后，后端会读取该用户最多 500 条普通记录，并关联已经保存的向量。缺失向量的旧记录会在问答时补齐，然后进入混合检索流程。</p>
+<h3 id="1-规则式意图识别"><a href="#1-规则式意图识别" class="headerlink" title="1. 规则式意图识别"></a>1. 规则式意图识别</h3><p><code>_classify</code> 根据当前问题和上一轮用户消息，将请求分成四类：</p>
+<ul>
+<li><code>summary</code>：总结、回顾、最近在关注什么。</li>
+<li><code>lookup</code>：寻找或询问某条记录。</li>
+<li><code>emotion</code>：焦虑、困难、报错、卡住等需要先回应感受的表达。</li>
+<li><code>chat</code>：一般对话。</li>
+</ul>
+<p>这里使用的是可解释的关键词规则，不是独立的 LLM 意图分类器。它的优点是响应快、没有额外调用成本；不足是对复杂表达和歧义的判断能力有限。</p>
+<h3 id="2-关键词与标签评分"><a href="#2-关键词与标签评分" class="headerlink" title="2. 关键词与标签评分"></a>2. 关键词与标签评分</h3><p><code>_terms</code> 从问题中提取有效词项并过滤停用词，<code>_score</code> 再对不同字段赋予不同权重：</p>
+<ul>
+<li>标签命中的权重最高；</li>
+<li>标题高于摘要，摘要高于正文；</li>
+<li>分类匹配会增加分数；</li>
+<li>时间范围命中会增加分数；</li>
+<li>越新的记录还会获得少量近期加权。</li>
+</ul>
+<p>这样可以避免把所有文本字段都当成同等重要。例如问题中明确出现某个标签时，该标签比正文里偶然出现同一个词更有意义。</p>
+<h3 id="3-时间窗口"><a href="#3-时间窗口" class="headerlink" title="3. 时间窗口"></a>3. 时间窗口</h3><p><code>_time_window</code> 识别“今天”“昨天”“最近一周”“最近一个月”等表达，并转换为明确的起止时间。对于“最近在关注什么”这类总结请求，检索还会按一周、一个月和最近一条记录逐级选择可用范围，而不是在没有本周记录时直接返回空结果。</p>
+<h3 id="4-向量相似度"><a href="#4-向量相似度" class="headerlink" title="4. 向量相似度"></a>4. 向量相似度</h3><p>系统使用 <code>_cos</code> 在 Python 中计算问题向量和记录向量的余弦相似度。相似度达到阈值的记录进入语义候选，高相似度结果会显示“语义：含义接近”的命中原因。</p>
+<p>当前项目没有部署向量数据库。Embedding 以 JSON 文本保存在 SQLite 中，查询时读取到 Python 逐条计算，因此更适合个人记录这种中小规模场景。它不是面向百万级文档设计的检索架构。</p>
+<h3 id="5-融合排序"><a href="#5-融合排序" class="headerlink" title="5. 融合排序"></a>5. 融合排序</h3><p><code>_retrieve</code> 将关键词、标签、时间和近期评分与向量相似度合并，然后按照意图控制上下文数量：</p>
+<ul>
+<li>总结类最多选取 12 条记录作为上下文；</li>
+<li>普通检索和聊天最多选取 8 条；</li>
+<li>情绪类最多选取 3 条，避免把大量记录机械地展示给用户；</li>
+<li>页面通常最多显示 5 条相关记录。</li>
+</ul>
+<p>最终送入模型的并不是整个数据库，而是一组经过筛选的记录摘要。这正是 RAG 在本项目中的核心作用：先检索个人记忆，再让模型基于有限且相关的事实回答。</p>
+<h2 id="多轮问答与回答生成"><a href="#多轮问答与回答生成" class="headerlink" title="多轮问答与回答生成"></a>多轮问答与回答生成</h2><p>问答历史保存在 <code>ask_messages</code> 表中。每次请求会读取当前用户最近 12 条持久化消息，模型提示中使用最近 10 条有效对话，并加入最多 8 条相关记录的日期、标题、摘要和标签。</p>
+<p><code>answer_question</code> 会根据意图切换回答指令：</p>
+<ul>
+<li>总结类强调提炼主题和变化，不逐条复述；</li>
+<li>检索类围绕最相关记录直接回答；</li>
+<li>情绪类先接住情绪，再自然回应；</li>
+<li>普通聊天则保持对话感。</li>
+</ul>
+<p>Prompt 还要求避免固定句式，不要每次都以“我看到记录里”开头。远程模型调用失败时，系统会返回本地模板回答，保证接口仍有结果，但这种降级回答的自然度和共情能力明显弱于真实模型。</p>
+<p>回答完成后，用户问题、AI 回答以及相关记录都会持久化。前端点击相关记录时，可以跳回时间线中的对应节点。</p>
+<h2 id="BYOK-与平台赠送额度"><a href="#BYOK-与平台赠送额度" class="headerlink" title="BYOK 与平台赠送额度"></a>BYOK 与平台赠送额度</h2><p>AI 应用上线后，一个现实问题是调用成本。完全由开发者承担模型费用不利于长期运行，但要求新用户一开始就理解 Base URL、模型名和 API Key，也会提高使用门槛。</p>
+<p>当前项目采用两级路由：</p>
+<ol>
+<li>用户配置了自己的 API Key 时，聊天和 AI 回顾优先使用用户 BYOK；</li>
+<li>用户没有配置时，可以使用平台赠送额度：聊天 20 次、AI 回顾 3 次；</li>
+<li>远程调用失败时，已经预扣的平台额度会退回；</li>
+<li>Embedding 暂时统一使用服务器配置，不消耗个人聊天额度；</li>
+<li>Frontier 使用服务器的 Dify Workflow Key，与个人聊天额度相互独立。</li>
+</ol>
+<p>用户 API Key 不保存在小程序本地，而是提交到服务端，使用 <code>cryptography.fernet.Fernet</code> 加密后写入数据库。查询配置状态时只返回掩码，不返回明文。Base URL 必须是允许列表中的公开 HTTPS 地址，并拒绝私网、回环地址和带用户名密码的 URL，用于降低服务端请求伪造风险。</p>
+<p>需要说明的是，当前聊天供应商虽然允许选择 Base URL 和模型名，但请求格式仍然要求兼容 OpenAI 风格的 <code>/chat/completions</code>，并不是任意厂商协议都能直接接入。</p>
+<h2 id="AI-回顾与时间线快照"><a href="#AI-回顾与时间线快照" class="headerlink" title="AI 回顾与时间线快照"></a>AI 回顾与时间线快照</h2><p>回顾页分成两层：</p>
+<ul>
+<li>默认打开时读取稳定的基础回顾或已有快照，不立即触发慢速模型调用；</li>
+<li>用户点击“生成 AI 回顾”后，才真正调用模型并保存结果。</li>
+</ul>
+<p><code>generate_review_insights</code> 从最近 7 天和最近 30 天的记录中生成周总结、月总结、关注标签、洞察和下一步建议。如果没有可用 AI，系统仍会基于标签频次生成基础回顾，但会明确标记 <code>ai_used=False</code>。</p>
+<p>每周日 20:00，systemd timer 会运行周回顾任务。满足条件且仍有 BYOK 或平台回顾额度的用户会生成周回顾快照；已存在的同周期 AI 快照不会重复生成。周回顾还会同步成只读的 <code>weekly_review</code> 时间线节点，使自动总结能够回到长期记录中。</p>
+<p>目前定时任务只生成周回顾，没有自动生成月度时间线节点。</p>
+<h2 id="Frontier：从外部信息到可读热点"><a href="#Frontier：从外部信息到可读热点" class="headerlink" title="Frontier：从外部信息到可读热点"></a>Frontier：从外部信息到可读热点</h2><p>“关注”模块与个人 RAG 是两条相对独立的链路：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Hacker News / GitHub Search API / RSS</span><br><span class="line">                    ↓</span><br><span class="line">              source_items</span><br><span class="line">                    ↓</span><br><span class="line">         去重、批次与来源配额筛选</span><br><span class="line">                    ↓</span><br><span class="line">              Dify Workflow</span><br><span class="line">                    ↓</span><br><span class="line">                hotspots</span><br><span class="line">                    ↓</span><br><span class="line">               关注页面</span><br></pre></td></tr></table></figure>
+
+<p>原始内容统一保存标题、来源、链接、发布时间和描述；各来源特有指标以 JSON 保存，例如 Hacker News 的分数、评论数和排名，或者 GitHub 的 Star、Fork 和语言。这样 RSS 没有互动指标时也可以使用空对象，不需要为每个来源重新设计表结构。</p>
+<p>Dify 工作流只负责将候选内容整理为结构化中文结果：展示标题、摘要、分类、主题和重要性，不负责生成来源热度数据。服务端还实现了内容哈希、幂等更新、失败重试上限、单次最多 20 条以及不同来源配额，避免重复消耗工作流额度。</p>
+<p>采集任务每天 06:00 和 18:00 自动运行。GitHub 部分的真实实现是调用 GitHub Search API，筛选近期创建、公开、非归档、非 Fork 且达到最低 Star 数的仓库，再按 Star 降序获取；它不是抓取 GitHub 官方 Trending 页面。RSS&#x2F;Atom 则是通用解析器，可以通过配置接入 arXiv 等信息源。</p>
+<p>当前 Frontier 还有清晰的产品边界：</p>
+<ul>
+<li>“稍后看”只保存在页面状态中，尚未持久化到用户账户；</li>
+<li>“查看原文”当前复制链接到剪贴板，而不是直接在小程序内打开任意外链；</li>
+<li>“记下想法”会预填记录标题，但来源链接和外部正文不会自动写入个人记录；</li>
+<li>因此外部关注内容目前不会自动进入个人 RAG 知识库，只有用户真正写下并保存的内容才会被检索。</li>
+</ul>
+<h2 id="登录、数据隔离与隐私"><a href="#登录、数据隔离与隐私" class="headerlink" title="登录、数据隔离与隐私"></a>登录、数据隔离与隐私</h2><p>小程序启动时调用 <code>wx.login</code> 获取临时 code，FastAPI 再请求微信 <code>jscode2session</code> 换取 openid。服务端生成随机登录令牌，只把令牌哈希保存在 <code>user_sessions</code> 表中；前端后续通过 Bearer Token 访问接口。</p>
+<p>记录、聊天历史、回顾快照、头像、AI 配置和额度均按用户关联查询。头像和 CSV 导出也只处理当前登录用户的数据。AI Key 留在服务端加密保存，不会下发完整明文。</p>
+<p>模型问答与回顾会把必要的个人记录片段发送给用户选择的模型服务或平台模型，因此隐私说明中仍需要明确数据处理目的，而不能因为 Key 加密就宣称记录完全不会离开服务器。</p>
+<h2 id="部署与自动化"><a href="#部署与自动化" class="headerlink" title="部署与自动化"></a>部署与自动化</h2><p>后端部署在 Ubuntu 云服务器，通过 systemd 管理 FastAPI 进程和定时任务，小程序使用已配置的 HTTPS 合法域名访问服务。当前仓库包含 Frontier 早晚刷新和周回顾的 service&#x2F;timer 配置。</p>
+<p>项目的后端测试覆盖了：</p>
+<ul>
+<li>BYOK 优先级、平台额度扣减与失败退款；</li>
+<li>Embedding 使用平台配置的策略；</li>
+<li>Hacker News、GitHub 和 RSS 的标准化、幂等写入与单源失败隔离；</li>
+<li>Dify 结构化输出、内容哈希、来源配额、批次上限和重试；</li>
+<li>头像大小校验与用户隔离；</li>
+<li>周回顾额度、缓存与时间线同步。</li>
+</ul>
+<p>在本文写作时重新运行测试：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ran 36 tests</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<p>这组测试主要覆盖新增的 AI 与 Frontier 服务逻辑，并不代表登录、记录 CRUD 和完整问答链路已经拥有同等程度的端到端测试。</p>
+<h2 id="项目中我认为最重要的取舍"><a href="#项目中我认为最重要的取舍" class="headerlink" title="项目中我认为最重要的取舍"></a>项目中我认为最重要的取舍</h2><h3 id="1-先做可解释的混合检索，而不是直接引入向量数据库"><a href="#1-先做可解释的混合检索，而不是直接引入向量数据库" class="headerlink" title="1. 先做可解释的混合检索，而不是直接引入向量数据库"></a>1. 先做可解释的混合检索，而不是直接引入向量数据库</h3><p>个人记录规模有限，SQLite 加 Python 余弦扫描足以支撑当前版本。关键词、标签、时间和向量的组合也比只使用向量更容易解释命中原因。代价是记录规模继续增长后，需要迁移到带向量索引的数据库，并补充重排与离线评测。</p>
+<h3 id="2-所有外部-AI-调用都要有失败路径"><a href="#2-所有外部-AI-调用都要有失败路径" class="headerlink" title="2. 所有外部 AI 调用都要有失败路径"></a>2. 所有外部 AI 调用都要有失败路径</h3><p>记录分析、Embedding、问答和回顾都可能受网络、额度和供应商状态影响。项目通过规则摘要、本地哈希向量、模板回答和稳定基础回顾保证核心记录功能不被外部 API 完全阻断，同时通过日志区分真实 AI 结果与降级结果。</p>
+<h3 id="3-在体验和成本之间加入-BYOK-过渡层"><a href="#3-在体验和成本之间加入-BYOK-过渡层" class="headerlink" title="3. 在体验和成本之间加入 BYOK 过渡层"></a>3. 在体验和成本之间加入 BYOK 过渡层</h3><p>直接要求所有用户配置 API Key 会劝退新用户，完全由平台付费又无法长期维持。少量赠送额度让用户先体验核心能力，BYOK 则承担长期使用成本，失败退款和使用日志保证额度状态可追踪。</p>
+<h2 id="当前不足与后续方向"><a href="#当前不足与后续方向" class="headerlink" title="当前不足与后续方向"></a>当前不足与后续方向</h2><p>基于现有代码，下一阶段最值得继续完善的是：</p>
+<ol>
+<li>为问答链路建立固定查询集，分别评估 Recall@K、MRR、时间问题命中率和最终回答事实一致性；</li>
+<li>统一历史 Embedding 的模型版本，在切换模型时支持批量重建，避免不同维度向量无法比较；</li>
+<li>当个人记录规模继续增长时，引入向量索引和 reranker，而不是继续在 Python 中全量扫描；</li>
+<li>为登录、记录 CRUD、数据隔离和 <code>/api/ask</code> 增加完整接口级测试；</li>
+<li>将 Frontier 的收藏状态持久化，并在用户明确保存后建立外部内容与个人记录的来源关系；</li>
+<li>完善账号注销、隐私授权说明、数据删除和生产环境 CORS 策略。</li>
+</ol>
+<h2 id="代码地图"><a href="#代码地图" class="headerlink" title="代码地图"></a>代码地图</h2><p>项目中与核心能力对应的主要文件如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">miniprogram/</span><br><span class="line">  app.js                         小程序启动与登录</span><br><span class="line">  utils/api.js                   统一 API 请求与鉴权</span><br><span class="line">  pages/record/                  写记录</span><br><span class="line">  pages/timeline/                时间线</span><br><span class="line">  pages/review/                  AI 回顾</span><br><span class="line">  pages/ask/                     个人记录问答</span><br><span class="line">  pages/mine/                    个人信息与数据导出</span><br><span class="line">  pages/ai-settings/             BYOK 配置</span><br><span class="line">  pages/frontier/                关注页面</span><br><span class="line"></span><br><span class="line">server/app/</span><br><span class="line">  main.py                        FastAPI 接口、混合检索与问答编排</span><br><span class="line">  ai.py                          Chat、Embedding、记录分析和回顾生成</span><br><span class="line">  db.py                          SQLite 表结构与增量初始化</span><br><span class="line">  auth.py                        微信登录、Token 与用户身份</span><br><span class="line">  ai_config.py                   API Key 加密、掩码和连接测试</span><br><span class="line">  ai_quota.py                    BYOK/平台额度路由与使用日志</span><br><span class="line">  review_service.py              回顾快照与时间线同步</span><br><span class="line">  frontier.py                    多来源采集编排与 API 输出</span><br><span class="line">  collectors/                    Hacker News、GitHub、RSS 采集器</span><br><span class="line">  clients/dify.py                Dify Workflow 客户端</span><br><span class="line">  services/frontier_enrichment.py  热点筛选、校验、重试和持久化</span><br></pre></td></tr></table></figure>
+
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>“也祝日志”最初只是一个记录工具，但随着功能迭代，它逐渐变成了一个完整的 AI 应用实践：从用户登录、数据隔离和记录 CRUD，到 Embedding、混合 RAG、多轮问答、BYOK、定时回顾，再到外部信息采集和 Dify 工作流。</p>
+<p>对我而言，这个项目最有价值的部分不是接入了多少模型，而是把模型放进一个真实、长期运行的产品后，继续处理上下文、检索、隐私、成本、失败降级、数据持久化和部署运维这些问题。</p>
+<p>它仍有许多可以继续完善的地方，但已经完成了从想法、开发、真机调试、服务器部署到微信发布的完整闭环。</p>
+</div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>记录学习与实践</span>
+    <span>© 2026 YangYang</span>
+  </footer>
+
+  <script>
+    
+    window.SEARCH_INDEX = [{"title":"AI桌面机器人","path":"/2026/08/10/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/","date":"2026.08.10","excerpt":"最近学习了一些嵌入式相关知识，包括 STM32、FreeRTOS 等，也看到不少 AI 桌面机器人项目。相比直接购买成品，我更想亲手完成从硬件组装、固件修改到云端服务部署的完整过程，于是选择复刻一台桌面机器人，并在此基础上继续开发自己的功能。 硬件复刻项目地址：https://oshwhub.com/movecall/moji2 硬件采用嘉立创开源平台上的 "},{"title":"Hello World","path":"/2026/08/05/hello-world/","date":"2026.08.05","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask"},{"title":"智能体经典范式构建","path":"/2026/08/05/chapter04/","date":"2026.08.05","excerpt":"Chat Completions 格式 大模型 API 调用最核心的消息格式 1234exampleMessages = [ &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python"},{"title":"基于coze的智能体搭建","path":"/2026/08/06/chapter05/","date":"2026.08.06","excerpt":"Coze 核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简"},{"title":"基于Dify的智能体搭建","path":"/2026/08/10/%E5%9F%BA%E4%BA%8EDify%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.10","excerpt":"Dify 核心定位：Dify 是一个开源的、功能全面的 LLM 应用开发与运营平台，旨在为开发者提供从原型构建到生产部署的一站式解决方案。 特点分析：它融合了后端服务和模型运营的理念，支持 Agent 工作流、RAG Pipeline、数据标注与微调等多种能力。对于追求专业、稳定、可扩展的企业级应用而言，Dify 提供了坚实的基础。 适用人群：有一定技术背景"},{"title":"API调用故障排查笔记","path":"/2026/08/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8API%E5%A4%B1%E8%B4%A5/","date":"2026.08.12","excerpt":"API 调用故障排查笔记更新时间：2026-08-12 这次遇到过的主要问题1. 页面报 timeout，但后端接口其实返回正常表现： 小程序页面提示超时 但后端日志里能看到 GET /api/review-insights 200 OK 结论： 不能只看前端提示 要以“后端有没有收到请求、有没有正常返回”为准 这次的关键日志： 12INFO:app.mai"},{"title":"如何使自己具有“前瞻性”,从被动信息获取到构建自己的技术雷达","path":"/2026/08/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E8%87%AA%E5%B7%B1%E5%85%B7%E6%9C%89%E5%89%8D%E7%9E%BB%E6%80%A7%EF%BC%8C%E4%BB%8E%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E5%88%B0%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9B%B7%E8%BE%BE/","date":"2026.08.20","excerpt":"感觉目前依赖的是一种被动的信息获取方式 别人用了一个好工具 → 告诉你 → 你才知道 → 然后发现别人已经用了很久 真正有“前瞻性”的人，并不是每天知道最多新工具的人，而是慢慢建立了一套自己的技术雷达（Technology Radar）：知道去哪里发现变化，怎么判断哪些变化重要，以及怎么快速试用。 而且现在这个问题比几年前更明显。GitHub 的 2025 "},{"title":"基于FastGPT平台的智能体搭建","path":"/2026/08/20/%E5%9F%BA%E4%BA%8EFastGPT%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.20","excerpt":"官网地址：https://fastgpt.cn/ FastGPT 最核心的竞争力在于其强大的知识库能力。平台支持多种文件格式的导入，包括 Word、Markdown、PDF 等常见文档类型。 构建”智能投顾助手”案例说明： 本案例将基于 FastGPT 平台，结合知识库、MCP 工具和工作流编排，构建一个专业的”智能投顾助手”。该助手能够回答金融投资理论问题"},{"title":"也祝日志-AI 私人记录微信小程序","path":"/2026/09/01/%E4%B9%9F%E7%A5%9D%E6%97%A5%E5%BF%97-AI%20%E7%A7%81%E4%BA%BA%E8%AE%B0%E5%BD%95%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/","date":"2026.09.01","excerpt":"写在前面“也祝日志”是我独立完成并发布的一款微信小程序，目前已经可以在微信中搜索使用。 我最初想解决的问题并不只是“找一个地方记日记”。普通笔记能够保存内容，却很难在记录积累之后回答这些问题：最近一段时间我在关注什么？以前遇到过类似的问题吗？当时是怎么处理的？零散记录之间是否存在持续出现的主题？ 因此，我把它设计成一个安静的个人记忆空间：用户先记录真实经历，"},{"title":"怎样写出好的prompt？","path":"/2026/08/12/%E6%80%8E%E6%A0%B7%E5%86%99%E5%87%BA%E5%A5%BD%E7%9A%84prompt/","date":"2026.08.12","excerpt":"接触生成式 AI 一段时间后，会逐渐发现一个很明显的现象：同样使用 ChatGPT、Claude、Gemini 等工具，不同 Prompt 得到的结果可能差别很大。有些回答结构完整、观点清晰，几乎可以直接使用；有些回答却比较空泛，甚至没有真正解决问题。 刚开始接触 Prompt 时，很容易把它理解成“向 AI 提问题的方式”。随着使用次数增加，会发现 Pro"},{"title":"什么是冒烟测试","path":"/2026/09/01/%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%92%E7%83%9F%E6%B5%8B%E8%AF%95/","date":"2026.09.01","excerpt":"当我在借助AI开发小程序的时候，AI会自动帮我进行冒烟测试，但我对测试领域并不是很了解，以及有哪些测试，各种测试是怎样工作的，有哪些功能。 “冒烟测试”这个名字其实很容易让人困惑。后来真正放到软件开发流程里理解，就会发现它并不复杂：冒烟测试就是在开始完整测试之前，先快速检查系统最核心的功能是否还能正常工作。 它解决的不是“系统有没有 Bug”这个大问题，而是"}];
+  </script>
+  <script>
+    window.FAIRY_ASSETS = {
+      IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
+      IMAGE_FAIRY_CASTING: '/images/fairy/fairy-casting-transparent.png',
+      IMAGE_BACKGROUND_OVERALL: '/images/fairy/forest-background.png',
+      IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
+    };
+  </script>
+  <script src="/js/forest-fairy.js?v=20260812-4"></script>
+</body>
+</html>
