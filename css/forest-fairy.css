@@ -382,3 +382,30 @@ h1 em, h2 em, h3 em { color: #769a53; font-style: normal; }
 .calendar-month-cell span { font-size: 9px; }
 .calendar-posts, .calendar-posts-hint { display: none; }
 @media (max-width: 700px) { .forest-calendar { padding: 19px 18px; } }
+
+/* Homepage top row: profile, calendar and topics */
+.content-grid { grid-template-columns: minmax(0, 1fr); }
+.home-topics {
+  min-width: 0;
+  align-self: stretch;
+  padding: 20px 22px;
+  border-radius: 22px;
+}
+.home-topics .tag-cloud { align-content: flex-start; }
+@media (min-width: 1101px) {
+  .home-top-grid {
+    grid-template-columns: minmax(320px, 1.25fr) minmax(260px, .9fr) minmax(260px, 1fr);
+    gap: 22px;
+  }
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+  .home-top-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .home-topics { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+  .home-top-grid { grid-template-columns: 1fr; }
+  .home-topics { padding: 19px 18px; }
+}
