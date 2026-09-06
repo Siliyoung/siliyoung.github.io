@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <title>什么是 RSS？ · YangYang</title>
+  <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body>
+  <div class="moss-orb moss-orb-one"></div>
+  <div class="moss-orb moss-orb-two"></div>
+  <div id="ambient-background" class="ambient-forest" aria-hidden="true">
+    <div class="ambient-glow ambient-glow-one"></div>
+    <div class="ambient-glow ambient-glow-two"></div>
+    <div class="ambient-moon">✦</div>
+    <div class="firefly-field"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="leaf-field"><span>❧</span><span>❧</span><span>❧</span></div>
+    <div class="pollen-field"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-constellation"><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-garden"><span>✿</span><span>✾</span><span>✿</span></div>
+    <div class="ambient-stars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-petals"><span>❋</span><span>✧</span><span>❋</span><span>✧</span><span>❋</span><span>✧</span></div>
+  </div>
+  <div id="fairy-sprite" aria-hidden="true"></div>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">✦</span>
+      <span><strong>YangYang</strong></span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      
+        <a href="/">首页</a>
+      
+        <a href="/categories/notes/">随记</a>
+      
+        <a href="/categories/study-notes/">学习笔记</a>
+      
+        <a href="/categories/works/">作品展示</a>
+      
+        <a href="/archives/">文章归档</a>
+      
+    </nav>
+    <button class="search-toggle" type="button" aria-label="搜索文章">⌕</button>
+    <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+    <div class="search-panel" id="search-panel" aria-hidden="true">
+      <div class="search-panel-inner">
+        <input id="site-search" type="search" placeholder="搜索文章标题或内容…" autocomplete="off">
+        <button id="search-close" type="button" aria-label="关闭搜索">×</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">随记</span>
+    <h1>什么是 RSS？</h1>
+    <div class="article-meta"><time datetime="2026-09-06T13:19:23.000Z">2026 年 09 月 06 日</time><span>·</span><span>5 min read</span></div>
+  </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8-RSS%EF%BC%9F"><span class="toc-text">为什么使用 RSS？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSS-%E5%92%8C-Atom"><span class="toc-text">RSS 和 Atom</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">在项目中的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSS-%E7%9A%84%E5%B1%80%E9%99%90"><span class="toc-text">RSS 的局限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></aside>
+    <div class="article-card reveal"><div class="article-content"><p>RSS 可以理解为网站提供的一份<strong>标准化更新清单</strong>，程序可以通过它自动获取网站最新发布的内容。</p>
+<p>普通网页主要给人阅读：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://example.com</span><br></pre></td></tr></table></figure>
+
+<p>而 RSS 地址主要给程序读取：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://example.com/feed.xml</span><br></pre></td></tr></table></figure>
+
+<p>RSS 通常使用 XML 格式，内容大致如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">rss</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">channel</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>某技术博客<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">title</span>&gt;</span>如何构建一个 RAG 应用<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">link</span>&gt;</span>https://example.com/rag<span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">pubDate</span>&gt;</span>Sat, 06 Sep 2026 10:00:00 GMT<span class="tag">&lt;/<span class="name">pubDate</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>本文介绍 RAG 的基本实现方式<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">channel</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">rss</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中通常会包含文章标题、链接、发布时间、作者和摘要等信息。程序只需要按照固定字段读取，不需要分析网页的排版结构。</p>
+<h2 id="为什么使用-RSS？"><a href="#为什么使用-RSS？" class="headerlink" title="为什么使用 RSS？"></a>为什么使用 RSS？</h2><p>假设需要关注 20 个技术网站，最直接的方式是每天分别打开这些网站检查更新。RSS 把这个过程变成了：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">多个网站</span><br><span class="line">   ↓</span><br><span class="line">RSS 订阅地址</span><br><span class="line">   ↓</span><br><span class="line">程序定时读取</span><br><span class="line">   ↓</span><br><span class="line">统一展示最新内容</span><br></pre></td></tr></table></figure>
+
+<p>相比直接抓取网页，RSS 最大的优势是<strong>结构稳定、解析简单、维护成本低</strong>。</p>
+<p>网页中的文章标题可能今天是：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">&quot;article-title&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>网站改版之后变成：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;post-name&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>依赖 HTML 结构的爬虫就可能失效，而 RSS 的字段通常相对稳定，更适合长期定时采集。</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>普通网页</th>
+<th>RSS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主要使用者</td>
+<td>人</td>
+<td>程序 &#x2F; RSS 阅读器</td>
+</tr>
+<tr>
+<td>格式</td>
+<td>HTML</td>
+<td>XML</td>
+</tr>
+<tr>
+<td>页面样式</td>
+<td>有</td>
+<td>基本没有</td>
+</tr>
+<tr>
+<td>解析难度</td>
+<td>较高</td>
+<td>较低</td>
+</tr>
+<tr>
+<td>改版影响</td>
+<td>较大</td>
+<td>较小</td>
+</tr>
+<tr>
+<td>主要内容</td>
+<td>完整网页</td>
+<td>更新列表和摘要</td>
+</tr>
+</tbody></table>
+<h2 id="RSS-和-Atom"><a href="#RSS-和-Atom" class="headerlink" title="RSS 和 Atom"></a>RSS 和 Atom</h2><p>除了 RSS，还有一种常见的订阅格式叫 <strong>Atom</strong>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">feed</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">entry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>文章标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;https://example.com/article&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">updated</span>&gt;</span>2026-09-06T10:00:00Z<span class="tag">&lt;/<span class="name">updated</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">summary</span>&gt;</span>文章摘要<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">entry</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">feed</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>两者解决的问题基本相同，只是 XML 结构有所区别。</p>
+<p>RSS 中一篇文章通常使用：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Atom 中则通常使用：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">entry</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>实际开发订阅采集器时，一般会同时兼容这两种格式。</p>
+<h2 id="在项目中的使用"><a href="#在项目中的使用" class="headerlink" title="在项目中的使用"></a>在项目中的使用</h2><p>“也祝日志”的关注模块使用 RSS 来聚合不同网站的最新内容，大致流程如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">RSS / Atom</span><br><span class="line">    ↓</span><br><span class="line">定时采集</span><br><span class="line">    ↓</span><br><span class="line">解析文章信息</span><br><span class="line">    ↓</span><br><span class="line">统一数据格式</span><br><span class="line">    ↓</span><br><span class="line">写入数据库</span><br><span class="line">    ↓</span><br><span class="line">AI 摘要与分类</span><br><span class="line">    ↓</span><br><span class="line">关注页面展示</span><br></pre></td></tr></table></figure>
+
+<p>项目中的 <code>rss.py</code> 会解析 RSS 的 <code>&lt;item&gt;</code> 和 Atom 的 <code>&lt;entry&gt;</code>，提取标题、链接、作者、发布时间、摘要以及唯一标识，再转换成统一的数据结构。</p>
+<p>这样无论内容来自哪个网站，后续数据库和 AI 处理流程面对的都是相同格式的数据。</p>
+<h2 id="RSS-的局限"><a href="#RSS-的局限" class="headerlink" title="RSS 的局限"></a>RSS 的局限</h2><p>RSS 并不是万能的数据来源。不同网站提供的信息完整度差异很大，有些只有标题和链接，有些提供摘要甚至全文，还有一些网站完全不提供 RSS。因此实际的信息采集通常会同时使用多种方式：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RSS / Atom</span><br><span class="line">官方 API</span><br><span class="line">第三方 API</span><br><span class="line">网页抓取</span><br></pre></td></tr></table></figure>
+
+<p>有 RSS 时优先使用 RSS，因为它通常比直接抓取 HTML 更稳定；没有 RSS 时，再考虑 API 或专门的网页采集器。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RSS 本质上就是：</p>
+<blockquote>
+<p><strong>网站为程序提供的“最新内容清单”。</strong></p>
+</blockquote>
+<p>它把网页内容转换成统一、结构化的数据，使程序能够低成本地持续获取多个网站的最新更新。对于新闻聚合、技术资讯订阅和内容监控这类场景，RSS 仍然是一种简单而实用的数据来源。</p>
+</div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>记录学习与实践</span>
+    <span>© 2026 YangYang</span>
+  </footer>
+
+  <script>
+    
+    window.SEARCH_INDEX = [{"title":"AI桌面机器人","path":"/2026/08/10/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/","date":"2026.08.10","excerpt":"最近学习了一些嵌入式相关知识，包括 STM32、FreeRTOS 等，也看到不少 AI 桌面机器人项目。相比直接购买成品，我更想亲手完成从硬件组装、固件修改到云端服务部署的完整过程，于是选择复刻一台桌面机器人，并在此基础上继续开发自己的功能。 硬件复刻项目地址：https://oshwhub.com/movecall/moji2 硬件采用嘉立创开源平台上的 "},{"title":"Hello World","path":"/2026/08/05/hello-world/","date":"2026.08.05","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask"},{"title":"智能体经典范式构建","path":"/2026/08/05/chapter04/","date":"2026.08.05","excerpt":"Chat Completions 格式 大模型 API 调用最核心的消息格式 1234exampleMessages = [ &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python"},{"title":"基于coze的智能体搭建","path":"/2026/08/06/chapter05/","date":"2026.08.06","excerpt":"Coze 核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简"},{"title":"基于Dify的智能体搭建","path":"/2026/08/10/%E5%9F%BA%E4%BA%8EDify%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.10","excerpt":"Dify 核心定位：Dify 是一个开源的、功能全面的 LLM 应用开发与运营平台，旨在为开发者提供从原型构建到生产部署的一站式解决方案。 特点分析：它融合了后端服务和模型运营的理念，支持 Agent 工作流、RAG Pipeline、数据标注与微调等多种能力。对于追求专业、稳定、可扩展的企业级应用而言，Dify 提供了坚实的基础。 适用人群：有一定技术背景"},{"title":"API调用故障排查笔记","path":"/2026/08/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8API%E5%A4%B1%E8%B4%A5/","date":"2026.08.12","excerpt":"API 调用故障排查笔记更新时间：2026-08-12 这次遇到过的主要问题1. 页面报 timeout，但后端接口其实返回正常表现： 小程序页面提示超时 但后端日志里能看到 GET /api/review-insights 200 OK 结论： 不能只看前端提示 要以“后端有没有收到请求、有没有正常返回”为准 这次的关键日志： 12INFO:app.mai"},{"title":"如何使自己具有“前瞻性”,从被动信息获取到构建自己的技术雷达","path":"/2026/08/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E8%87%AA%E5%B7%B1%E5%85%B7%E6%9C%89%E5%89%8D%E7%9E%BB%E6%80%A7%EF%BC%8C%E4%BB%8E%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E5%88%B0%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9B%B7%E8%BE%BE/","date":"2026.08.20","excerpt":"感觉目前依赖的是一种被动的信息获取方式 别人用了一个好工具 → 告诉你 → 你才知道 → 然后发现别人已经用了很久 真正有“前瞻性”的人，并不是每天知道最多新工具的人，而是慢慢建立了一套自己的技术雷达（Technology Radar）：知道去哪里发现变化，怎么判断哪些变化重要，以及怎么快速试用。 而且现在这个问题比几年前更明显。GitHub 的 2025 "},{"title":"基于FastGPT平台的智能体搭建","path":"/2026/08/20/%E5%9F%BA%E4%BA%8EFastGPT%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.20","excerpt":"官网地址：https://fastgpt.cn/ FastGPT 最核心的竞争力在于其强大的知识库能力。平台支持多种文件格式的导入，包括 Word、Markdown、PDF 等常见文档类型。 构建”智能投顾助手”案例说明： 本案例将基于 FastGPT 平台，结合知识库、MCP 工具和工作流编排，构建一个专业的”智能投顾助手”。该助手能够回答金融投资理论问题"},{"title":"也祝日志-AI 记录微信小程序","path":"/2026/09/01/%E4%B9%9F%E7%A5%9D%E6%97%A5%E5%BF%97-AI%20%E7%A7%81%E4%BA%BA%E8%AE%B0%E5%BD%95%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/","date":"2026.09.01","excerpt":"背景“也祝日志”是我独立完成并发布的一款微信小程序，目前已经可以在微信中搜索使用。 我最初想解决的问题并不只是“找一个地方记日记”。普通笔记能够保存内容，却很难在记录积累之后回答这些问题：最近一段时间我在关注什么？以前遇到过类似的问题吗？当时是怎么处理的？零散记录之间是否存在持续出现的主题？ 因此，我把它设计成一个安静的个人记忆空间：用户先记录真实经历，系统"},{"title":"怎样写出好的prompt？","path":"/2026/08/12/%E6%80%8E%E6%A0%B7%E5%86%99%E5%87%BA%E5%A5%BD%E7%9A%84prompt/","date":"2026.08.12","excerpt":"接触生成式 AI 一段时间后，会逐渐发现一个很明显的现象：同样使用 ChatGPT、Claude、Gemini 等工具，不同 Prompt 得到的结果可能差别很大。有些回答结构完整、观点清晰，几乎可以直接使用；有些回答却比较空泛，甚至没有真正解决问题。 刚开始接触 Prompt 时，很容易把它理解成“向 AI 提问题的方式”。随着使用次数增加，会发现 Pro"},{"title":"什么是冒烟测试","path":"/2026/09/01/%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%92%E7%83%9F%E6%B5%8B%E8%AF%95/","date":"2026.09.01","excerpt":"当我在借助AI开发小程序的时候，AI会自动帮我进行冒烟测试，但我对测试领域并不是很了解，以及有哪些测试，各种测试是怎样工作的，有哪些功能。 “冒烟测试”这个名字其实很容易让人困惑。后来真正放到软件开发流程里理解，就会发现它并不复杂：冒烟测试就是在开始完整测试之前，先快速检查系统最核心的功能是否还能正常工作。 它解决的不是“系统有没有 Bug”这个大问题，而是"},{"title":"codex-with-chatgpt 插件使用体验","path":"/2026/09/06/codex-with-chatgpt%EF%BC%9A%E7%BB%93%E5%90%88ChatGPT%E4%B8%8ECodex%E7%9A%84AI%E7%BC%96%E7%A0%81%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/","date":"2026.09.06","excerpt":"codex-with-chatgpt：结合ChatGPT与Codex的AI编码工具 插件地址：https://github.com/XiaoDuoYa/codex-with-chatgpt 核心理念： ChatGPT 负责思考，Codex 负责干活。 ChatGPT 网页版：负责需求分析、架构设计、制定修改方案、代码 Review。 Codex：负责真正操作"},{"title":"什么是 RSS？","path":"/2026/09/06/%E4%BB%80%E4%B9%88%E6%98%AFRSS/","date":"2026.09.06","excerpt":"RSS 可以理解为网站提供的一份标准化更新清单，程序可以通过它自动获取网站最新发布的内容。 普通网页主要给人阅读： 1https://example.com 而 RSS 地址主要给程序读取： 1https://example.com/feed.xml RSS 通常使用 XML 格式，内容大致如下： 123456789101112&lt;rss&gt; &lt"}];
+  </script>
+  <script>
+    window.FAIRY_ASSETS = {
+      IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
+      IMAGE_FAIRY_CASTING: '/images/fairy/fairy-casting-transparent.png',
+      IMAGE_BACKGROUND_OVERALL: '/images/fairy/forest-background.png',
+      IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
+    };
+  </script>
+  <script src="/js/forest-fairy.js?v=20260812-4"></script>
+</body>
+</html>
