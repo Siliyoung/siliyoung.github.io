@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <title>给个人项目接入邮箱验证码：一次腾讯云 SES 配置记录 · YangYang</title>
+  <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body>
+  <div class="moss-orb moss-orb-one"></div>
+  <div class="moss-orb moss-orb-two"></div>
+  <div id="ambient-background" class="ambient-forest" aria-hidden="true">
+    <div class="ambient-glow ambient-glow-one"></div>
+    <div class="ambient-glow ambient-glow-two"></div>
+    <div class="ambient-moon">✦</div>
+    <div class="firefly-field"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="leaf-field"><span>❧</span><span>❧</span><span>❧</span></div>
+    <div class="pollen-field"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-constellation"><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-garden"><span>✿</span><span>✾</span><span>✿</span></div>
+    <div class="ambient-stars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-petals"><span>❋</span><span>✧</span><span>❋</span><span>✧</span><span>❋</span><span>✧</span></div>
+  </div>
+  <div id="fairy-sprite" aria-hidden="true"></div>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark">✦</span>
+      <span><strong>YangYang</strong></span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      
+        <a href="/">首页</a>
+      
+        <a href="/categories/notes/">随记</a>
+      
+        <a href="/categories/study-notes/">学习笔记</a>
+      
+        <a href="/categories/works/">作品展示</a>
+      
+        <a href="/archives/">文章归档</a>
+      
+    </nav>
+    <button class="search-toggle" type="button" aria-label="搜索文章">⌕</button>
+    <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+    <div class="search-panel" id="search-panel" aria-hidden="true">
+      <div class="search-panel-inner">
+        <input id="site-search" type="search" placeholder="搜索文章标题或内容…" autocomplete="off">
+        <button id="search-close" type="button" aria-label="关闭搜索">×</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">随记</span>
+    <h1>给个人项目接入邮箱验证码：一次腾讯云 SES 配置记录</h1>
+    <div class="article-meta"><time datetime="2026-09-08T06:47:00.000Z">2026 年 09 月 08 日</time><span>·</span><span>7 min read</span></div>
+  </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%88%E9%85%8D%E7%BD%AE%E5%8F%91%E4%BF%A1%E5%9F%9F%E5%90%8D"><span class="toc-text">1. 先配置发信域名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E5%8F%91%E4%BF%A1%E5%9C%B0%E5%9D%80%E5%92%8C%E9%AA%8C%E8%AF%81%E7%A0%81%E6%A8%A1%E6%9D%BF"><span class="toc-text">2. 创建发信地址和验证码模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-API-%E5%AF%86%E9%92%A5%E4%B8%8D%E8%A6%81%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E4%B8%BB%E8%B4%A6%E5%8F%B7"><span class="toc-text">3. API 密钥不要直接使用主账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%8A%8A%E9%85%8D%E7%BD%AE%E6%94%BE%E8%BF%9B%E6%9C%8D%E5%8A%A1%E5%99%A8-env"><span class="toc-text">4. 把配置放进服务器 .env</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-FastAPI-%E8%B0%83%E7%94%A8-SES"><span class="toc-text">5. FastAPI 调用 SES</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E6%AF%94%E8%BE%83%E5%80%BC%E5%BE%97%E8%AE%B0%E5%BD%95%E7%9A%84%E7%82%B9"><span class="toc-text">几个比较值得记录的点</span></a></li></ol></aside>
+    <div class="article-card reveal"><div class="article-content"><p>最近给个人项目补账号系统时，需要实现邮箱注册和验证码验证。项目服务器在腾讯云，域名 <code>yang--yang.com</code> 托管在阿里云，因此邮件服务直接选择了腾讯云 SES。</p>
+<p>整个过程并不复杂，但涉及域名验证、DNS、邮件模板、API 权限和后端调用，第一次配置时还是有几个容易踩坑的地方。</p>
+<h2 id="1-先配置发信域名"><a href="#1-先配置发信域名" class="headerlink" title="1. 先配置发信域名"></a>1. 先配置发信域名</h2><p>在腾讯云 SES 中新建发信域名：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mail.xxxx.com</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>mail.xxxx.com</code> 不需要单独购买，它只是 <code>xxxx.com</code> 的一个子域名。</p>
+<p>腾讯云会要求验证这个域名，并给出一组 DNS 记录，主要包括：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MX</span><br><span class="line">SPF</span><br><span class="line">DKIM</span><br><span class="line">DMARC</span><br></pre></td></tr></table></figure>
+
+<p>腾讯云 SES 要求这些记录保持正确配置，否则可能影响后续发信。(<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1288/47454?utm_source=chatgpt.com">腾讯云</a>)</p>
+<p>由于域名的 DNS 在阿里云管理，所以接下来进入阿里云云解析 DNS，把腾讯云提供的记录逐条添加进去。</p>
+<p>例如腾讯云要求添加：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">类型：TXT</span><br><span class="line">主机记录：mail</span><br><span class="line">记录值：v=spf1 ...</span><br></pre></td></tr></table></figure>
+
+<p>在阿里云中就直接选择 <code>TXT</code>，主机记录填写 <code>mail</code>，不需要再写完整的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mail.xxxx.com</span><br></pre></td></tr></table></figure>
+
+<p>阿里云会自动拼接主域名。(<a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/dns/pubz-add-parsing-record?utm_source=chatgpt.com">阿里云帮助中心</a>)</p>
+<p>DKIM 也是 TXT 记录，不过主机记录通常类似：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxxx._domainkey.mail</span><br></pre></td></tr></table></figure>
+
+<p>记录值则是一段比较长的公钥：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v=DKIM1; k=rsa; p=......</span><br></pre></td></tr></table></figure>
+
+<p>这里最好完全复制腾讯云提供的内容，不要自己修改，也不要手动换行。</p>
+<p><img src="/images/%E7%BB%99%E4%B8%AA%E4%BA%BA%E9%A1%B9%E7%9B%AE%E6%8E%A5%E5%85%A5%E9%82%AE%E7%AE%B1%E9%AA%8C%E8%AF%81%E7%A0%81/image-20260908145109247.png" alt="image-20260908145109247"></p>
+<p>配置完成后等待 DNS 生效，再回腾讯云重新验证。腾讯云文档说明 DNS 配置同步可能需要几分钟到数小时。(<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1288/47454?utm_source=chatgpt.com">腾讯云</a>)</p>
+<p>最终看到：</p>
+<p><img src="/images/%E7%BB%99%E4%B8%AA%E4%BA%BA%E9%A1%B9%E7%9B%AE%E6%8E%A5%E5%85%A5%E9%82%AE%E7%AE%B1%E9%AA%8C%E8%AF%81%E7%A0%81/image-20260908145242070.png" alt="image-20260908145242070"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mail.xxxx.com</span><br><span class="line">已验证</span><br></pre></td></tr></table></figure>
+
+<p>发信域名这一部分就完成了。</p>
+<h2 id="2-创建发信地址和验证码模板"><a href="#2-创建发信地址和验证码模板" class="headerlink" title="2. 创建发信地址和验证码模板"></a>2. 创建发信地址和验证码模板</h2><p>域名验证完成后，可以创建真正的发件地址，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">no-reply@mail.xxxx.com</span><br></pre></td></tr></table></figure>
+
+<p>邮件显示名称设置为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">也祝日志</span><br></pre></td></tr></table></figure>
+
+<p>之后创建一个验证码邮件模板，正文保持简单即可：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>也祝日志<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>本次邮箱验证码为：<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;code&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>验证码 10 分钟内有效，请勿泄露给他人。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>如果并非本人操作，请忽略此邮件。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里 <code>&#123;&#123;code&#125;&#125;</code> 是动态变量。后端真正发邮件时，只需要传入：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;code&quot;</span><span class="punctuation">:</span> <span class="string">&quot;583921&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>模板审核通过以后，就可以正式通过 API 发送验证码。</p>
+<h2 id="3-API-密钥不要直接使用主账号"><a href="#3-API-密钥不要直接使用主账号" class="headerlink" title="3. API 密钥不要直接使用主账号"></a>3. API 密钥不要直接使用主账号</h2><p>后端调用腾讯云 SES 需要：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SecretId</span><br><span class="line">SecretKey</span><br></pre></td></tr></table></figure>
+
+<p>一开始比较容易想到直接创建腾讯云主账号 API 密钥，但这样权限过大。更合适的方式是在腾讯云 CAM 中创建一个专用子用户：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yizhu-ses</span><br></pre></td></tr></table></figure>
+
+<p>只开启：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">编程访问</span><br></pre></td></tr></table></figure>
+
+<p>并创建一个最小权限策略：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;statement&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;effect&quot;</span><span class="punctuation">:</span> <span class="string">&quot;allow&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;action&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;ses:SendEmail&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;resource&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;*&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样这个密钥只能调用 SES 发邮件，即使意外泄露，也不会直接获得云服务器、数据库等其他资源的管理权限。</p>
+<h2 id="4-把配置放进服务器-env"><a href="#4-把配置放进服务器-env" class="headerlink" title="4. 把配置放进服务器 .env"></a>4. 把配置放进服务器 <code>.env</code></h2><p>项目使用 FastAPI，所有敏感配置都放在服务器环境变量中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TENCENT_SECRET_ID=xxxx</span><br><span class="line">TENCENT_SECRET_KEY=xxxx</span><br><span class="line"></span><br><span class="line">TENCENT_SES_REGION=ap-hongkong</span><br><span class="line">TENCENT_SES_FROM=no-reply@mail.yang--yang.com</span><br><span class="line">TENCENT_SES_TEMPLATE_ID=xxxx</span><br></pre></td></tr></table></figure>
+
+<p>前端无论是 Web、PWA 还是微信小程序，都不应该直接拿到腾讯云密钥。正确链路应该是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">前端</span><br><span class="line"> ↓</span><br><span class="line">FastAPI</span><br><span class="line"> ↓</span><br><span class="line">腾讯云 SES</span><br><span class="line"> ↓</span><br><span class="line">用户邮箱</span><br></pre></td></tr></table></figure>
+
+<p>而不是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">前端</span><br><span class="line"> ↓</span><br><span class="line">腾讯云 SES</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-FastAPI-调用-SES"><a href="#5-FastAPI-调用-SES" class="headerlink" title="5. FastAPI 调用 SES"></a>5. FastAPI 调用 SES</h2><p>腾讯云 SES 提供 <code>SendEmail</code> 接口，适用于验证码这类触发邮件，请求域名为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ses.tencentcloudapi.com</span><br></pre></td></tr></table></figure>
+
+<p>目前该接口支持 <code>ap-guangzhou</code> 和 <code>ap-hongkong</code> 两个 Region。(<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/api/1288/51034?utm_source=chatgpt.com">腾讯云</a>)</p>
+<p>第一次接入时没有直接开始做完整注册系统，而是先写一个最小测试：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FastAPI</span><br><span class="line"> ↓</span><br><span class="line">固定验证码 123456</span><br><span class="line"> ↓</span><br><span class="line">腾讯云 SES</span><br><span class="line"> ↓</span><br><span class="line">自己的邮箱</span><br></pre></td></tr></table></figure>
+
+<p>模板参数：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;code&quot;</span><span class="punctuation">:</span> <span class="string">&quot;123456&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>发送成功后，SES 返回 <code>MessageId</code>，邮箱也实际收到验证码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">【也祝日志】邮箱验证码</span><br><span class="line"></span><br><span class="line">123456</span><br></pre></td></tr></table></figure>
+
+<p>到这里才确认整条邮件链路真正跑通。</p>
+<h2 id="几个比较值得记录的点"><a href="#几个比较值得记录的点" class="headerlink" title="几个比较值得记录的点"></a>几个比较值得记录的点</h2><p>域名、服务器和邮件服务并不要求必须在同一家云厂商。域名在阿里云、服务器和 SES 在腾讯云完全可以正常使用，本质上只需要在实际 DNS 服务商配置腾讯云要求的记录即可。腾讯云官方也明确支持域名托管在其他服务商的情况。(<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1288/55191?utm_source=chatgpt.com">腾讯云</a>)</p>
+<p>另外，邮件验证中最容易出问题的是 DKIM。SPF、DMARC 验证比较直观，而 DKIM 的主机记录和公钥比较长，复制时少一个字符都可能验证失败。</p>
+<p>最后是安全问题。验证码系统真正上线后还不能只做到“随机生成六位数字”，还需要增加：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">验证码 10 分钟失效</span><br><span class="line">60 秒内禁止重复发送</span><br><span class="line">验证码只允许使用一次</span><br><span class="line">限制错误尝试次数</span><br><span class="line">限制同邮箱/IP发送频率</span><br><span class="line">数据库只保存验证码 Hash</span><br><span class="line">密码使用 Argon2id 等安全哈希</span><br></pre></td></tr></table></figure>
+
+<p>邮件发送只是账号系统中的一小段，但把这一段独立测试通之后，后面的注册、登录和找回密码都会简单很多。</p>
+<p>腾讯云相关文档可以参考：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1288/47454?utm_source=chatgpt.com">腾讯云 SES 邮件配置</a>、<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/api/1288/51034?utm_source=chatgpt.com">SendEmail API</a>；DNS 配置可以参考 <a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/dns/pubz-add-parsing-record?utm_source=chatgpt.com">阿里云公网 DNS 解析记录说明</a>。</p>
+</div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>记录学习与实践</span>
+    <span>© 2026 YangYang</span>
+  </footer>
+
+  <script>
+    
+    window.SEARCH_INDEX = [{"title":"AI桌面机器人","path":"/2026/08/10/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/","date":"2026.08.10","excerpt":"最近学习了一些嵌入式相关知识，包括 STM32、FreeRTOS 等，也看到不少 AI 桌面机器人项目。相比直接购买成品，我更想亲手完成从硬件组装、固件修改到云端服务部署的完整过程，于是选择复刻一台桌面机器人，并在此基础上继续开发自己的功能。 硬件复刻项目地址：https://oshwhub.com/movecall/moji2 硬件采用嘉立创开源平台上的 "},{"title":"Hello World","path":"/2026/08/05/hello-world/","date":"2026.08.05","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask"},{"title":"智能体经典范式构建","path":"/2026/08/05/chapter04/","date":"2026.08.05","excerpt":"Chat Completions 格式 大模型 API 调用最核心的消息格式 1234exampleMessages = [ &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python"},{"title":"基于coze的智能体搭建","path":"/2026/08/06/chapter05/","date":"2026.08.06","excerpt":"Coze 核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简"},{"title":"基于Dify的智能体搭建","path":"/2026/08/10/%E5%9F%BA%E4%BA%8EDify%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.10","excerpt":"Dify 核心定位：Dify 是一个开源的、功能全面的 LLM 应用开发与运营平台，旨在为开发者提供从原型构建到生产部署的一站式解决方案。 特点分析：它融合了后端服务和模型运营的理念，支持 Agent 工作流、RAG Pipeline、数据标注与微调等多种能力。对于追求专业、稳定、可扩展的企业级应用而言，Dify 提供了坚实的基础。 适用人群：有一定技术背景"},{"title":"API调用故障排查笔记","path":"/2026/08/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8API%E5%A4%B1%E8%B4%A5/","date":"2026.08.12","excerpt":"API 调用故障排查笔记更新时间：2026-08-12 这次遇到过的主要问题1. 页面报 timeout，但后端接口其实返回正常表现： 小程序页面提示超时 但后端日志里能看到 GET /api/review-insights 200 OK 结论： 不能只看前端提示 要以“后端有没有收到请求、有没有正常返回”为准 这次的关键日志： 12INFO:app.mai"},{"title":"如何使自己具有“前瞻性”,从被动信息获取到构建自己的技术雷达","path":"/2026/08/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E8%87%AA%E5%B7%B1%E5%85%B7%E6%9C%89%E5%89%8D%E7%9E%BB%E6%80%A7%EF%BC%8C%E4%BB%8E%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E5%88%B0%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9B%B7%E8%BE%BE/","date":"2026.08.20","excerpt":"感觉目前依赖的是一种被动的信息获取方式 别人用了一个好工具 → 告诉你 → 你才知道 → 然后发现别人已经用了很久 真正有“前瞻性”的人，并不是每天知道最多新工具的人，而是慢慢建立了一套自己的技术雷达（Technology Radar）：知道去哪里发现变化，怎么判断哪些变化重要，以及怎么快速试用。 而且现在这个问题比几年前更明显。GitHub 的 2025 "},{"title":"基于FastGPT平台的智能体搭建","path":"/2026/08/20/%E5%9F%BA%E4%BA%8EFastGPT%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.20","excerpt":"官网地址：https://fastgpt.cn/ FastGPT 最核心的竞争力在于其强大的知识库能力。平台支持多种文件格式的导入，包括 Word、Markdown、PDF 等常见文档类型。 构建”智能投顾助手”案例说明： 本案例将基于 FastGPT 平台，结合知识库、MCP 工具和工作流编排，构建一个专业的”智能投顾助手”。该助手能够回答金融投资理论问题"},{"title":"也祝日志-AI 记录微信小程序","path":"/2026/09/01/%E4%B9%9F%E7%A5%9D%E6%97%A5%E5%BF%97-AI%20%E7%A7%81%E4%BA%BA%E8%AE%B0%E5%BD%95%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/","date":"2026.09.01","excerpt":"背景“也祝日志”是我独立完成并发布的一款微信小程序，目前已经可以在微信中搜索使用。 我最初想解决的问题并不只是“找一个地方记日记”。普通笔记能够保存内容，却很难在记录积累之后回答这些问题：最近一段时间我在关注什么？以前遇到过类似的问题吗？当时是怎么处理的？零散记录之间是否存在持续出现的主题？ 因此，我把它设计成一个安静的个人记忆空间：用户先记录真实经历，系统"},{"title":"怎样写出好的prompt？","path":"/2026/08/12/%E6%80%8E%E6%A0%B7%E5%86%99%E5%87%BA%E5%A5%BD%E7%9A%84prompt/","date":"2026.08.12","excerpt":"接触生成式 AI 一段时间后，会逐渐发现一个很明显的现象：同样使用 ChatGPT、Claude、Gemini 等工具，不同 Prompt 得到的结果可能差别很大。有些回答结构完整、观点清晰，几乎可以直接使用；有些回答却比较空泛，甚至没有真正解决问题。 刚开始接触 Prompt 时，很容易把它理解成“向 AI 提问题的方式”。随着使用次数增加，会发现 Pro"},{"title":"什么是冒烟测试","path":"/2026/09/01/%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%92%E7%83%9F%E6%B5%8B%E8%AF%95/","date":"2026.09.01","excerpt":"当我在借助AI开发小程序的时候，AI会自动帮我进行冒烟测试，但我对测试领域并不是很了解，以及有哪些测试，各种测试是怎样工作的，有哪些功能。 “冒烟测试”这个名字其实很容易让人困惑。后来真正放到软件开发流程里理解，就会发现它并不复杂：冒烟测试就是在开始完整测试之前，先快速检查系统最核心的功能是否还能正常工作。 它解决的不是“系统有没有 Bug”这个大问题，而是"},{"title":"codex-with-chatgpt 插件使用体验","path":"/2026/09/06/codex-with-chatgpt%EF%BC%9A%E7%BB%93%E5%90%88ChatGPT%E4%B8%8ECodex%E7%9A%84AI%E7%BC%96%E7%A0%81%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/","date":"2026.09.06","excerpt":"codex-with-chatgpt：结合ChatGPT与Codex的AI编码工具 插件地址：https://github.com/XiaoDuoYa/codex-with-chatgpt 核心理念： ChatGPT 负责思考，Codex 负责干活。 ChatGPT 网页版：负责需求分析、架构设计、制定修改方案、代码 Review。 Codex：负责真正操作"},{"title":"什么是 RSS？","path":"/2026/09/06/%E4%BB%80%E4%B9%88%E6%98%AFRSS/","date":"2026.09.06","excerpt":"RSS 可以理解为网站提供的一份标准化更新清单，程序可以通过它自动获取网站最新发布的内容。 普通网页主要给人阅读： 1https://example.com 而 RSS 地址主要给程序读取： 1https://example.com/feed.xml RSS 通常使用 XML 格式，内容大致如下： 123456789101112&lt;rss&gt; &lt"},{"title":"给个人项目接入邮箱验证码：一次腾讯云 SES 配置记录","path":"/2026/09/08/%E7%BB%99%E4%B8%AA%E4%BA%BA%E9%A1%B9%E7%9B%AE%E6%8E%A5%E5%85%A5%E9%82%AE%E7%AE%B1%E9%AA%8C%E8%AF%81%E7%A0%81/","date":"2026.09.08","excerpt":"最近给个人项目补账号系统时，需要实现邮箱注册和验证码验证。项目服务器在腾讯云，域名 yang--yang.com 托管在阿里云，因此邮件服务直接选择了腾讯云 SES。 整个过程并不复杂，但涉及域名验证、DNS、邮件模板、API 权限和后端调用，第一次配置时还是有几个容易踩坑的地方。 1. 先配置发信域名在腾讯云 SES 中新建发信域名： 1mail.xxxx"}];
+  </script>
+  <script>
+    window.FAIRY_ASSETS = {
+      IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
+      IMAGE_FAIRY_CASTING: '/images/fairy/fairy-casting-transparent.png',
+      IMAGE_BACKGROUND_OVERALL: '/images/fairy/forest-background.png',
+      IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
+    };
+  </script>
+  <script src="/js/forest-fairy.js?v=20260812-4"></script>
+</body>
+</html>
