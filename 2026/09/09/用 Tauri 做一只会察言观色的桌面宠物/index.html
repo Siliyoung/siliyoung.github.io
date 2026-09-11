@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <meta name="description" content="学习与项目记录">
   <title>用 Tauri 做一只会“察言观色”的桌面宠物：也祝 · YangYang</title>
   <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,10 +63,10 @@
   <header class="article-hero reveal">
     <span class="card-kicker">作品展示</span>
     <h1>用 Tauri 做一只会“察言观色”的桌面宠物：也祝</h1>
-    <div class="article-meta"><time datetime="2026-09-09T13:54:23.000Z">2026 年 09 月 09 日</time><span>·</span><span>4 min read</span></div>
+    <div class="article-meta"><time datetime="2026-09-09T13:54:23.000Z">2026 年 09 月 09 日</time><span>·</span><span>约 4 分钟</span></div>
   </header>
   <div class="article-layout">
-    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%8F%E6%98%8E%E7%AA%97%E5%8F%A3%E5%8F%AA%E6%98%AF%E8%B5%B7%E7%82%B9"><span class="toc-text">透明窗口只是起点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E4%B8%BA%E4%B8%8D%E6%98%AF%E2%80%9C%E6%A3%80%E6%B5%8B%E5%88%B0%E8%BE%93%E5%85%A5%E5%B0%B1%E5%88%87%E5%8A%A8%E7%94%BB%E2%80%9D"><span class="toc-text">行为不是“检测到输入就切动画”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E3%80%81%E6%89%93%E5%8C%85%E4%B8%8E%E5%BC%80%E6%BA%90"><span class="toc-text">配置、打包与开源</span></a></li></ol></aside>
+    <aside class="toc-panel"><div class="toc-title">目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%8F%E6%98%8E%E7%AA%97%E5%8F%A3%E5%8F%AA%E6%98%AF%E8%B5%B7%E7%82%B9"><span class="toc-text">透明窗口只是起点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E4%B8%BA%E4%B8%8D%E6%98%AF%E2%80%9C%E6%A3%80%E6%B5%8B%E5%88%B0%E8%BE%93%E5%85%A5%E5%B0%B1%E5%88%87%E5%8A%A8%E7%94%BB%E2%80%9D"><span class="toc-text">行为不是“检测到输入就切动画”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E3%80%81%E6%89%93%E5%8C%85%E4%B8%8E%E5%BC%80%E6%BA%90"><span class="toc-text">配置、打包与开源</span></a></li></ol></aside>
     <div class="article-card reveal"><div class="article-content"><p>“也祝”是一只运行在 Windows 桌面上的小猪宠物。它会沿屏幕边缘散步，会在你持续打字时陪你工作，也会在长时间安静后犯困、睡觉；右键宠物还能打招呼、打开设置或让它暂时退下。项目最初使用 Electron，实现起来直接，但安装包体积与常驻资源占用都偏大，于是后来迁移到了 Tauri 2：界面仍由 HTML、CSS 和 JavaScript 驱动，窗口、系统托盘、全局输入检测与配置持久化则交给 Rust。最终的 Windows NSIS 安装包约 4 MB，源码已开放在 <a target="_blank" rel="noopener" href="https://github.com/Siliyoung/open-desktop-pet">GitHub：Siliyoung&#x2F;open-desktop-pet</a>。</p>
 <table>
   <tr>
@@ -86,14 +86,13 @@
 <p>当键盘、鼠标和宠物互动都很少时，它会先用“累了，睡会儿”之类的气泡进入困倦过渡，随后才切换到睡眠；新的有效操作会让它伸懒腰醒来。清醒状态下如果很久没有和宠物互动，它可能变得伤心，摸一摸则进入开心状态。整体流程可以概括为：<code>空闲 → 持续输入 → 工作 → 空闲 → 困倦 → 睡眠 → 起床</code>，而“伤心 → 抚摸 → 开心”是另一条陪伴反馈。状态机把短暂事件和持续行为分开，宠物才不会在用户浏览、点击或偶尔敲键盘时反复乱跳。</p>
 <h2 id="配置、打包与开源"><a href="#配置、打包与开源" class="headerlink" title="配置、打包与开源"></a>配置、打包与开源</h2><p>缩放、昵称、自动散步、开机启动和窗口位置都保存在 Tauri 的应用配置目录中，前端只负责收集设置，Rust 负责落盘及调用系统能力。缩放范围从 20% 开始，既适合小屏幕，也能按比例同步调整气泡和字号。打包使用 Tauri 的 NSIS bundler；体积能降到约 4 MB，是因为程序复用了 Windows 已有的 WebView2，而不是像 Electron 那样把完整 Chromium 一起装入安装包。代价是目标系统需要 WebView2 Runtime，不过现代 Windows 通常已经具备。</p>
 <p>当前版本为 <strong>v0.2.4</strong>，可以直接查看源码、提交问题或下载安装包：<a target="_blank" rel="noopener" href="https://github.com/Siliyoung/open-desktop-pet">项目主页</a> · <a target="_blank" rel="noopener" href="https://github.com/Siliyoung/open-desktop-pet/releases/tag/v0.2.4">v0.2.4 Release</a>。如果你也准备做桌面宠物，这个项目最值得复用的不是某一张动画图，而是“透明窗口 + 原生系统能力 + 有迟滞的行为状态机”这套组合：界面足够轻，行为也更像一个安静陪伴你的桌面角色。</p>
-</div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
+</div><footer class="article-footer"><a href="/">返回首页 ↑</a></footer></div>
   </div>
 </article>
 
   </main>
 
   <footer class="site-footer">
-    <span>记录学习与实践</span>
     <span>© 2026 YangYang</span>
   </footer>
 

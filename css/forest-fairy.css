@@ -147,7 +147,7 @@ h1 em, h2 em, h3 em { color: #769a53; font-style: normal; }
 .archive-row time { color: var(--muted); font-size: 11px; }
 .archive-row strong { font-family: "Noto Serif SC", serif; font-size: 17px; }
 .archive-row span { color: var(--gold); font-size: 18px; }
-.site-footer { display: flex; justify-content: space-between; width: min(1400px, calc(100% - 48px)); margin: 0 auto; padding: 24px 0 38px; color: rgba(34, 71, 42, .72); font-size: 11px; }
+.site-footer { display: flex; justify-content: center; width: min(1400px, calc(100% - 48px)); margin: 0 auto; padding: 24px 0 38px; color: rgba(34, 71, 42, .72); font-size: 11px; }
 .moss-orb { position: fixed; z-index: -1; width: 240px; height: 240px; border-radius: 50%; filter: blur(45px); opacity: .25; pointer-events: none; }
 .moss-orb-one { top: 16%; left: 3%; background: #ffe27d; animation: drift 11s ease-in-out infinite; }
 .moss-orb-two { right: 4%; bottom: 10%; background: #a9d778; animation: drift 14s ease-in-out infinite reverse; }

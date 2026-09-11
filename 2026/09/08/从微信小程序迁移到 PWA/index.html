@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <meta name="description" content="学习与项目记录">
   <title>从微信小程序迁移到 PWA · YangYang</title>
   <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,10 +63,10 @@
   <header class="article-hero reveal">
     <span class="card-kicker">随记</span>
     <h1>从微信小程序迁移到 PWA</h1>
-    <div class="article-meta"><time datetime="2026-09-08T15:17:00.000Z">2026 年 09 月 08 日</time><span>·</span><span>6 min read</span></div>
+    <div class="article-meta"><time datetime="2026-09-08T15:17:00.000Z">2026 年 09 月 08 日</time><span>·</span><span>约 6 分钟</span></div>
   </header>
   <div class="article-layout">
-    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%89%8D%E7%AB%AF%E8%BF%81%E7%A7%BB%E5%88%B0-Vue"><span class="toc-text">小程序前端迁移到 Vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%8A%E7%BD%91%E7%AB%99%E5%8F%98%E6%88%90-PWA"><span class="toc-text">把网站变成 PWA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GitHub-Cloudflare-Pages"><span class="toc-text">GitHub + Cloudflare Pages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%A4%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">部署时遇到的两个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E7%BB%A7%E7%BB%AD%E5%8F%AA%E6%94%BE%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">密钥继续只放服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">最后的结构</span></a></li></ol></aside>
+    <aside class="toc-panel"><div class="toc-title">目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%89%8D%E7%AB%AF%E8%BF%81%E7%A7%BB%E5%88%B0-Vue"><span class="toc-text">小程序前端迁移到 Vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%8A%E7%BD%91%E7%AB%99%E5%8F%98%E6%88%90-PWA"><span class="toc-text">把网站变成 PWA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GitHub-Cloudflare-Pages"><span class="toc-text">GitHub + Cloudflare Pages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%A4%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">部署时遇到的两个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E7%BB%A7%E7%BB%AD%E5%8F%AA%E6%94%BE%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">密钥继续只放服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">最后的结构</span></a></li></ol></aside>
     <div class="article-card reveal"><div class="article-content"><p>最近把一个原本运行在微信小程序里的项目迁移出了一套独立 PWA。原因很直接：小程序适合作为轻量入口，但平台审核、类目和能力限制比较明显，希望保留原有版本的同时，再提供一个不依赖微信运行环境的 Web 版本。</p>
 <p>这次没有重写后端，而是把整个系统调整成了“双前端 + 单后端”的结构：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">微信小程序 ─┐</span><br><span class="line">            ├─→ FastAPI → 数据库 / AI / 邮件服务</span><br><span class="line">PWA Web ────┘</span><br></pre></td></tr></table></figure>
@@ -149,14 +149,13 @@
 <p>整个过程真正改动最大的不是后端，而是<strong>运行环境的替换</strong>：把微信提供的导航、存储、网络请求、触摸事件逐步换成浏览器标准能力。</p>
 <p>PWA 的价值也不在于完全取代原生 App，而是用一套普通 Web 技术获得了接近 App 的安装和使用体验，同时保留 Web 部署简单、跨平台和更新快的特点。</p>
 <p>对于已经拥有独立后端的小程序项目，这种迁移方式比重新开发一个完整 App 要轻量得多。</p>
-</div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
+</div><footer class="article-footer"><a href="/">返回首页 ↑</a></footer></div>
   </div>
 </article>
 
   </main>
 
   <footer class="site-footer">
-    <span>记录学习与实践</span>
     <span>© 2026 YangYang</span>
   </footer>
 

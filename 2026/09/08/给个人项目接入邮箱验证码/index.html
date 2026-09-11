@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="AI Agent 学习笔记与实践记录">
+  <meta name="description" content="学习与项目记录">
   <title>给个人项目接入邮箱验证码：一次腾讯云 SES 配置记录 · YangYang</title>
   <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,10 +63,10 @@
   <header class="article-hero reveal">
     <span class="card-kicker">随记</span>
     <h1>给个人项目接入邮箱验证码：一次腾讯云 SES 配置记录</h1>
-    <div class="article-meta"><time datetime="2026-09-08T06:47:00.000Z">2026 年 09 月 08 日</time><span>·</span><span>7 min read</span></div>
+    <div class="article-meta"><time datetime="2026-09-08T06:47:00.000Z">2026 年 09 月 08 日</time><span>·</span><span>约 7 分钟</span></div>
   </header>
   <div class="article-layout">
-    <aside class="toc-panel"><div class="toc-title">ON THIS PAGE</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%88%E9%85%8D%E7%BD%AE%E5%8F%91%E4%BF%A1%E5%9F%9F%E5%90%8D"><span class="toc-text">1. 先配置发信域名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E5%8F%91%E4%BF%A1%E5%9C%B0%E5%9D%80%E5%92%8C%E9%AA%8C%E8%AF%81%E7%A0%81%E6%A8%A1%E6%9D%BF"><span class="toc-text">2. 创建发信地址和验证码模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-API-%E5%AF%86%E9%92%A5%E4%B8%8D%E8%A6%81%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E4%B8%BB%E8%B4%A6%E5%8F%B7"><span class="toc-text">3. API 密钥不要直接使用主账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%8A%8A%E9%85%8D%E7%BD%AE%E6%94%BE%E8%BF%9B%E6%9C%8D%E5%8A%A1%E5%99%A8-env"><span class="toc-text">4. 把配置放进服务器 .env</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-FastAPI-%E8%B0%83%E7%94%A8-SES"><span class="toc-text">5. FastAPI 调用 SES</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E6%AF%94%E8%BE%83%E5%80%BC%E5%BE%97%E8%AE%B0%E5%BD%95%E7%9A%84%E7%82%B9"><span class="toc-text">几个比较值得记录的点</span></a></li></ol></aside>
+    <aside class="toc-panel"><div class="toc-title">目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%88%E9%85%8D%E7%BD%AE%E5%8F%91%E4%BF%A1%E5%9F%9F%E5%90%8D"><span class="toc-text">1. 先配置发信域名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E5%8F%91%E4%BF%A1%E5%9C%B0%E5%9D%80%E5%92%8C%E9%AA%8C%E8%AF%81%E7%A0%81%E6%A8%A1%E6%9D%BF"><span class="toc-text">2. 创建发信地址和验证码模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-API-%E5%AF%86%E9%92%A5%E4%B8%8D%E8%A6%81%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E4%B8%BB%E8%B4%A6%E5%8F%B7"><span class="toc-text">3. API 密钥不要直接使用主账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%8A%8A%E9%85%8D%E7%BD%AE%E6%94%BE%E8%BF%9B%E6%9C%8D%E5%8A%A1%E5%99%A8-env"><span class="toc-text">4. 把配置放进服务器 .env</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-FastAPI-%E8%B0%83%E7%94%A8-SES"><span class="toc-text">5. FastAPI 调用 SES</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E6%AF%94%E8%BE%83%E5%80%BC%E5%BE%97%E8%AE%B0%E5%BD%95%E7%9A%84%E7%82%B9"><span class="toc-text">几个比较值得记录的点</span></a></li></ol></aside>
     <div class="article-card reveal"><div class="article-content"><p>最近给个人项目补账号系统时，需要实现邮箱注册和验证码验证。项目服务器在腾讯云，域名 <code>XXXX.com</code> 托管在阿里云，因此邮件服务直接选择了腾讯云 SES。</p>
 <p>整个过程并不复杂，但涉及域名验证、DNS、邮件模板、API 权限和后端调用，第一次配置时还是有几个容易踩坑的地方。</p>
 <h2 id="1-先配置发信域名"><a href="#1-先配置发信域名" class="headerlink" title="1. 先配置发信域名"></a>1. 先配置发信域名</h2><p>在腾讯云 SES 中新建发信域名：</p>
@@ -155,14 +155,13 @@
 
 <p>邮件发送只是账号系统中的一小段，但把这一段独立测试通之后，后面的注册、登录和找回密码都会简单很多。</p>
 <p>腾讯云相关文档可以参考：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1288/47454?utm_source=chatgpt.com">腾讯云 SES 邮件配置</a>、<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/api/1288/51034?utm_source=chatgpt.com">SendEmail API</a>；DNS 配置可以参考 <a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/dns/pubz-add-parsing-record?utm_source=chatgpt.com">阿里云公网 DNS 解析记录说明</a>。</p>
-</div><footer class="article-footer"><span>✦ ✦ ✦</span><a href="/">返回首页 ↑</a></footer></div>
+</div><footer class="article-footer"><a href="/">返回首页 ↑</a></footer></div>
   </div>
 </article>
 
   </main>
 
   <footer class="site-footer">
-    <span>记录学习与实践</span>
     <span>© 2026 YangYang</span>
   </footer>
 
