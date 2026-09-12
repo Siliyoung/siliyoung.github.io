@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="学习与项目记录">
+  <title>Cloudflare 连接 GitHub 仓库并部署静态网站 · YangYang</title>
+  <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body>
+  <div class="moss-orb moss-orb-one"></div>
+  <div class="moss-orb moss-orb-two"></div>
+  <div id="ambient-background" class="ambient-forest" aria-hidden="true">
+    <div class="ambient-glow ambient-glow-one"></div>
+    <div class="ambient-glow ambient-glow-two"></div>
+    <div class="ambient-moon">✦</div>
+    <div class="firefly-field"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="leaf-field"><span>❧</span><span>❧</span><span>❧</span></div>
+    <div class="pollen-field"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-constellation"><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-garden"><span>✿</span><span>✾</span><span>✿</span></div>
+    <div class="ambient-stars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ambient-petals"><span>❋</span><span>✧</span><span>❋</span><span>✧</span><span>❋</span><span>✧</span></div>
+  </div>
+  <div id="fairy-sprite" aria-hidden="true"></div>
+  <div id="sparkle-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="brand-mark"><img src="/images/%E7%94%A8%20Tauri%20%E5%81%9A%E4%B8%80%E5%8F%AA%E4%BC%9A%E5%AF%9F%E8%A8%80%E8%A7%82%E8%89%B2%E7%9A%84%E6%A1%8C%E9%9D%A2%E5%AE%A0%E7%89%A9/pig-idle.png" alt="" aria-hidden="true"></span>
+      <span><strong>YangYang</strong></span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      
+      
+        <a href="/">首页</a>
+      
+        <a href="/categories/notes/">随记</a>
+      
+        <a href="/categories/study-notes/">学习笔记</a>
+      
+        <a href="/categories/works/">作品展示</a>
+      
+        <a href="/archives/">文章归档</a>
+      
+    </nav>
+    <button class="search-toggle" type="button" aria-label="搜索文章">⌕</button>
+    <button class="nav-toggle" type="button" aria-label="打开导航">☰</button>
+    <div class="search-panel" id="search-panel" aria-hidden="true">
+      <div class="search-panel-inner">
+        <input id="site-search" type="search" placeholder="搜索文章标题或内容…" autocomplete="off">
+        <button id="search-close" type="button" aria-label="关闭搜索">×</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">随记</span>
+    <h1>Cloudflare 连接 GitHub 仓库并部署静态网站</h1>
+    <div class="article-meta"><time datetime="2026-09-12T15:25:00.000Z">2026 年 09 月 12 日</time><span>·</span><span>约 13 分钟</span></div>
+  </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="toc-text">整体结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E6%8A%8A%E5%89%8D%E7%AB%AF%E6%94%BE%E5%88%B0-GitHub"><span class="toc-text">先把前端放到 GitHub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-Cloudflare-Pages-%E8%BF%9E%E6%8E%A5-GitHub"><span class="toc-text">在 Cloudflare Pages 连接 GitHub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Vue-Vite-%E6%9E%84%E5%BB%BA%E5%8F%82%E6%95%B0"><span class="toc-text">配置 Vue &#x2F; Vite 构建参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E8%B0%83%E7%94%A8%E5%90%8E%E7%AB%AF-API"><span class="toc-text">前端调用后端 API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%90%8E%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E7%94%9F%E6%95%88%EF%BC%9F"><span class="toc-text">修改环境变量后为什么没有生效？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%E8%BF%98%E9%9C%80%E8%A6%81%E5%A4%84%E7%90%86-CORS"><span class="toc-text">后端还需要处理 CORS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue-Router-%E8%BF%98%E9%9C%80%E8%A6%81-SPA-%E5%9B%9E%E9%80%80"><span class="toc-text">Vue Router 还需要 SPA 回退</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GitHub-%E5%92%8C-Cloudflare-%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84%E5%9C%B0%E6%96%B9%EF%BC%9A%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="toc-text">GitHub 和 Cloudflare 最方便的地方：自动部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Preview-Deployment-%E4%B9%9F%E5%BE%88%E5%AE%9E%E7%94%A8"><span class="toc-text">Preview Deployment 也很实用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E5%86%8D%E7%BB%91%E5%AE%9A%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D"><span class="toc-text">最后再绑定自己的域名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E5%A5%97%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E9%A1%B9%E7%9B%AE"><span class="toc-text">这套部署方式适合什么项目</span></a></li></ol></aside>
+    <div class="article-card reveal"><div class="article-content"><p>最近把一个原本运行在微信小程序里的项目迁移成了 Web&#x2F;PWA 版本，前端使用 Vue 3 + Vite。后端仍然运行在自己的服务器上，前端则希望找一个不需要额外维护 Nginx、支持 HTTPS、还能自动跟 GitHub 同步的平台。最后选择了 <strong>Cloudflare Pages</strong>。</p>
+<p>实际用下来，这套流程非常适合个人项目：代码推到 GitHub，Cloudflare 自动拉取、构建、部署，之后每次更新 <code>main</code> 分支都可以自动发布。</p>
+<h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p>最终的部署结构其实很简单：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">GitHub Repository</span><br><span class="line">        │</span><br><span class="line">        │ push</span><br><span class="line">        ▼</span><br><span class="line">Cloudflare Pages</span><br><span class="line">        │</span><br><span class="line">        │ npm run build</span><br><span class="line">        ▼</span><br><span class="line">       dist</span><br><span class="line">        │</span><br><span class="line">        ▼</span><br><span class="line">https://xxx.pages.dev</span><br><span class="line">        │</span><br><span class="line">        ├── 静态 HTML / CSS / JS</span><br><span class="line">        │</span><br><span class="line">        └── 请求 API</span><br><span class="line">                 │</span><br><span class="line">                 ▼</span><br><span class="line">          FastAPI Backend</span><br></pre></td></tr></table></figure>
+
+<p>Cloudflare Pages 只负责前端静态资源，并没有把 FastAPI 后端一起搬过去。这一点比较重要。像 Vue、React、Vite 这类项目经过构建后，本质上都会得到一套 HTML、CSS 和 JavaScript 静态文件，因此非常适合放到 Pages 上。</p>
+<hr>
+<h2 id="先把前端放到-GitHub"><a href="#先把前端放到-GitHub" class="headerlink" title="先把前端放到 GitHub"></a>先把前端放到 GitHub</h2><p>项目本地目录大致如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">web/</span><br><span class="line">├── src/</span><br><span class="line">├── public/</span><br><span class="line">├── package.json</span><br><span class="line">├── vite.config.ts</span><br><span class="line">└── ...</span><br></pre></td></tr></table></figure>
+
+<p>先初始化 Git：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;feat: initial web version&quot;</span></span><br><span class="line">git branch -M main</span><br></pre></td></tr></table></figure>
+
+<p>然后在 GitHub 创建一个仓库，再添加远程地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/&lt;username&gt;/&lt;repo&gt;.git</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+
+<p>这里之前踩过一个很小的坑。一开始使用的是 SSH 地址：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
+
+<p>但本地没有配置 GitHub SSH Key，因此出现：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Permission denied (publickey)</span><br></pre></td></tr></table></figure>
+
+<p>如果不打算专门配置 SSH，直接换成 HTTPS 地址即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote set-url origin https://github.com/&lt;username&gt;/&lt;repo&gt;.git</span><br></pre></td></tr></table></figure>
+
+<p>对于个人项目来说会省事很多。另外，下面这些文件不要提交：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">node_modules/</span><br><span class="line">dist/</span><br><span class="line">.env</span><br><span class="line">.env.local</span><br></pre></td></tr></table></figure>
+
+<p>尤其是 <code>.env</code>，里面如果存在服务器配置或者密钥，不应该进入 GitHub。</p>
+<hr>
+<h2 id="在-Cloudflare-Pages-连接-GitHub"><a href="#在-Cloudflare-Pages-连接-GitHub" class="headerlink" title="在 Cloudflare Pages 连接 GitHub"></a>在 Cloudflare Pages 连接 GitHub</h2><p>进入 Cloudflare 控制台后创建 Pages 项目，选择：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Workers &amp; Pages</span><br><span class="line">→ Create</span><br><span class="line">→ Pages</span><br><span class="line">→ Connect to Git</span><br></pre></td></tr></table></figure>
+
+<p>授权 Cloudflare 访问 GitHub 后，就可以看到 GitHub 仓库。选择需要部署的仓库即可。这里有一个很容易弄混的地方：</p>
+<blockquote>
+<p>Vue&#x2F;Vite 静态网站应该创建 <strong>Cloudflare Pages</strong> 项目，不是直接使用 Workers 部署。</p>
+</blockquote>
+<p>之前曾经尝试过：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx wrangler deploy</span><br></pre></td></tr></table></figure>
+
+<p>结果走成了 Workers 的部署方式。虽然 Cloudflare Pages 和 Workers 现在在控制台里结合得越来越紧，但如果只是部署一个 Vue 静态网站，直接使用 <strong>Pages + Git Integration</strong> 会简单得多。</p>
+<hr>
+<h2 id="配置-Vue-Vite-构建参数"><a href="#配置-Vue-Vite-构建参数" class="headerlink" title="配置 Vue &#x2F; Vite 构建参数"></a>配置 Vue &#x2F; Vite 构建参数</h2><p>连接仓库后，Cloudflare 会要求填写构建配置。对于普通 Vue 3 + Vite 项目，可以这样配置：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Production branch:</span><br><span class="line">main</span><br><span class="line"></span><br><span class="line">Framework preset:</span><br><span class="line">Vue / Vite</span><br><span class="line"></span><br><span class="line">Build command:</span><br><span class="line">npm run build</span><br><span class="line"></span><br><span class="line">Build output directory:</span><br><span class="line">dist</span><br></pre></td></tr></table></figure>
+
+<p>如果 GitHub 仓库本身就是前端项目：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">repo/</span><br><span class="line">├── package.json</span><br><span class="line">├── src/</span><br><span class="line">└── vite.config.ts</span><br></pre></td></tr></table></figure>
+
+<p>那么：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Root directory</span><br></pre></td></tr></table></figure>
+
+<p>可以直接留空。</p>
+<p>如果前端放在仓库里的子目录：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">repo/</span><br><span class="line">├── server/</span><br><span class="line">└── web/</span><br></pre></td></tr></table></figure>
+
+<p>那 Root directory 才需要填写：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web</span><br></pre></td></tr></table></figure>
+
+<p>Cloudflare 在部署时实际上做的事情和本地差不多：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+<p>然后把：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dist/</span><br></pre></td></tr></table></figure>
+
+<p>部署到 CDN。</p>
+<p>构建成功以后，会得到一个默认地址：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://项目名.pages.dev</span><br></pre></td></tr></table></figure>
+
+<p>到这里，一个免费的 HTTPS 静态网站就已经上线了。</p>
+<hr>
+<h2 id="前端调用后端-API"><a href="#前端调用后端-API" class="headerlink" title="前端调用后端 API"></a>前端调用后端 API</h2><p>静态网站通常还会调用自己的后端。例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Vue</span><br><span class="line">    ↓</span><br><span class="line">https://&lt;API域名&gt;/api/records</span><br><span class="line">    ↓</span><br><span class="line">FastAPI</span><br></pre></td></tr></table></figure>
+
+<p>Vite 项目一般使用环境变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VITE_API_BASE_URL=https://&lt;API域名&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在代码中：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> apiBaseUrl = <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">env</span>.<span class="property">VITE_API_BASE_URL</span></span><br></pre></td></tr></table></figure>
+
+<p>Cloudflare Pages 中可以在：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Settings</span><br><span class="line">→ Environment variables</span><br></pre></td></tr></table></figure>
+
+<p>添加：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VITE_API_BASE_URL</span><br></pre></td></tr></table></figure>
+
+<p>值填写正式 API 地址。</p>
+<blockquote>
+<p><code>VITE_*</code> 环境变量并不是服务器密钥。</p>
+</blockquote>
+<p>Vite 会在：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+<p>的时候直接把它写进浏览器最终下载的 JavaScript 中。</p>
+<p>因此下面这种配置没问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VITE_API_BASE_URL=https://api.example.com</span><br></pre></td></tr></table></figure>
+
+<p>但绝对不能写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VITE_SECRET_KEY=xxx</span><br><span class="line">VITE_TENCENT_SECRET_KEY=xxx</span><br><span class="line">VITE_OPENAI_API_KEY=xxx</span><br></pre></td></tr></table></figure>
+
+<p>真正的 Secret 应该始终留在 FastAPI 后端。</p>
+<hr>
+<h2 id="修改环境变量后为什么没有生效？"><a href="#修改环境变量后为什么没有生效？" class="headerlink" title="修改环境变量后为什么没有生效？"></a>修改环境变量后为什么没有生效？</h2><p>这里也踩过一次坑。Cloudflare Pages 修改：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VITE_API_BASE_URL</span><br></pre></td></tr></table></figure>
+
+<p>以后，已经部署出去的网页不会自动变化。因为 Vite 的环境变量是在<strong>构建阶段</strong>写进去的。流程实际上是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">VITE_API_BASE_URL</span><br><span class="line">       ↓</span><br><span class="line">npm run build</span><br><span class="line">       ↓</span><br><span class="line">JavaScript Bundle</span><br><span class="line">       ↓</span><br><span class="line">浏览器</span><br></pre></td></tr></table></figure>
+
+<p>所以修改环境变量后需要：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Redeploy</span><br></pre></td></tr></table></figure>
+
+<p>重新构建一次。否则网页仍然会使用上一次构建时的值。当时就出现过前端错误地请求：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://xxx.pages.dev/api/...</span><br></pre></td></tr></table></figure>
+
+<p>而不是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://&lt;API域名&gt;/api/...</span><br></pre></td></tr></table></figure>
+
+<p>重新配置 <code>VITE_API_BASE_URL</code> 并部署后就恢复正常了。</p>
+<hr>
+<h2 id="后端还需要处理-CORS"><a href="#后端还需要处理-CORS" class="headerlink" title="后端还需要处理 CORS"></a>后端还需要处理 CORS</h2><p>前端和 API 不在同一个域名下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Frontend:</span><br><span class="line">https://xxx.pages.dev</span><br><span class="line"></span><br><span class="line">Backend:</span><br><span class="line">https://api.example.com</span><br></pre></td></tr></table></figure>
+
+<p>对于浏览器来说，这是两个不同的 Origin。因此 FastAPI 需要允许 Pages 域名访问。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi.middleware.cors <span class="keyword">import</span> CORSMiddleware</span><br><span class="line"></span><br><span class="line">app.add_middleware(</span><br><span class="line">    CORSMiddleware,</span><br><span class="line">    allow_origins=[</span><br><span class="line">        <span class="string">&quot;https://xxx.pages.dev&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://app.example.com&quot;</span>,</span><br><span class="line">    ],</span><br><span class="line">    allow_credentials=<span class="literal">True</span>,</span><br><span class="line">    allow_methods=[<span class="string">&quot;*&quot;</span>],</span><br><span class="line">    allow_headers=[<span class="string">&quot;*&quot;</span>],</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>不太建议为了方便直接：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">allow_origins=[<span class="string">&quot;*&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>正式环境最好明确允许自己的前端域名。如果还会使用 Cloudflare 的 Preview Deployment，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://xxxxx.project.pages.dev</span><br></pre></td></tr></table></figure>
+
+<p>也可以根据实际情况配置规则匹配 Preview 域名。</p>
+<hr>
+<h2 id="Vue-Router-还需要-SPA-回退"><a href="#Vue-Router-还需要-SPA-回退" class="headerlink" title="Vue Router 还需要 SPA 回退"></a>Vue Router 还需要 SPA 回退</h2><p>Vue Router 使用 History 模式时，还有一个典型问题。例如直接访问：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://example.pages.dev/mine</span><br></pre></td></tr></table></figure>
+
+<p>服务器实际上找不到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/mine</span><br></pre></td></tr></table></figure>
+
+<p>这个 HTML 文件。因为真正存在的只有：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index.html</span><br></pre></td></tr></table></figure>
+
+<p>所以需要告诉 Cloudflare：</p>
+<blockquote>
+<p>不管访问哪个前端路由，都先返回 <code>index.html</code>，然后交给 Vue Router 处理。</p>
+</blockquote>
+<p>可以在：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public/_redirects</span><br></pre></td></tr></table></figure>
+
+<p>加入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/* /index.html 200</span><br></pre></td></tr></table></figure>
+
+<p>构建完成后：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dist/_redirects</span><br></pre></td></tr></table></figure>
+
+<p>也会存在。</p>
+<p>这样：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/</span><br><span class="line"> /mine</span><br><span class="line"> /record</span><br><span class="line"> /review</span><br></pre></td></tr></table></figure>
+
+<p>这些路由直接刷新就不会出现 404。</p>
+<hr>
+<h2 id="GitHub-和-Cloudflare-最方便的地方：自动部署"><a href="#GitHub-和-Cloudflare-最方便的地方：自动部署" class="headerlink" title="GitHub 和 Cloudflare 最方便的地方：自动部署"></a>GitHub 和 Cloudflare 最方便的地方：自动部署</h2><p>完成 GitHub Integration 后，日常开发流程就非常简单了。</p>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;feat: add new feature&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<p>Cloudflare 会检测到 GitHub 更新：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Git push</span><br><span class="line">   ↓</span><br><span class="line">Cloudflare 收到 webhook</span><br><span class="line">   ↓</span><br><span class="line">拉取最新代码</span><br><span class="line">   ↓</span><br><span class="line">npm install</span><br><span class="line">   ↓</span><br><span class="line">npm run build</span><br><span class="line">   ↓</span><br><span class="line">部署 dist</span><br><span class="line">   ↓</span><br><span class="line">全球 CDN 更新</span><br></pre></td></tr></table></figure>
+
+<p>不再需要：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp dist服务器</span><br></pre></td></tr></table></figure>
+
+<p>也不需要：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">上传FTP</span><br></pre></td></tr></table></figure>
+
+<p>更不用手动维护前端 Nginx。</p>
+<p>对于一个个人项目来说，这一点体验很好。</p>
+<hr>
+<h2 id="Preview-Deployment-也很实用"><a href="#Preview-Deployment-也很实用" class="headerlink" title="Preview Deployment 也很实用"></a>Preview Deployment 也很实用</h2><p>Cloudflare Pages 并不是只有正式环境。例如开发一个新功能：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git switch -c feature/new-page</span><br><span class="line">git push -u origin feature/new-page</span><br></pre></td></tr></table></figure>
+
+<p>Cloudflare 可以给这个分支创建一个独立 Preview 地址。这样可以先测试：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">feature branch</span><br><span class="line">      ↓</span><br><span class="line">Cloudflare Preview</span><br><span class="line">      ↓</span><br><span class="line">确认没问题</span><br><span class="line">      ↓</span><br><span class="line">Merge main</span><br><span class="line">      ↓</span><br><span class="line">Production</span><br></pre></td></tr></table></figure>
+
+<p>比直接往正式网站上改安全很多。现在比较习惯的流程也是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">feature/*</span><br><span class="line">    ↓</span><br><span class="line">Cloudflare Preview</span><br><span class="line">    ↓</span><br><span class="line">测试</span><br><span class="line">    ↓</span><br><span class="line">main</span><br><span class="line">    ↓</span><br><span class="line">正式部署</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="最后再绑定自己的域名"><a href="#最后再绑定自己的域名" class="headerlink" title="最后再绑定自己的域名"></a>最后再绑定自己的域名</h2><p>默认的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx.pages.dev</span><br></pre></td></tr></table></figure>
+
+<p>其实已经可以正常使用。如果希望网站看起来更正式，可以在 Pages：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Custom domains</span><br></pre></td></tr></table></figure>
+
+<p>添加：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.example.com</span><br></pre></td></tr></table></figure>
+
+<p>如果 DNS 本身不托管在 Cloudflare，而是在其他 DNS 服务商，可以选择：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">My DNS provider</span><br></pre></td></tr></table></figure>
+
+<p>然后按照 Cloudflare 提示添加 CNAME。通常类似：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">类型：CNAME</span><br><span class="line">主机记录：app</span><br><span class="line">记录值：xxx.pages.dev</span><br></pre></td></tr></table></figure>
+
+<p>等待 DNS 生效后：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://app.example.com</span><br></pre></td></tr></table></figure>
+
+<p>就会指向 Cloudflare Pages。HTTPS 证书也由 Cloudflare 自动处理。</p>
+<hr>
+<h2 id="这套部署方式适合什么项目"><a href="#这套部署方式适合什么项目" class="headerlink" title="这套部署方式适合什么项目"></a>这套部署方式适合什么项目</h2><p>折腾完之后，会发现 Cloudflare Pages 并不是什么复杂的“云原生部署平台”，如果只是从个人开发角度理解，可以把它看成：</p>
+<blockquote>
+<p><strong>GitHub 仓库的自动构建 + 静态网站托管 + CDN + HTTPS。</strong></p>
+</blockquote>
+<p>对于：</p>
+<p><strong>Vue、React、Vite、个人博客、文档站、PWA、项目官网</strong></p>
+<p>都很合适。这次迁移之后，整个项目也变成了比较清晰的结构：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">GitHub</span><br><span class="line">  │</span><br><span class="line">  └── Vue / Vite</span><br><span class="line">          │</span><br><span class="line">          ▼</span><br><span class="line">   Cloudflare Pages</span><br><span class="line">          │</span><br><span class="line">          ▼</span><br><span class="line">     用户浏览器</span><br><span class="line">          │</span><br><span class="line">          ▼</span><br><span class="line">      FastAPI API</span><br><span class="line">          │</span><br><span class="line">          ├── SQLite</span><br><span class="line">          ├── AI 服务</span><br><span class="line">          └── 邮件服务</span><br></pre></td></tr></table></figure>
+
+<p>前端更新交给 GitHub + Cloudflare，后端继续运行在自己的服务器上，两边互不影响。</p>
+<p>相比把所有东西都部署在一台服务器上，这种方式最大的感受不是“性能提升了多少”，而是<strong>前端部署变得非常省心</strong>：提交代码之后，剩下的事情基本都由 Cloudflare 自动完成。</p>
+</div><footer class="article-footer"><a href="/">返回首页 ↑</a></footer></div>
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 YangYang</span>
+  </footer>
+
+  <script>
+    
+    window.SEARCH_INDEX = [{"title":"AI桌面机器人","path":"/2026/08/10/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/","date":"2026.08.10","excerpt":"最近学习了一些嵌入式相关知识，包括 STM32、FreeRTOS 等，也看到不少 AI 桌面机器人项目。相比直接购买成品，我更想亲手完成从硬件组装、固件修改到云端服务部署的完整过程，于是选择复刻一台桌面机器人，并在此基础上继续开发自己的功能。 硬件复刻项目地址：https://oshwhub.com/movecall/moji2 硬件采用嘉立创开源平台上的 "},{"title":"Hello World","path":"/2026/08/05/hello-world/","date":"2026.08.05","excerpt":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask"},{"title":"智能体经典范式构建","path":"/2026/08/05/chapter04/","date":"2026.08.05","excerpt":"Chat Completions 格式 大模型 API 调用最核心的消息格式 1234exampleMessages = [ &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that writes Python"},{"title":"基于coze的智能体搭建","path":"/2026/08/06/chapter05/","date":"2026.08.06","excerpt":"Coze 核心定位：由字节跳动推出的 Coze[1]，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。 特点分析：Coze 拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简"},{"title":"基于Dify的智能体搭建","path":"/2026/08/10/%E5%9F%BA%E4%BA%8EDify%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.10","excerpt":"Dify 核心定位：Dify 是一个开源的、功能全面的 LLM 应用开发与运营平台，旨在为开发者提供从原型构建到生产部署的一站式解决方案。 特点分析：它融合了后端服务和模型运营的理念，支持 Agent 工作流、RAG Pipeline、数据标注与微调等多种能力。对于追求专业、稳定、可扩展的企业级应用而言，Dify 提供了坚实的基础。 适用人群：有一定技术背景"},{"title":"API调用故障排查笔记","path":"/2026/08/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B0%83%E7%94%A8API%E5%A4%B1%E8%B4%A5/","date":"2026.08.12","excerpt":"API 调用故障排查笔记更新时间：2026-08-12 这次遇到过的主要问题1. 页面报 timeout，但后端接口其实返回正常表现： 小程序页面提示超时 但后端日志里能看到 GET /api/review-insights 200 OK 结论： 不能只看前端提示 要以“后端有没有收到请求、有没有正常返回”为准 这次的关键日志： 12INFO:app.mai"},{"title":"如何使自己具有“前瞻性”,从被动信息获取到构建自己的技术雷达","path":"/2026/08/20/%E5%A6%82%E4%BD%95%E4%BD%BF%E8%87%AA%E5%B7%B1%E5%85%B7%E6%9C%89%E5%89%8D%E7%9E%BB%E6%80%A7%EF%BC%8C%E4%BB%8E%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E5%88%B0%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9B%B7%E8%BE%BE/","date":"2026.08.20","excerpt":"感觉目前依赖的是一种被动的信息获取方式 别人用了一个好工具 → 告诉你 → 你才知道 → 然后发现别人已经用了很久 真正有“前瞻性”的人，并不是每天知道最多新工具的人，而是慢慢建立了一套自己的技术雷达（Technology Radar）：知道去哪里发现变化，怎么判断哪些变化重要，以及怎么快速试用。 而且现在这个问题比几年前更明显。GitHub 的 2025 "},{"title":"基于FastGPT平台的智能体搭建","path":"/2026/08/20/%E5%9F%BA%E4%BA%8EFastGPT%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/","date":"2026.08.20","excerpt":"官网地址：https://fastgpt.cn/ FastGPT 最核心的竞争力在于其强大的知识库能力。平台支持多种文件格式的导入，包括 Word、Markdown、PDF 等常见文档类型。 构建”智能投顾助手”案例说明： 本案例将基于 FastGPT 平台，结合知识库、MCP 工具和工作流编排，构建一个专业的”智能投顾助手”。该助手能够回答金融投资理论问题"},{"title":"也祝日志-AI 记录微信小程序","path":"/2026/09/01/%E4%B9%9F%E7%A5%9D%E6%97%A5%E5%BF%97-AI%20%E7%A7%81%E4%BA%BA%E8%AE%B0%E5%BD%95%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/","date":"2026.09.01","excerpt":"背景“也祝日志”是我独立完成并发布的一款微信小程序，目前已经可以在微信中搜索使用。 我最初想解决的问题并不只是“找一个地方记日记”。普通笔记能够保存内容，却很难在记录积累之后回答这些问题：最近一段时间我在关注什么？以前遇到过类似的问题吗？当时是怎么处理的？零散记录之间是否存在持续出现的主题？ 因此，我把它设计成一个安静的个人记忆空间：用户先记录真实经历，系统"},{"title":"怎样写出好的prompt？","path":"/2026/08/12/%E6%80%8E%E6%A0%B7%E5%86%99%E5%87%BA%E5%A5%BD%E7%9A%84prompt/","date":"2026.08.12","excerpt":"接触生成式 AI 一段时间后，会逐渐发现一个很明显的现象：同样使用 ChatGPT、Claude、Gemini 等工具，不同 Prompt 得到的结果可能差别很大。有些回答结构完整、观点清晰，几乎可以直接使用；有些回答却比较空泛，甚至没有真正解决问题。 刚开始接触 Prompt 时，很容易把它理解成“向 AI 提问题的方式”。随着使用次数增加，会发现 Pro"},{"title":"什么是冒烟测试","path":"/2026/09/01/%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%92%E7%83%9F%E6%B5%8B%E8%AF%95/","date":"2026.09.01","excerpt":"当我在借助AI开发小程序的时候，AI会自动帮我进行冒烟测试，但我对测试领域并不是很了解，以及有哪些测试，各种测试是怎样工作的，有哪些功能。 “冒烟测试”这个名字其实很容易让人困惑。后来真正放到软件开发流程里理解，就会发现它并不复杂：冒烟测试就是在开始完整测试之前，先快速检查系统最核心的功能是否还能正常工作。 它解决的不是“系统有没有 Bug”这个大问题，而是"},{"title":"codex-with-chatgpt 插件使用体验","path":"/2026/09/06/codex-with-chatgpt%EF%BC%9A%E7%BB%93%E5%90%88ChatGPT%E4%B8%8ECodex%E7%9A%84AI%E7%BC%96%E7%A0%81%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/","date":"2026.09.06","excerpt":"codex-with-chatgpt：结合ChatGPT与Codex的AI编码工具 插件地址：https://github.com/XiaoDuoYa/codex-with-chatgpt 核心理念： ChatGPT 负责思考，Codex 负责干活。 ChatGPT 网页版：负责需求分析、架构设计、制定修改方案、代码 Review。 Codex：负责真正操作"},{"title":"什么是 RSS？","path":"/2026/09/06/%E4%BB%80%E4%B9%88%E6%98%AFRSS/","date":"2026.09.06","excerpt":"RSS 可以理解为网站提供的一份标准化更新清单，程序可以通过它自动获取网站最新发布的内容。 普通网页主要给人阅读： 1https://example.com 而 RSS 地址主要给程序读取： 1https://example.com/feed.xml RSS 通常使用 XML 格式，内容大致如下： 123456789101112&lt;rss&gt; &lt"},{"title":"给个人项目接入邮箱验证码：一次腾讯云 SES 配置记录","path":"/2026/09/08/%E7%BB%99%E4%B8%AA%E4%BA%BA%E9%A1%B9%E7%9B%AE%E6%8E%A5%E5%85%A5%E9%82%AE%E7%AE%B1%E9%AA%8C%E8%AF%81%E7%A0%81/","date":"2026.09.08","excerpt":"最近给个人项目补账号系统时，需要实现邮箱注册和验证码验证。项目服务器在腾讯云，域名 XXXX.com 托管在阿里云，因此邮件服务直接选择了腾讯云 SES。 整个过程并不复杂，但涉及域名验证、DNS、邮件模板、API 权限和后端调用，第一次配置时还是有几个容易踩坑的地方。 1. 先配置发信域名在腾讯云 SES 中新建发信域名： 1mail.xxxx.com 这"},{"title":"从微信小程序迁移到 PWA","path":"/2026/09/08/%E4%BB%8E%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%BF%81%E7%A7%BB%E5%88%B0%20PWA/","date":"2026.09.08","excerpt":"最近把一个原本运行在微信小程序里的项目迁移出了一套独立 PWA。原因很直接：小程序适合作为轻量入口，但平台审核、类目和能力限制比较明显，希望保留原有版本的同时，再提供一个不依赖微信运行环境的 Web 版本。 这次没有重写后端，而是把整个系统调整成了“双前端 + 单后端”的结构： 123微信小程序 ─┐ ├─→ FastAPI → 数据库 / AI / 邮件服"},{"title":"用 Tauri 做一只会“察言观色”的桌面宠物：也祝","path":"/2026/09/09/%E7%94%A8%20Tauri%20%E5%81%9A%E4%B8%80%E5%8F%AA%E4%BC%9A%E5%AF%9F%E8%A8%80%E8%A7%82%E8%89%B2%E7%9A%84%E6%A1%8C%E9%9D%A2%E5%AE%A0%E7%89%A9/","date":"2026.09.09","excerpt":"“也祝”是一只运行在 Windows 桌面上的小猪宠物。它会沿屏幕边缘散步，会在你持续打字时陪你工作，也会在长时间安静后犯困、睡觉；右键宠物还能打招呼、打开设置或让它暂时退下。项目最初使用 Electron，实现起来直接，但安装包体积与常驻资源占用都偏大，于是后来迁移到了 Tauri 2：界面仍由 HTML、CSS 和 JavaScript 驱动，窗口、系统"},{"title":"AI Infra 岗和 AI / Agent 开发有什么区别？","path":"/2026/09/12/AI%20Infra%20%E5%B2%97%E5%92%8C%20AI%20-%20Agent%20%E5%BC%80%E5%8F%91%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/","date":"2026.09.12","excerpt":"最近秋招看岗位时，经常会看到 AI Infra 这个词。 AI Infra 的全称是 AI Infrastructure，也就是“人工智能基础设施”。它和 AI &#x2F; Agent 开发最大的区别，可以直接理解成： AI &#x2F; Agent 开发负责把模型用起来，AI Infra 负责让模型跑起来。 AI &#x2F; Agent 开发更靠近应用"},{"title":"Rust，最近越来越常见","path":"/2026/09/12/Rust%E5%9C%A8%E8%BF%99%E4%B8%A4%E5%B9%B4%E7%AA%81%E7%84%B6%E7%81%AB%E4%BA%86/","date":"2026.09.12","excerpt":"最近刷 GitHub、技术博客或者 AI Infra 相关内容时，经常能看到一个词：Rust。一开始很容易以为这是一门刚出来的新语言，但实际上 Rust 已经有快二十年的历史了。 Rust 最早可以追溯到 2006 年，最初是 Graydon Hoare 的个人项目，后来得到了 Mozilla 的支持。到 2015 年，Rust 1.0 正式发布，开始进入稳"},{"title":"Cloudflare 连接 GitHub 仓库并部署静态网站","path":"/2026/09/12/Cloudflare%20%E8%BF%9E%E6%8E%A5%20GitHub%E4%BB%93%E5%BA%93%E5%B9%B6%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/","date":"2026.09.12","excerpt":"最近把一个原本运行在微信小程序里的项目迁移成了 Web&#x2F;PWA 版本，前端使用 Vue 3 + Vite。后端仍然运行在自己的服务器上，前端则希望找一个不需要额外维护 Nginx、支持 HTTPS、还能自动跟 GitHub 同步的平台。最后选择了 Cloudflare Pages。 实际用下来，这套流程非常适合个人项目：代码推到 GitHub，Cl"}];
+  </script>
+  <script>
+    window.FAIRY_ASSETS = {
+      IMAGE_FAIRY_IDLE: '/images/fairy/fairy-idle-transparent.png',
+      IMAGE_FAIRY_CASTING: '/images/fairy/fairy-casting-transparent.png',
+      IMAGE_BACKGROUND_OVERALL: '/images/fairy/forest-background.png',
+      IMAGE_BACKGROUND_ARTICLE: '/images/fairy/article-card.png'
+    };
+  </script>
+  <script src="/js/forest-fairy.js?v=20260812-4"></script>
+</body>
+</html>
