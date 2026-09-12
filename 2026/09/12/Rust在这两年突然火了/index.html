@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="学习与项目记录">
-  <title>YangYang</title>
+  <title>Rust，最近越来越常见 · YangYang</title>
   <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,71 +59,43 @@
   </header>
 
   <main class="site-main">
-    <section class="archive-page">
-  <header class="section-heading reveal">
-    <h1>学习笔记</h1>
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">随记</span>
+    <h1>Rust，最近越来越常见</h1>
+    <div class="article-meta"><time datetime="2026-09-12T08:00:00.000Z">2026 年 09 月 12 日</time><span>·</span><span>约 5 分钟</span></div>
   </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">目录</div></aside>
+    <div class="article-card reveal"><div class="article-content"><p>最近刷 GitHub、技术博客或者 AI Infra 相关内容时，经常能看到一个词：<strong>Rust</strong>。一开始很容易以为这是一门刚出来的新语言，但实际上 Rust 已经有快二十年的历史了。</p>
+<p>Rust 最早可以追溯到 <strong>2006 年</strong>，最初是 Graydon Hoare 的个人项目，后来得到了 Mozilla 的支持。到 <strong>2015 年</strong>，Rust 1.0 正式发布，开始进入稳定版本。因此从正式发布算，Rust 到现在也已经发展了十多年。</p>
+<p>感觉最近几年 Rust 突然变多了，一个很重要的原因是，软件行业越来越重视<strong>内存安全</strong>。</p>
+<p>传统的系统级开发主要使用 C 和 C++，它们的性能很高，也可以直接控制内存，但同时容易出现空指针、越界访问、Use After Free、数据竞争等问题。这些问题不仅可能让程序崩溃，还经常会变成安全漏洞。</p>
+<p>Rust 想解决的正是这个问题：<strong>尽可能保留 C&#x2F;C++ 的性能和底层控制能力，同时通过语言本身减少内存安全问题。</strong></p>
+<p>它最有代表性的设计就是 <strong>Ownership（所有权）</strong> 和 <strong>Borrowing（借用）</strong>。很多原本需要运行之后才能发现的问题，会直接在编译阶段被拦下来。换句话说，Rust 的编译器有时候会显得很“严格”，但这种严格本身就是它安全性的来源。</p>
+<p>Rust 真正开始被大量关注，还有一个原因：它已经不只是“看起来设计得不错”，而是逐渐进入了真正的基础设施项目。</p>
+<p>比如 Linux Kernel 已经开始支持 Rust，Android 也在部分底层组件中使用 Rust。对于 Linux Kernel 这种长期以 C 为主的项目来说，允许 Rust 进入本身就是一个很明显的信号：Rust 已经开始具备承担系统级开发任务的能力。</p>
+<p>这几年云计算、网络服务、数据库和 AI Infra 的发展，也刚好放大了 Rust 的优势。这些场景往往同时要求：**性能高、并发能力强、资源占用低、服务稳定、安全性高。**Rust 刚好处在这个交叉位置。</p>
+<p>还有一个有意思的现象，即使平时主要写 Python，也越来越容易遇到 Rust。例如 Python 生态里近几年很火的 <strong>Ruff</strong> 和 <strong>uv</strong>，底层都是使用 Rust 编写的。对于普通使用者来说，表面上仍然是在使用 Python 工具，但真正承担大量高性能工作的部分已经换成了 Rust。</p>
+<p>这种模式现在越来越常见：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Python / JavaScript / TypeScript</span><br><span class="line">              │</span><br><span class="line">              │ 负责业务与上层应用</span><br><span class="line">              ▼</span><br><span class="line">       AI / Web / Agent</span><br><span class="line">              │</span><br><span class="line">              │ 调用</span><br><span class="line">              ▼</span><br><span class="line">      Rust 高性能工具</span><br><span class="line">              │</span><br><span class="line">              ▼</span><br><span class="line">     CPU / 网络 / 操作系统</span><br></pre></td></tr></table></figure>
 
-  
-    <div class="column-grid">
-      
-        <a class="column-card reveal" href="/categories/study-notes/ai-agent/">
-          <strong>AI Agent</strong>
-          <span>Agent、工作流与大模型应用实践</span>
-          <em>进入专栏 ↗</em>
-        </a>
-      
-        <a class="column-card reveal" href="/categories/study-notes/embedded/">
-          <strong>嵌入式</strong>
-          <span>嵌入式系统与硬件实践记录</span>
-          <em>进入专栏 ↗</em>
-        </a>
-      
-        <a class="column-card reveal" href="/categories/study-notes/python/">
-          <strong>Python</strong>
-          <span>Python 语言与工具学习笔记</span>
-          <em>进入专栏 ↗</em>
-        </a>
-      
-    </div>
-  
+<p>所以 Rust 并不是简单地“取代 Python”。</p>
+<p>Python 更适合快速开发应用、AI、数据处理和 Agent；Rust 更擅长处理性能敏感、资源敏感或者靠近系统底层的部分。两者甚至经常是合作关系。</p>
+<p>在接触 <strong>AI &#x2F; Agent 开发</strong>时，看到的更多是 Python、FastAPI、RAG、LangChain，而开始接触 <strong>AI Infra、数据库、开发工具和底层系统</strong>之后，会突然发现 Rust、Go、C++、CUDA、LLVM 这些词出现得越来越频繁。</p>
+<p>Rust 的发展过程其实比较像：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2006        2010        2015            2020            2023+</span><br><span class="line"> │            │           │               │                │</span><br><span class="line">个人项目 ── Mozilla ── Rust 1.0 ── 企业开始采用 ── 基础设施大量出现</span><br></pre></td></tr></table></figure>
 
-  <div class="archive-list">
-    
-      
-        <a class="archive-row reveal" href="/2026/09/01/%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%92%E7%83%9F%E6%B5%8B%E8%AF%95/">
-          <time>2026.09.01</time>
-          <strong>什么是冒烟测试</strong>
-          <span>↗</span>
-        </a>
-      
-        <a class="archive-row reveal" href="/2026/08/20/%E5%9F%BA%E4%BA%8EFastGPT%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/">
-          <time>2026.08.20</time>
-          <strong>基于FastGPT平台的智能体搭建</strong>
-          <span>↗</span>
-        </a>
-      
-        <a class="archive-row reveal" href="/2026/08/10/%E5%9F%BA%E4%BA%8EDify%E7%9A%84%E6%99%BA%E8%83%BD%E4%BD%93%E6%90%AD%E5%BB%BA/">
-          <time>2026.08.10</time>
-          <strong>基于Dify的智能体搭建</strong>
-          <span>↗</span>
-        </a>
-      
-        <a class="archive-row reveal" href="/2026/08/06/chapter05/">
-          <time>2026.08.06</time>
-          <strong>基于coze的智能体搭建</strong>
-          <span>↗</span>
-        </a>
-      
-        <a class="archive-row reveal" href="/2026/08/05/chapter04/">
-          <time>2026.08.05</time>
-          <strong>智能体经典范式构建</strong>
-          <span>↗</span>
-        </a>
-      
-    
+<p>所以与其说 Rust 是“这两年突然火了”，不如说它花了十几年完成语言设计、生态和工程实践上的积累，然后刚好赶上了行业越来越重视<strong>性能、安全和基础设施</strong>的阶段。</p>
+<p>如果只是做普通 AI 应用开发，目前并没有必要因为 Rust 热度高就马上去学。Python 仍然是更直接的选择。但如果以后开始接触 <strong>AI Infra、高性能推理、模型服务、数据库、网络服务或者系统开发</strong>，Rust 就会变成一个很值得关注的方向。</p>
+<p>简单来说：</p>
+<blockquote>
+<p><strong>Rust 等了很多年，终于等到了整个软件行业同时开始重视“C++ 级性能”和“更安全的内存管理”。</strong></p>
+</blockquote>
+<p>这可能才是最近几年 Rust 存在感越来越强的真正原因。</p>
+</div><footer class="article-footer"><a href="/">返回首页 ↑</a></footer></div>
   </div>
-</section>
+</article>
 
   </main>
 
