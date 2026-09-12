@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="学习与项目记录">
-  <title>YangYang</title>
+  <title>AI Infra 岗和 AI / Agent 开发有什么区别？ · YangYang</title>
   <link rel="stylesheet" href="/css/forest-fairy.css?v=20260812-4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,25 +59,33 @@
   </header>
 
   <main class="site-main">
-    <section class="archive-page">
-  <header class="section-heading reveal">
-    <h1>AI桌面机器人</h1>
+    <article class="article-page">
+  <header class="article-hero reveal">
+    <span class="card-kicker">随记</span>
+    <h1>AI Infra 岗和 AI / Agent 开发有什么区别？</h1>
+    <div class="article-meta"><time datetime="2026-09-12T07:22:00.000Z">2026 年 09 月 12 日</time><span>·</span><span>约 3 分钟</span></div>
   </header>
+  <div class="article-layout">
+    <aside class="toc-panel"><div class="toc-title">目录</div></aside>
+    <div class="article-card reveal"><div class="article-content"><p>最近秋招看岗位时，经常会看到 <strong>AI Infra</strong> 这个词。</p>
+<p>AI Infra 的全称是 <strong>AI Infrastructure</strong>，也就是“人工智能基础设施”。它和 AI &#x2F; Agent 开发最大的区别，可以直接理解成：</p>
+<p><strong>AI &#x2F; Agent 开发负责把模型用起来，AI Infra 负责让模型跑起来。</strong></p>
+<p>AI &#x2F; Agent 开发更靠近应用。比如做智能助手、RAG 知识库、Agent、工作流，主要关注模型怎么调用、怎么接工具、怎么接业务。常见的技术包括 <strong>Prompt、RAG、Agent、MCP、Function Calling、LangChain、Dify、FastAPI、向量数据库</strong> 等。</p>
+<p>AI Infra 更靠近底层。一个 Agent 调用模型接口时，背后还需要解决模型部署、GPU 使用、推理速度、并发、显存、服务稳定性等问题，这些通常就是 AI Infra 在做的事情。常见技术包括 <strong>vLLM、SGLang、Docker、Kubernetes、GPU、CUDA、模型服务、推理优化</strong> 等。</p>
+<p>可以简单看成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户 → AI / Agent 应用 → 模型服务 → 推理框架 → GPU</span><br></pre></td></tr></table></figure>
 
-  
+<p>前半部分更偏 AI &#x2F; Agent 开发，后半部分更偏 AI Infra。</p>
+<p>看招聘 JD 时也很好区分。如果经常出现 <strong>Agent、RAG、MCP、知识库、工作流、Prompt</strong>，一般偏 AI 应用开发；如果出现 <strong>GPU、vLLM、模型部署、Kubernetes、推理优化、并发</strong>，就更偏 AI Infra。</p>
+<p>如果再看到 <strong>CUDA、NCCL、RDMA、Tensor Parallel、Pipeline Parallel、算子优化、分布式训练</strong> 这些词，基本就是更底层的 AI Infra 了，和普通 Agent 开发区别会比较明显。</p>
+<p>不过岗位名称并不完全统一。有些岗位虽然叫 AI Infra，实际主要做模型部署和模型服务，并不会特别底层。所以秋招时比起看岗位名字，更重要的是直接看 JD 里要求什么。</p>
+<p>目前自己的理解是，AI 相关岗位可以粗略看成一条链路：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AI / Agent 开发 → AI 平台 / 模型服务 → AI Infra → GPU / 硬件</span><br></pre></td></tr></table></figure>
 
-  <div class="archive-list">
-    
-      
-        <a class="archive-row reveal" href="/2026/08/10/AI%E6%A1%8C%E9%9D%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/">
-          <time>2026.08.10</time>
-          <strong>AI桌面机器人</strong>
-          <span>↗</span>
-        </a>
-      
-    
+<p><strong>AI &#x2F; Agent 开发是在用 AI 做产品，AI Infra 是在给 AI 搭底座。</strong></p>
+</div><footer class="article-footer"><a href="/">返回首页 ↑</a></footer></div>
   </div>
-</section>
+</article>
 
   </main>
 
