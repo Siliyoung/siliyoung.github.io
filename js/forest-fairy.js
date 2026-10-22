@@ -244,6 +244,51 @@
       }
     });
   }
+
+  function setupForestNavigation() {
+    const randomButton = document.getElementById('random-post');
+    const posts = Array.isArray(window.SEARCH_INDEX) ? window.SEARCH_INDEX : [];
+    if (!randomButton) return;
+    if (!posts.length) {
+      randomButton.disabled = true;
+      return;
+    }
+    randomButton.addEventListener('click', function () {
+      const target = posts[Math.floor(Math.random() * posts.length)];
+      if (target && target.path) window.location.href = target.path;
+    });
+  }
+
+  function setupKnowledgeMap() {
+    const map = document.querySelector('.knowledge-map');
+    if (!map) return;
+    const nodes = map.querySelectorAll('.knowledge-node');
+    const vines = map.querySelectorAll('.knowledge-vines path');
+    function reset() {
+      map.classList.remove('is-exploring');
+      nodes.forEach(function (node) { node.classList.remove('is-related'); });
+      vines.forEach(function (vine) { vine.classList.remove('is-related'); });
+    }
+    function activate(name) {
+      map.classList.add('is-exploring');
+      nodes.forEach(function (node) { node.classList.toggle('is-related', node.dataset.node === name); });
+      vines.forEach(function (vine) {
+        const related = vine.dataset.from === name || vine.dataset.to === name;
+        vine.classList.toggle('is-related', related);
+        if (related) {
+          nodes.forEach(function (node) {
+            if (node.dataset.node === vine.dataset.from || node.dataset.node === vine.dataset.to) node.classList.add('is-related');
+          });
+        }
+      });
+    }
+    nodes.forEach(function (node) {
+      node.addEventListener('pointerenter', function () { activate(node.dataset.node); });
+      node.addEventListener('focus', function () { activate(node.dataset.node); });
+    });
+    map.addEventListener('pointerleave', reset);
+    map.addEventListener('focusout', function (event) { if (!map.contains(event.relatedTarget)) reset(); });
+  }
   function setupCopyButtons() {
     document.querySelectorAll('.article-content figure.highlight, .article-content > pre').forEach(function (block) {
       const code = block.matches('figure.highlight') ? block.querySelector('.code pre') : (block.querySelector('pre') || block);
@@ -324,6 +369,8 @@
   setupDayNightCycle();
   setupAmbientForest();
   setupCalendar();
+  setupForestNavigation();
+  setupKnowledgeMap();
   setupSearch();
   setupCopyButtons();
   setupTableOfContentsDrawer();
