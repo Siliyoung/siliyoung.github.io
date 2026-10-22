@@ -93,7 +93,57 @@
       const y = (event.clientY / window.innerHeight - .5) * 2;
       scene.style.setProperty('--parallax-x', `${x * 8}px`);
       scene.style.setProperty('--parallax-y', `${y * 6}px`);
+      root.style.setProperty('--depth-x', `${x}px`);
+      root.style.setProperty('--depth-y', `${y}px`);
     }, { passive: true });
+  }
+
+  // A restrained scene layer built from CSS primitives: light through the canopy,
+  // falling leaves and two distant butterflies. It never receives pointer events.
+  function setupForestMotion() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const motion = document.createElement('div');
+    motion.className = 'forest-motion-layer';
+    motion.setAttribute('aria-hidden', 'true');
+    motion.innerHTML = '<img class="scene-layer scene-trunks" src="/images/fairy/forest-layer-trunks-v2.png" alt=""><img class="scene-layer scene-canopy" src="/images/fairy/forest-layer-canopy-v3.png" alt=""><img class="scene-layer scene-meadow" src="/images/fairy/forest-layer-meadow-v2.png" alt=""><i class="forest-ray forest-ray-one"></i><i class="forest-ray forest-ray-two"></i><i class="forest-ray forest-ray-three"></i>';
+    for (let index = 0; index < 9; index += 1) {
+      const leaf = document.createElement('i');
+      leaf.className = 'forest-drifting-leaf';
+      leaf.style.setProperty('--leaf-x', `${6 + ((index * 11) % 88)}%`);
+      leaf.style.setProperty('--leaf-delay', `${-(index * 1.8)}s`);
+      leaf.style.setProperty('--leaf-duration', `${15 + (index % 4) * 3}s`);
+      leaf.style.setProperty('--leaf-size', `${7 + (index % 3) * 2}px`);
+      motion.appendChild(leaf);
+    }
+    document.body.insertBefore(motion, document.body.firstChild);
+
+    // Foreground creatures live in their own layer, above cards but only around
+    // the viewport edges, so they are continuously visible without blocking text.
+    const creatures = document.createElement('div');
+    creatures.className = 'forest-creature-layer';
+    creatures.setAttribute('aria-hidden', 'true');
+    creatures.innerHTML = '<i class="forest-creature creature-green-butterfly edge-green-one"></i><i class="forest-creature creature-purple-butterfly edge-purple-one"></i><i class="forest-creature creature-yellow-butterfly edge-yellow-one"></i><i class="forest-creature creature-bee edge-bee-left"></i><i class="forest-creature creature-bee edge-bee-right"></i><i class="forest-creature creature-firefly edge-firefly-one"></i><i class="forest-creature creature-firefly edge-firefly-two"></i><i class="forest-creature creature-firefly edge-firefly-three"></i>';
+    document.body.appendChild(creatures);
+  }
+
+  function setupSceneHotspots() {
+    const atHome = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html');
+    if (!atHome) return;
+    const hotspots = document.createElement('nav');
+    hotspots.className = 'scene-hotspots';
+    hotspots.setAttribute('aria-label', '森林快捷导航');
+    hotspots.innerHTML = '<a class="scene-hotspot hotspot-notes" href="/categories/notes/" aria-label="前往随记"><i>✦</i><span>随记</span></a><a class="scene-hotspot hotspot-study" href="/categories/study-notes/" aria-label="前往学习笔记"><i>✧</i><span>学习笔记</span></a><a class="scene-hotspot hotspot-works" href="/categories/works/" aria-label="前往作品展示"><i>✦</i><span>作品展示</span></a>';
+    document.body.appendChild(hotspots);
+  }
+
+  function setupDayNightCycle() {
+    const applyTime = function () {
+      const hour = new Date().getHours();
+      document.body.classList.toggle('forest-night', hour >= 19 || hour < 6);
+      document.body.classList.toggle('forest-dusk', (hour >= 17 && hour < 19) || (hour >= 6 && hour < 8));
+    };
+    applyTime();
+    window.setInterval(applyTime, 60000);
   }
   function setupCalendar() {
     const calendar = document.getElementById('forest-calendar');
@@ -226,6 +276,16 @@
       block.appendChild(button);
     });
   }
+
+  // Keep the table of contents as a hoverable side drawer, so it does not
+  // occupy a permanent column beside the article.
+  function setupTableOfContentsDrawer() {
+    document.querySelectorAll('.article-layout').forEach(function (layout) {
+      const toc = layout.querySelector('.toc-panel');
+      if (!toc) return;
+      layout.classList.add('toc-drawer-layout');
+    });
+  }
   function createSparkles(x, y) {
     if (!sparkleLayer) return;
     const count = 12 + Math.floor(Math.random() * 4);
@@ -259,10 +319,14 @@
     });
   }
 
+  setupForestMotion();
+  setupSceneHotspots();
+  setupDayNightCycle();
   setupAmbientForest();
   setupCalendar();
   setupSearch();
   setupCopyButtons();
+  setupTableOfContentsDrawer();
 
   if (!canReveal) return;
 
