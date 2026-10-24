@@ -115,7 +115,7 @@
 <p>部署流程变成：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">本地开发</span><br><span class="line">↓</span><br><span class="line">Git commit</span><br><span class="line">↓</span><br><span class="line">Push GitHub</span><br><span class="line">↓</span><br><span class="line">Cloudflare Pages 自动构建</span><br><span class="line">↓</span><br><span class="line">npm run build</span><br><span class="line">↓</span><br><span class="line">发布 dist</span><br></pre></td></tr></table></figure>
 
-<p>相比手动上传服务器，最大的好处是每次 <code>push</code> 都可以自动部署。</p>
+<p>相比手动上传服务器，比较方便的是每次 <code>push</code> 都可以自动部署。</p>
 <p>以后也可以使用简单的分支策略：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">main</span><br><span class="line">    生产版本</span><br><span class="line"></span><br><span class="line">feature/*</span><br><span class="line">    新功能</span><br><span class="line"></span><br><span class="line">fix/*</span><br><span class="line">    Bug 修复</span><br></pre></td></tr></table></figure>
 
@@ -142,7 +142,7 @@
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OPTIONS /api/...</span><br></pre></td></tr></table></figure>
 
 <p>也就是 CORS Preflight。遇到“页面能打开，但登录、验证码全部失败”的情况，Network 面板里的 <code>OPTIONS</code> 请求通常是很好的排查入口。</p>
-<h2 id="密钥继续只放服务器"><a href="#密钥继续只放服务器" class="headerlink" title="密钥继续只放服务器"></a>密钥继续只放服务器</h2><p>迁移 Web 以后最需要注意的是：浏览器前端没有真正的 Secret。</p>
+<h2 id="密钥继续只放服务器"><a href="#密钥继续只放服务器" class="headerlink" title="密钥继续只放服务器"></a>密钥继续只放服务器</h2><p>迁移 Web 以后需要注意的是：浏览器前端没有真正的 Secret。</p>
 <p>例如：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">邮件服务 SecretKey</span><br><span class="line">JWT Secret</span><br><span class="line">AI API Key</span><br><span class="line">数据库凭据</span><br></pre></td></tr></table></figure>
 
@@ -157,7 +157,7 @@
 <h2 id="最后的结构"><a href="#最后的结构" class="headerlink" title="最后的结构"></a>最后的结构</h2><p>这次迁移完成后，项目从单一的小程序前端变成：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        ┌─ 微信小程序</span><br><span class="line">        │</span><br><span class="line">用户 ───┤</span><br><span class="line">        │</span><br><span class="line">        └─ PWA</span><br><span class="line">             ↓</span><br><span class="line">          FastAPI</span><br><span class="line">             ↓</span><br><span class="line">     数据库 / AI / 邮件</span><br></pre></td></tr></table></figure>
 
-<p>整个过程真正改动最大的不是后端，而是<strong>运行环境的替换</strong>：把微信提供的导航、存储、网络请求、触摸事件逐步换成浏览器标准能力。</p>
+<p>整个过程真正改动大的不是后端，而是<strong>运行环境的替换</strong>：把微信提供的导航、存储、网络请求、触摸事件逐步换成浏览器标准能力。</p>
 <p>PWA 的价值也不在于完全取代原生 App，而是用一套普通 Web 技术获得了接近 App 的安装和使用体验，同时保留 Web 部署简单、跨平台和更新快的特点。</p>
 <p>对于已经拥有独立后端的小程序项目，这种迁移方式比重新开发一个完整 App 要轻量得多。</p>
 </div><footer class="article-footer"><a href="/">返回首页 ↑</a></footer></div>
